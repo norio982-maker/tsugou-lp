@@ -177,7 +177,7 @@ a{color:inherit}
 .cast__group::after{content:"";flex:1;height:1px;background:var(--rule)}
 .cast{list-style:none;margin:.9rem 0 0;padding:0;display:grid;gap:.8rem}
 @media (min-width:640px){.cast{grid-template-columns:repeat(2,minmax(0,1fr))}.cast--solo{grid-template-columns:1fr}}
-/* PCでは4列の中に、僕（1人）→会社（7人を4人＋3人）→喫茶店（1人）＋家（3人）と並べる。--n は使う列の数、--cols は段の中の人数 */
+/* PCでは4列の中に、僕（1人）→会社（7人を4人＋3人）→他部署（3人）→喫茶店（1人）＋家（3人）と並べる。--n は使う列の数、--cols は段の中の人数 */
 @media (min-width:960px){
   .cast-groups{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:.8rem}
   .cast-group{grid-column:span var(--n)}
@@ -663,6 +663,15 @@ const CAST = [
     { key: 'doryo_c', name: '女性の同僚', role: '同じ部署', color: '#9A846E', initial: '同',
       desc: 'まわりをよく見ていて、僕が手いっぱいのときも先に気づいてくれる。', quote: '一緒に確認しましょう' },
   ] },
+  // 会社の段と縦の列をそろえる（4列の中に3人）
+  { place: '他部署', columns: 4, perRow: 4, people: [
+    { key: 'eigyo', name: '営業部の人', role: '他部署', color: '#3E5875', initial: '営',
+      desc: '明るく話しやすい人。必要な情報を、僕にもこまめに共有してくれる。', quote: 'こちらでも確認しておきます' },
+    { key: 'jinji', name: '人事部の人', role: '他部署', color: '#9A846E', initial: '人',
+      desc: '落ち着いて話を聞き、相談の要点を一緒に整理してくれる。', quote: '無理のない範囲で進めましょう' },
+    { key: 'somu', name: '総務部の人', role: '他部署', color: '#527389', initial: '総',
+      desc: '職場の小さな困りごとに気づき、働く環境を整えてくれる。', quote: '何かあれば声をかけてください' },
+  ] },
   { place: '帰り道の喫茶店', people: [
     { key: 'onodera', name: '小野寺さん', role: 'メンター', color: '#2E2A2B', initial: '小',
       desc: '黒いハットに、口元の大きな笑み。いつの間にか現れて、僕の話を最後まで聞いてくれる。', quote: '小さく変われば大丈夫です' },
@@ -688,7 +697,7 @@ function renderCast() {
         img.src = `assets/cast/${p.key}.jpg`;
         face.append(img, el('span', { 'aria-hidden': 'true' }, p.initial));
         // 1人だけの段を4列ぶん使う（主人公の都合さん）ときは、横幅いっぱいのカードにする
-        const wide = group.columns && group.people.length < group.columns;
+        const wide = group.people.length === 1 && group.columns > 1;
         return el('li', { class: 'person' + (wide ? ' person--wide' : '') }, face,
           el('div', {},
             el('p', { class: 'person__name' }, p.name, el('span', { class: 'person__role' }, p.role)),
