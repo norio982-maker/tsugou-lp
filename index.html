@@ -158,7 +158,7 @@ a{color:inherit}
 .cast__group::after{content:"";flex:1;height:1px;background:var(--rule)}
 .cast{list-style:none;margin:.9rem 0 0;padding:0;display:grid;gap:.8rem}
 @media (min-width:640px){.cast{grid-template-columns:repeat(2,minmax(0,1fr))}.cast--solo{grid-template-columns:1fr}}
-/* PCでは4列の中に、会社（4人）→ 喫茶店（1人）＋家（3人）と並べる */
+/* PCでは4列の中に、僕（1人）→会社（4人）→喫茶店（1人）＋家（3人）と並べる */
 @media (min-width:960px){
   .cast-groups{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:.8rem}
   .cast-group{grid-column:span var(--n)}
@@ -177,6 +177,11 @@ a{color:inherit}
 .person__desc{margin-top:.35rem;font-size:.95rem;line-height:1.75}
 .person__quote{margin-top:.45rem;font-family:var(--f-hand);font-weight:600;font-size:.98rem;line-height:1.6;color:var(--night-2)}
 .cast__more{margin-top:1.2rem;font-size:.92rem;color:var(--ink-soft)}
+.person--wide{grid-column:1/-1;border-color:var(--dawn);box-shadow:0 0 0 2px var(--dawn-soft)}
+@media (min-width:960px){
+  .person--wide{grid-template-columns:92px minmax(0,1fr);align-items:center;justify-items:stretch}
+  .person--wide .person__desc{max-width:44em}
+}
 
 /* 特典 */
 .gifts{display:grid;gap:1.3rem;margin-top:1.9rem}
@@ -395,7 +400,7 @@ a{color:inherit}
   <section class="sec sec--mist" id="cast" style="padding-top:0">
     <div class="wrap">
       <p class="kicker">登場人物</p>
-      <h2 class="sec__h">僕のまわりの人たち</h2>
+      <h2 class="sec__h">僕と、まわりの人たち</h2>
       <p class="sec__sub">会社と、帰り道の喫茶店と、家。動画には、この人たちが出てきます。</p>
       <div class="cast-groups" data-slot="cast"></div>
       <p class="cast__more">家族はほかに、結婚して家を出た長女の美咲さん、一人暮らしの次女の七海さん、孫の結衣ちゃんも出てきます。</p>
@@ -596,8 +601,12 @@ const THEMES = {
 };
 
 // 登場人物。紹介は都合さんの目から。役どころ・年の差・口ぐせは キャラクター設定.md と各話の台本のとおり
-// 似顔絵は assets/cast/<key>.jpg（Codex依頼_登場人物の似顔絵8枚.md）。無いあいだは頭文字の丸を出す
+// 似顔絵は assets/cast/<key>.jpg。無いあいだは頭文字の丸を出す
 const CAST = [
+  { place: '僕', columns: 4, people: [
+    { key: 'tsugo', name: '都合さん', role: '主人公', color: '#2E4A7F', initial: '都',
+      desc: '僕は52歳の会社員。まだ断れずに引き受けることもあるけれど、自分の状況を伝える練習を続けています。', quote: '' },
+  ] },
   { place: '会社', people: [
     { key: 'katayama', name: '片山課長', role: '上司', color: '#4A3566', initial: '片',
       desc: '僕の上司。四つ年下で、怒鳴らない日のほうが少ない。', quote: '言い訳するな！' },
@@ -624,7 +633,7 @@ const CAST = [
 
 function renderCast() {
   document.querySelector('[data-slot="cast"]').replaceChildren(...CAST.map(group =>
-    el('div', { class: 'cast-group', style: `--n:${group.people.length}` },
+    el('div', { class: 'cast-group', style: `--n:${group.columns ?? group.people.length}` },
       el('h3', { class: 'cast__group' }, group.place),
       el('ul', { class: 'cast' + (group.people.length === 1 ? ' cast--solo' : '') }, ...group.people.map(p => {
         const face = el('figure', { class: 'person__face', style: `--c:${p.color}` });
@@ -632,7 +641,9 @@ function renderCast() {
         img.addEventListener('error', () => face.classList.add('is-fallback'));
         img.src = `assets/cast/${p.key}.jpg`;
         face.append(img, el('span', { 'aria-hidden': 'true' }, p.initial));
-        return el('li', { class: 'person' }, face,
+        // 1人だけの段を4列ぶん使う（主人公の都合さん）ときは、横幅いっぱいのカードにする
+        const wide = group.columns && group.people.length < group.columns;
+        return el('li', { class: 'person' + (wide ? ' person--wide' : '') }, face,
           el('div', {},
             el('p', { class: 'person__name' }, p.name, el('span', { class: 'person__role' }, p.role)),
             el('p', { class: 'person__desc' }, p.desc),
