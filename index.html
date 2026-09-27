@@ -181,6 +181,23 @@ a{color:inherit}
 .peek__warn{margin-top:1rem;font-size:.95rem;color:var(--ink-soft)}
 .peek__warn a{color:var(--redpen);font-weight:700}
 
+/* 5話までの予告 */
+.series{list-style:none;padding:0;margin:1.8rem 0 0;display:grid;gap:.8rem}
+.ep{position:relative;display:grid;grid-template-columns:clamp(60px,17vw,84px) minmax(0,1fr);gap:.95rem;align-items:start;padding:.9rem;background:#fff;border:1px solid var(--edge);border-radius:8px}
+.ep.is-current{border-color:var(--dawn);box-shadow:0 0 0 2px var(--dawn-soft)}
+.ep .cover{box-shadow:0 6px 14px -8px rgba(18,32,59,.55);font-size:.5rem}
+.ep__no{font-family:var(--f-mincho);font-weight:900;font-size:1rem;color:var(--night-2);letter-spacing:.06em}
+.ep__badge{display:inline-block;margin-left:.5rem;font-family:var(--f-body);font-size:.72rem;font-weight:700;letter-spacing:.04em;padding:0 .55rem;border-radius:999px;background:var(--dawn-soft);color:var(--night);vertical-align:.12em}
+.ep__theme{margin-top:.15rem;font-weight:700;line-height:1.55}
+.ep__gifts{list-style:none;margin:.4rem 0 0;padding:0;font-size:.86rem;line-height:1.6;color:var(--ink-soft)}
+.ep__gifts li{padding-left:1em;text-indent:-1em}
+.ep__gifts li::before{content:"・"}
+@media (min-width:960px){
+  .series{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .ep{grid-template-columns:1fr;align-content:start}
+  .ep .cover{width:72%;justify-self:center;font-size:.62rem}
+}
+
 /* 受け取り方 */
 .steps{list-style:none;counter-reset:s;padding:0;margin:1.7rem 0 0;display:grid;gap:1.05rem}
 .steps li{counter-increment:s;display:grid;grid-template-columns:2.7rem 1fr;gap:.95rem;align-items:center;font-size:1.08rem}
@@ -202,7 +219,7 @@ a{color:inherit}
 .qa dd{margin:.35rem 0 0;color:var(--ink-soft)}
 
 /* 相談先 */
-.help{background:var(--mist);border:1px solid var(--edge);border-radius:8px;padding:clamp(1.2rem,4vw,2rem)}
+.help{background:#fff;border:1px solid var(--edge);border-radius:8px;padding:clamp(1.2rem,4vw,2rem)}
 .help__h{font-size:1.3rem}
 .help>p{margin-top:.6rem}
 .help__list{list-style:none;padding:0;margin:1rem 0 0;display:grid;gap:.9rem}
@@ -336,7 +353,16 @@ a{color:inherit}
     </div>
   </section>
 
-  <section class="sec sec--mist" id="uketori">
+  <section class="sec sec--mist" id="series">
+    <div class="wrap">
+      <p class="kicker">この先の特典</p>
+      <h2 class="sec__h">LINE特典は、5話まで用意しています。</h2>
+      <p class="sec__sub">都合さんの話は、この先も続きます。回ごとに、その話に合わせた特典を2つずつ。新しい話が出たら、LINEでお知らせします。</p>
+      <ol class="series" data-slot="series"></ol>
+    </div>
+  </section>
+
+  <section class="sec" id="uketori">
     <div class="wrap narrow">
       <h2 class="sec__h">受け取り方</h2>
       <ol class="steps" data-slot="steps"></ol>
@@ -353,7 +379,7 @@ a{color:inherit}
     </div>
   </section>
 
-  <section class="sec" id="qa">
+  <section class="sec sec--mist" id="qa">
     <div class="wrap narrow">
       <h2 class="sec__h">よくある質問</h2>
       <dl class="qa">
@@ -365,7 +391,7 @@ a{color:inherit}
     </div>
   </section>
 
-  <section class="sec" id="soudan" style="padding-top:0">
+  <section class="sec sec--mist" id="soudan" style="padding-top:0">
     <div class="wrap narrow">
       <div class="help">
         <h2 class="help__h">つらさが強いときは、先にこちらへ</h2>
@@ -500,6 +526,15 @@ const EPISODES = {
 
 const STAIR_COLORS = ['var(--s1)', 'var(--s2)', 'var(--s3)', 'var(--s4)', 'var(--s5)'];
 
+// 「LINE特典は、5話まで」の予告に出す、各話のひとこと（動画のタイトルは変わることがあるので、中身の短い言い方にしてある）
+const THEMES = {
+  1: '壊れる前に出る、口ぐせのサイン',
+  2: '優しいのに、軽く見られる理由',
+  3: '賢い人が、しないこと',
+  4: '嫌な人に、振り回されない',
+  5: '心と体の、危険サイン',
+};
+
 function pickEpisode() {
   let n = null;
   try { n = new URLSearchParams(location.search).get('ep'); } catch (e) {}
@@ -520,10 +555,10 @@ function el(tag, attrs, ...kids) {
 }
 
 // 表紙。画像がまだ無いときは、文字だけの仮の表紙に切り替わる
-function cover(gift, extraClass) {
+function cover(gift, extraClass, lazy) {
   const [first, second] = gift.name.split('・');
   const fig = el('figure', { class: 'cover ' + (extraClass || '') });
-  const img = el('img', { alt: gift.name + 'の表紙', width: '600', height: '900' });
+  const img = el('img', Object.assign({ alt: gift.name + 'の表紙', width: '600', height: '900' }, lazy ? { loading: 'lazy' } : {}));
   img.addEventListener('error', () => fig.classList.add('is-fallback'));
   img.src = gift.img;
   const title = el('span', { class: 'cover__title' }, first, second ? el('span', {}, second) : null);
@@ -569,6 +604,17 @@ function render(n) {
     el('p', { class: 'peek__sub' }, pk.title),
     el('ol', { class: 'rows' + (pk.stairs ? ' rows--stairs' : '') }, ...rows),
     warn);
+
+  document.querySelector('[data-slot="series"]').replaceChildren(...Object.keys(EPISODES).map(k => {
+    const e = EPISODES[k];
+    const current = Number(k) === n;
+    return el('li', { class: 'ep' + (current ? ' is-current' : '') },
+      cover(e.gifts[0], '', true),
+      el('div', {},
+        el('p', { class: 'ep__no' }, `${k}話`, current ? el('span', { class: 'ep__badge' }, 'この動画の特典') : null),
+        el('p', { class: 'ep__theme' }, THEMES[k]),
+        el('ul', { class: 'ep__gifts' }, ...e.gifts.map(g => el('li', {}, g.name)))));
+  }));
 
   const steps = ['下のボタンを押して、LINEを友だち追加します。'];
   const kwStep = document.createDocumentFragment();
