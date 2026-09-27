@@ -150,6 +150,34 @@ a{color:inherit}
 .frame p+p{margin-top:.2rem;font-size:1rem}
 .story__close{margin-top:2.2rem;max-width:38em;font-size:1.08rem}
 
+/* 登場人物 */
+#cast{border-top:1px solid var(--edge)}
+#cast .kicker{padding-top:clamp(2.4rem,6vw,3.6rem)}
+.cast-groups{display:grid;gap:1.8rem;margin-top:1.8rem}
+.cast__group{font-size:1.05rem;display:flex;align-items:center;gap:.7rem;color:var(--night-2)}
+.cast__group::after{content:"";flex:1;height:1px;background:var(--rule)}
+.cast{list-style:none;margin:.9rem 0 0;padding:0;display:grid;gap:.8rem}
+@media (min-width:640px){.cast{grid-template-columns:repeat(2,minmax(0,1fr))}.cast--solo{grid-template-columns:1fr}}
+/* PCでは4列の中に、会社（4人）→ 喫茶店（1人）＋家（3人）と並べる */
+@media (min-width:960px){
+  .cast-groups{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:.8rem}
+  .cast-group{grid-column:span var(--n)}
+  .cast,.cast--solo{grid-template-columns:repeat(var(--n),minmax(0,1fr))}
+}
+.person{display:grid;grid-template-columns:76px minmax(0,1fr);gap:.9rem;align-items:start;padding:1rem;background:#fff;border:1px solid var(--edge);border-radius:8px}
+@media (min-width:960px){.person{grid-template-columns:1fr;justify-items:start}}
+.person__face{position:relative;width:76px;height:76px;margin:0;border-radius:50%;overflow:hidden;background:var(--c,var(--night-2));box-shadow:0 0 0 3px #fff,0 0 0 4px var(--edge)}
+@media (min-width:960px){.person__face{width:92px;height:92px}}
+.person__face img{width:100%;height:100%;object-fit:cover}
+.person__face span{display:none;place-items:center;width:100%;height:100%;color:#fff;font-family:var(--f-mincho);font-weight:900;font-size:1.7rem}
+.person__face.is-fallback img{display:none}
+.person__face.is-fallback span{display:grid}
+.person__name{font-family:var(--f-mincho);font-weight:700;font-size:1.12rem;line-height:1.4}
+.person__role{display:inline-block;margin-left:.5rem;font-family:var(--f-body);font-size:.74rem;font-weight:700;letter-spacing:.04em;padding:0 .55rem;border-radius:999px;background:var(--mist);color:var(--ink-soft);vertical-align:.15em}
+.person__desc{margin-top:.35rem;font-size:.95rem;line-height:1.75}
+.person__quote{margin-top:.45rem;font-family:var(--f-hand);font-weight:600;font-size:.98rem;line-height:1.6;color:var(--night-2)}
+.cast__more{margin-top:1.2rem;font-size:.92rem;color:var(--ink-soft)}
+
 /* 特典 */
 .gifts{display:grid;gap:1.3rem;margin-top:1.9rem}
 @media (min-width:960px){.gifts{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.gift{grid-template-columns:minmax(0,38%) minmax(0,1fr)}}
@@ -364,6 +392,16 @@ a{color:inherit}
     </div>
   </section>
 
+  <section class="sec sec--mist" id="cast" style="padding-top:0">
+    <div class="wrap">
+      <p class="kicker">登場人物</p>
+      <h2 class="sec__h">僕のまわりの人たち</h2>
+      <p class="sec__sub">会社と、帰り道の喫茶店と、家。動画には、この人たちが出てきます。</p>
+      <div class="cast-groups" data-slot="cast"></div>
+      <p class="cast__more">家族はほかに、結婚して家を出た長女の美咲さん、一人暮らしの次女の七海さん、孫の結衣ちゃんも出てきます。</p>
+    </div>
+  </section>
+
   <section class="sec" id="tokuten">
     <div class="wrap">
       <p class="kicker">LINEでお渡しするもの</p>
@@ -557,6 +595,51 @@ const THEMES = {
   5: '心と体の、危険サイン',
 };
 
+// 登場人物。紹介は都合さんの目から。役どころ・年の差・口ぐせは キャラクター設定.md と各話の台本のとおり
+// 似顔絵は assets/cast/<key>.jpg（Codex依頼_登場人物の似顔絵8枚.md）。無いあいだは頭文字の丸を出す
+const CAST = [
+  { place: '会社', people: [
+    { key: 'katayama', name: '片山課長', role: '上司', color: '#4A3566', initial: '片',
+      desc: '僕の上司。四つ年下で、怒鳴らない日のほうが少ない。', quote: '言い訳するな！' },
+    { key: 'hayakawa', name: '早川さん', role: '主任', color: '#3B3350', initial: '早',
+      desc: '隣の席の主任。僕より十三も下。課長の前でだけ、やたらと声が大きい。', quote: '都合さん、それはちょっと考えが甘いですよ' },
+    { key: 'kashiwagi', name: '柏木さん', role: '営業企画部', color: '#56606E', initial: '柏',
+      desc: '六つ上のベテラン。怒った顔を誰も見たことがないのに、誰からも軽く扱われない人。', quote: '都合さん、全部を一人で抱えなくていいんですよ' },
+    { key: 'saeki', name: '佐伯さん', role: '同僚', color: '#A48E74', initial: '佐',
+      desc: '人の変化に、いちばん先に気づいてくれる同僚。', quote: '都合さん、大丈夫ですか？' },
+  ] },
+  { place: '帰り道の喫茶店', people: [
+    { key: 'onodera', name: '小野寺さん', role: 'メンター', color: '#2E2A2B', initial: '小',
+      desc: '黒いハットに、口元の大きな笑み。いつの間にか現れて、僕の話を最後まで聞いてくれる。', quote: '小さく変われば大丈夫です' },
+  ] },
+  { place: '家', people: [
+    { key: 'keiko', name: '恵子さん', role: '妻', color: '#2E4A7F', initial: '恵',
+      desc: 'はっきり物を言うけれど、いちばん僕の体を気にかけてくれる。', quote: '無理しすぎじゃない？' },
+    { key: 'hinata', name: 'ひなたさん', role: '三女', color: '#C9962A', initial: 'ひ',
+      desc: '一緒に暮らしている三女。家の空気を明るくしてくれる。', quote: 'お父さん、おかえり！' },
+    { key: 'taeko', name: 'たえこ', role: '飼い犬', color: '#B97F45', initial: 'た',
+      desc: 'うちのトイプードル。僕が落ちこんでいると、そっとそばに寄ってくる。', quote: '' },
+  ] },
+];
+
+function renderCast() {
+  document.querySelector('[data-slot="cast"]').replaceChildren(...CAST.map(group =>
+    el('div', { class: 'cast-group', style: `--n:${group.people.length}` },
+      el('h3', { class: 'cast__group' }, group.place),
+      el('ul', { class: 'cast' + (group.people.length === 1 ? ' cast--solo' : '') }, ...group.people.map(p => {
+        const face = el('figure', { class: 'person__face', style: `--c:${p.color}` });
+        const img = el('img', { alt: p.name + 'のイラスト', width: '360', height: '360', loading: 'lazy' });
+        img.addEventListener('error', () => face.classList.add('is-fallback'));
+        img.src = `assets/cast/${p.key}.jpg`;
+        face.append(img, el('span', { 'aria-hidden': 'true' }, p.initial));
+        return el('li', { class: 'person' }, face,
+          el('div', {},
+            el('p', { class: 'person__name' }, p.name, el('span', { class: 'person__role' }, p.role)),
+            el('p', { class: 'person__desc' }, p.desc),
+            p.quote ? el('p', { class: 'person__quote' }, `「${p.quote}」`) : null));
+      })))));
+}
+
 function pickEpisode() {
   let n = null;
   try { n = new URLSearchParams(location.search).get('ep'); } catch (e) {}
@@ -719,6 +802,7 @@ function imageExists(src) {
   return new Promise(resolve => { const img = new Image(); img.onload = () => resolve(true); img.onerror = () => resolve(false); img.src = src; });
 }
 
+renderCast();
 render(currentEp = pickEpisode());
 window.addEventListener('hashchange', () => render(currentEp = pickEpisode()));
 
