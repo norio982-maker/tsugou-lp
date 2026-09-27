@@ -73,10 +73,24 @@ a{color:inherit}
 .eyebrow{font-size:.85rem;font-weight:700;letter-spacing:.2em;color:var(--dawn);margin-bottom:.9rem}
 .hero__q{font-size:clamp(2rem,7.2vw,3.35rem);font-weight:900;line-height:1.32;letter-spacing:.03em}
 .hero__lead{margin-top:1.2rem;max-width:32em;color:var(--on-night-soft);font-size:1.05rem}
-.hero__covers{grid-area:covers;position:relative;justify-self:center;width:min(100%,300px);aspect-ratio:1/1}
+.hero__covers{grid-area:covers;justify-self:center;width:min(100%,300px);min-width:0;display:grid;grid-template-columns:minmax(0,1fr);gap:.45rem}
+/* 表紙のスライド（1話〜5話）。スマホは指で横に動かせる */
+.slides{display:flex;width:100%;min-width:0;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-block:10px 18px;border-radius:8px}
+.slides::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:center;display:grid;place-items:center}
+.slide__art{position:relative;width:92%;aspect-ratio:1/1}
+.slides__cap{text-align:center;font-size:.92rem;font-weight:700;color:var(--on-night-soft)}
+.slides__cap b{color:var(--dawn)}
+.slides__nav{display:flex;align-items:center;justify-content:center;gap:.8rem}
+.slides__step{all:unset;box-sizing:border-box;display:grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(232,182,76,.55);color:var(--dawn);font-size:1.5rem;line-height:1;cursor:pointer}
+.slides__step:hover{background:rgba(232,182,76,.14)}
+.slides__dots{display:flex;align-items:center;gap:.45rem}
+.slides__dot{all:unset;box-sizing:border-box;width:.7rem;height:.7rem;border-radius:999px;background:rgba(197,204,219,.35);cursor:pointer;transition:width .2s}
+.slides__dot[aria-current="true"]{width:1.5rem;background:var(--dawn)}
+.slides__step:focus-visible,.slides__dot:focus-visible,.slides:focus-visible{outline:3px solid var(--dawn);outline-offset:3px}
 .hero .cta{grid-area:cta}
 @media (min-width:820px){
-  .hero__in{grid-template-columns:1.12fr .88fr;grid-template-areas:"text covers" "cta covers";column-gap:3.2rem;row-gap:2rem;align-items:center;padding-block:4.2rem 4.8rem}
+  .hero__in{grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);grid-template-areas:"text covers" "cta covers";column-gap:3.2rem;row-gap:2rem;align-items:center;padding-block:4.2rem 4.8rem}
   .hero__covers{width:min(100%,430px)}
   .hero .cta{align-self:start}
 }
@@ -689,6 +703,63 @@ function cover(gift, extraClass, lazy) {
   return fig;
 }
 
+// いちばん上の表紙：1話〜5話をスライドで切り替える。最初はいま見ている回。
+// 触るまでは5秒ごとに次の回へ送り、ボタン・点・スワイプ・キーで触ったら止める（動きを減らす設定の人は送らない）
+let heroTimer = null;
+function renderHeroSlider(n) {
+  const keys = Object.keys(EPISODES).map(Number);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const track = el('div', { class: 'slides', tabindex: '0', 'aria-roledescription': 'カルーセル', 'aria-label': '1話〜5話の特典の表紙' });
+  keys.forEach(k => {
+    const e = EPISODES[k];
+    track.append(el('div', { class: 'slide', role: 'group', 'aria-roledescription': 'スライド', 'aria-label': `${k}話の特典` },
+      el('div', { class: 'slide__art' }, cover(e.gifts[1], 'cover--b', k !== n), cover(e.gifts[0], 'cover--a', k !== n))));
+  });
+  const cap = el('p', { class: 'slides__cap', 'aria-live': 'polite' });
+  const dots = keys.map(k => el('button', { class: 'slides__dot', type: 'button', 'aria-label': `${k}話の特典を見る` }));
+  const prev = el('button', { class: 'slides__step', type: 'button', 'aria-label': '前の話の特典' }, '‹');
+  const next = el('button', { class: 'slides__step', type: 'button', 'aria-label': '次の話の特典' }, '›');
+  let index = keys.indexOf(n);
+
+  const mark = () => {
+    const k = keys[index];
+    cap.replaceChildren(k === n ? el('b', {}, `この動画の特典（${k}話）`) : `${k}話の特典`);
+    dots.forEach((d, i) => d.setAttribute('aria-current', i === index ? 'true' : 'false'));
+  };
+  const show = (i, smooth) => {
+    index = (i + keys.length) % keys.length;
+    track.scrollTo({ left: index * track.clientWidth, behavior: smooth && !reduce ? 'smooth' : 'auto' });
+    mark();
+  };
+  const stopAuto = () => { clearInterval(heroTimer); heroTimer = null; };
+
+  prev.addEventListener('click', () => { stopAuto(); show(index - 1, true); });
+  next.addEventListener('click', () => { stopAuto(); show(index + 1, true); });
+  dots.forEach((d, i) => d.addEventListener('click', () => { stopAuto(); show(i, true); }));
+  ['pointerdown', 'touchstart', 'wheel'].forEach(t => track.addEventListener(t, stopAuto, { passive: true }));
+  track.addEventListener('keydown', e => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault();
+    stopAuto();
+    show(index + (e.key === 'ArrowRight' ? 1 : -1), true);
+  });
+  let frame = 0;
+  track.addEventListener('scroll', () => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(() => {
+      const i = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+      if (i !== index && i >= 0 && i < keys.length) { index = i; mark(); }
+    });
+  }, { passive: true });
+
+  document.querySelector('[data-slot="heroCovers"]').replaceChildren(track, cap,
+    el('div', { class: 'slides__nav' }, prev, el('div', { class: 'slides__dots' }, ...dots), next));
+  mark();
+  requestAnimationFrame(() => show(index, false));
+  stopAuto();
+  if (!reduce) heroTimer = setInterval(() => { if (!document.hidden) show(index + 1, true); }, 5000);
+}
+
 function howText(ep) {
   const p = document.createDocumentFragment();
   if (ep.keyword) p.append('無料です。友だち追加のあと、トークで', el('span', { class: 'kw' }, ep.keyword), 'と送ると届きます。');
@@ -703,7 +774,7 @@ function render(n) {
   document.querySelector('[data-slot="before"]').textContent = ep.before;
   document.querySelectorAll('[data-slot="how"]').forEach(node => node.replaceChildren(howText(ep)));
 
-  document.querySelector('[data-slot="heroCovers"]').replaceChildren(cover(ep.gifts[1], 'cover--b'), cover(ep.gifts[0], 'cover--a'));
+  renderHeroSlider(n);
 
   const tags = [['まず開くのはこちら', 'gift__tag'], ['あわせて使う', 'gift__tag gift__tag--sub']];
   document.querySelector('[data-slot="gifts"]').replaceChildren(...ep.gifts.map((g, i) =>
@@ -886,10 +957,11 @@ checks.forEach(b => b.addEventListener('click', () => {
 const bar = document.getElementById('bar');
 if ('IntersectionObserver' in window) {
   const seen = new Set();
+  // ボタンの端が少し見えているだけでは押しにくいので、6割以上見えているときだけ「見えている」とみなす
   const io = new IntersectionObserver(entries => {
-    for (const e of entries) e.isIntersecting ? seen.add(e.target) : seen.delete(e.target);
+    for (const e of entries) e.intersectionRatio >= 0.6 ? seen.add(e.target) : seen.delete(e.target);
     bar.hidden = seen.size > 0;
-  });
+  }, { threshold: [0, 0.6, 1] });
   ['ctaHero', 'ctaMid', 'ctaFinal'].forEach(id => io.observe(document.getElementById(id)));
 }
 </script>
