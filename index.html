@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>都合さんからのプレゼント</title>
+<title>都合さんの逆転ノート</title>
 <meta name="description" content="YouTube「都合さんの逆転ノート」の動画でお話しした限界サインを、自分で確かめられるシートにしました。LINEの友だち追加で、無料でお渡しします。">
 <meta property="og:type" content="website">
-<meta property="og:title" content="都合さんからのプレゼント｜都合さんの逆転ノート">
+<meta property="og:title" content="都合さんの逆転ノート">
 <meta property="og:description" content="動画でお話しした5つの段を、自分で確かめられるシートにしました。LINEで無料でお渡しします。">
 <!-- 公開先：GitHub Pages（norio982-maker/tsugou-lp）。公開先を変えたら、この2行のURLも変える -->
 <meta property="og:url" content="https://norio982-maker.github.io/tsugou-lp/">
@@ -548,6 +548,23 @@ a{color:inherit}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
+// 開いたとき・再読み込みしたときは、いつもいちばん上から見せる（ブラウザが前に見ていた位置へ戻すのを止める）。
+// ページの中の場所を指したURL（#soudan など）で開いたときだけは、その場所へ行かせる。#ep2 などは回の切り替えなので上から
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+function toTop() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  if (id && !/^ep[1-9]$/.test(id) && document.getElementById(id)) return;
+  const html = document.documentElement;
+  html.style.scrollBehavior = 'auto'; // なめらかに動かさず、すぐ上へ
+  window.scrollTo(0, 0);
+  html.style.scrollBehavior = '';
+}
+toTop();
+// 前の見方の設定のまま、読み込みの終わりに位置を戻すブラウザもあるので、読み込み後にもう一度上へ（自分で動かし始めた人はそのまま）
+let movedByReader = false;
+['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(t => addEventListener(t, () => { movedByReader = true; }, { once: true, passive: true }));
+addEventListener('load', () => { if (!movedByReader) toTop(); });
+
 // ── ここだけ書き換えれば、ボタンとQRコードの行き先が全部変わる ──
 // 動画のQRと同じLINE登録URL（2026-09-25のCTA画像より）。LPからの登録を分けて数えたいときは ref=YouTube を配信ツールに登録した別の名前に変える
 const LINE_URL = 'https://liff.line.me/2009844800-B6WEn0vn?liffId=2009844800-B6WEn0vn&ref=YouTube';
