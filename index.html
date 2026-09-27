@@ -226,6 +226,17 @@ a{color:inherit}
 .foot a{color:var(--on-night)}
 .foot__c{margin-top:.6rem;font-size:.8rem}
 
+/* パソコンでボタンを押したときに出すQRコード */
+.qr-dialog{width:min(92vw,420px);border:0;border-radius:10px;padding:1.6rem 1.4rem 1.3rem;background:#fff;color:var(--ink);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.qr-dialog::backdrop{background:rgba(12,21,40,.62)}
+.qr-dialog h2{font-size:1.3rem}
+.qr-dialog p{margin-top:.6rem;font-size:.98rem;color:var(--ink-soft)}
+.qr-dialog .cta__note{color:var(--ink-soft)}
+.qr-dialog__code{display:flex;justify-content:center;margin:1.1rem auto .2rem;padding:10px;width:max-content;border:1px solid var(--edge);border-radius:8px}
+.qr-dialog__code img,.qr-dialog__code canvas{display:block;width:220px;height:220px}
+.qr-dialog__close{all:unset;box-sizing:border-box;display:block;margin:1.2rem auto 0;padding:.55rem 2.2rem;border-radius:999px;border:1px solid #B9C6D6;color:var(--night);font-weight:700;cursor:pointer}
+.qr-dialog__close:focus-visible{outline:3px solid var(--dawn);outline-offset:2px}
+
 /* スマホで下に出るボタン */
 .bar{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:.6rem var(--gutter) calc(.6rem + env(safe-area-inset-bottom,0px));background:rgba(12,21,40,.94);box-shadow:0 -8px 24px rgba(0,0,0,.2)}
 .bar .line-btn{width:100%;min-height:54px;font-size:1.05rem;box-shadow:0 3px 0 var(--line-deep)}
@@ -396,6 +407,14 @@ a{color:inherit}
   <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで特典を受け取る</a>
 </div>
 
+<dialog class="qr-dialog" id="qrDialog" aria-labelledby="qrDialogTitle">
+  <h2 id="qrDialogTitle">スマホで読み取ってください</h2>
+  <p>LINEの友だち追加は、スマホのLINEで行います。スマホのカメラで、このQRコードを読み取ってください。</p>
+  <div class="qr-dialog__code" id="qrLarge"></div>
+  <p class="cta__note" data-slot="how">無料です。友だち追加のあと、トークで<span class="kw">特典</span>と送ると届きます。</p>
+  <button type="button" class="qr-dialog__close" id="qrClose">閉じる</button>
+</dialog>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 // ── ここだけ書き換えれば、ボタンとQRコードの行き先が全部変わる ──
@@ -565,13 +584,36 @@ function render(n) {
 render(pickEpisode());
 window.addEventListener('hashchange', () => render(pickEpisode()));
 
-document.querySelectorAll('[data-line]').forEach(a => { a.href = LINE_URL; });
+// LINE登録のURL（LIFF）はスマホのLINEアプリで開く前提。パソコンのブラウザで開くと、
+// 登録後にLINE Harnessが飛ばす line.me/R/… がスマホ専用のため、LINEのトップページに行き着いてしまう。
+// そこでパソコンでは、ボタンを押したらLINEへ飛ばさず、スマホで読み取るQRコードを出す。
+const IS_PHONE = /iPhone|iPod|iPad|Android/i.test(navigator.userAgent)
+  || (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent)); // iPadOSはMacと名乗る
+const qrDialog = document.getElementById('qrDialog');
 
-// QRコード（パソコンで見ている人向け）。読み込めなかったら枠ごと隠す
-try {
-  new QRCode(document.getElementById('qr'), { text: LINE_URL, width: 264, height: 264, colorDark: '#12203B', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
-  document.getElementById('qr').removeAttribute('title');
-} catch (e) { document.getElementById('qrBox').hidden = true; }
+function makeQR(id, size) {
+  const box = document.getElementById(id);
+  if (box.childElementCount) return true;
+  try {
+    new QRCode(box, { text: LINE_URL, width: size, height: size, colorDark: '#12203B', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+    box.removeAttribute('title');
+    return true;
+  } catch (e) { return false; }
+}
+
+document.querySelectorAll('[data-line]').forEach(a => {
+  a.href = LINE_URL;
+  a.addEventListener('click', e => {
+    if (IS_PHONE || typeof qrDialog.showModal !== 'function' || !makeQR('qrLarge', 440)) return;
+    e.preventDefault();
+    qrDialog.showModal();
+  });
+});
+document.getElementById('qrClose').addEventListener('click', () => qrDialog.close());
+qrDialog.addEventListener('click', e => { if (e.target === qrDialog) qrDialog.close(); });
+
+// 受け取り方の欄のQRコード（パソコンで見ている人向け）。読み込めなかったら枠ごと隠す
+if (!makeQR('qr', 264)) document.getElementById('qrBox').hidden = true;
 
 // こんなこと、ありませんか：押すと赤ペンの印
 const checks = [...document.querySelectorAll('.check')];
