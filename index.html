@@ -177,14 +177,14 @@ a{color:inherit}
 .cast__group::after{content:"";flex:1;height:1px;background:var(--rule)}
 .cast{list-style:none;margin:.9rem 0 0;padding:0;display:grid;gap:.8rem}
 @media (min-width:640px){.cast{grid-template-columns:repeat(2,minmax(0,1fr))}.cast--solo{grid-template-columns:1fr}}
-/* PCでは4列の中に、僕（1人）→会社（4人）→喫茶店（1人）＋家（3人）と並べる */
+/* PCでは4列の中に、僕（1人）→会社（6人を3人ずつ2段）→喫茶店（1人）＋家（3人）と並べる。--n は使う列の数、--cols は段の中の人数 */
 @media (min-width:960px){
   .cast-groups{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:.8rem}
   .cast-group{grid-column:span var(--n)}
-  .cast,.cast--solo{grid-template-columns:repeat(var(--n),minmax(0,1fr))}
+  .cast,.cast--solo{grid-template-columns:repeat(var(--cols,var(--n)),minmax(0,1fr))}
 }
 .person{display:grid;grid-template-columns:76px minmax(0,1fr);gap:.9rem;align-items:start;padding:1rem;background:#fff;border:1px solid var(--edge);border-radius:8px}
-@media (min-width:960px){.person{grid-template-columns:1fr;justify-items:start}}
+@media (min-width:960px){.person{grid-template-columns:1fr;justify-items:start;align-content:start}}
 .person__face{position:relative;width:76px;height:76px;margin:0;border-radius:50%;overflow:hidden;background:var(--c,var(--night-2));box-shadow:0 0 0 3px #fff,0 0 0 4px var(--edge)}
 @media (min-width:960px){.person__face{width:92px;height:92px}}
 .person__face img{width:100%;height:100%;object-fit:cover}
@@ -633,7 +633,8 @@ const CAST = [
     { key: 'tsugo', name: '都合さん', role: '主人公', color: '#2E4A7F', initial: '都',
       desc: 'まだ断れずに引き受けることもあるけれど、自分の状況を伝える練習を続けています。', quote: '' },
   ] },
-  { place: '会社', people: [
+  // 6人なので、PCでは横幅いっぱいに3人ずつ2段で並べる
+  { place: '会社', columns: 4, perRow: 3, people: [
     { key: 'katayama', name: '片山課長', role: '上司', color: '#4A3566', initial: '片',
       desc: '僕の上司。四つ年下で、怒鳴らない日のほうが少ない。', quote: '言い訳するな！' },
     { key: 'hayakawa', name: '早川さん', role: '主任', color: '#3B3350', initial: '早',
@@ -642,6 +643,11 @@ const CAST = [
       desc: '六つ上のベテラン。怒った顔を誰も見たことがないのに、誰からも軽く扱われない人。', quote: '都合さん、全部を一人で抱えなくていいんですよ' },
     { key: 'saeki', name: '佐伯さん', role: '同僚', color: '#A48E74', initial: '佐',
       desc: '人の変化に、いちばん先に気づいてくれる同僚。', quote: '都合さん、大丈夫ですか？' },
+    // 同僚と後輩は、台本でも設定でも名前が無い（会社の同僚たちのシートの男性B・男性A）
+    { key: 'doryo', name: '同僚', role: '同じ部署', color: '#557A9E', initial: '同',
+      desc: '人の口ぐせに、よく気づく人。最近は資料を抱えて、僕のところへ確認を頼みに来る。', quote: '都合さん、この資料、穴がないか見てもらえませんか' },
+    { key: 'kohai', name: '後輩', role: '同じ部署の若手', color: '#34466B', initial: '後',
+      desc: '柏木さんには、まっすぐ目を見て相談するのに、僕のところには、書類を置いてすぐに帰っていく。', quote: '都合さんって優しいから、何を頼んでも大丈夫だよね' },
   ] },
   { place: '帰り道の喫茶店', people: [
     { key: 'onodera', name: '小野寺さん', role: 'メンター', color: '#2E2A2B', initial: '小',
@@ -659,7 +665,7 @@ const CAST = [
 
 function renderCast() {
   document.querySelector('[data-slot="cast"]').replaceChildren(...CAST.map(group =>
-    el('div', { class: 'cast-group', style: `--n:${group.columns ?? group.people.length}` },
+    el('div', { class: 'cast-group', style: `--n:${group.columns ?? group.people.length};--cols:${group.perRow ?? group.columns ?? group.people.length}` },
       el('h3', { class: 'cast__group' }, group.place),
       el('ul', { class: 'cast' + (group.people.length === 1 ? ' cast--solo' : '') }, ...group.people.map(p => {
         const face = el('figure', { class: 'person__face', style: `--c:${p.color}` });
