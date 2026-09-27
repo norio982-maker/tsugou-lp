@@ -70,8 +70,10 @@ a{color:inherit}
 @media (min-width:820px){.hero__path{display:block}}
 .hero__in{position:relative;display:grid;grid-template-areas:"text" "covers" "cta";gap:1.8rem;padding-block:2.6rem 3rem}
 .hero__text{grid-area:text}
-.eyebrow{font-size:.85rem;font-weight:700;letter-spacing:.2em;color:var(--dawn);margin-bottom:.9rem}
-.hero__q{font-size:clamp(2rem,7.2vw,3.35rem);font-weight:900;line-height:1.32;letter-spacing:.03em}
+/* 見出しは句読点を付けず、EPISODES の question の「\n」で言葉の切れ目ごとに改行する */
+.hero__q{font-size:clamp(2rem,7.2vw,3.35rem);font-weight:900;line-height:1.32;letter-spacing:.03em;white-space:pre-line}
+/* 小さいスマホ（幅320px）でも、いちばん長い行（9字）が1行に入る大きさにする */
+@media (max-width:359px){.hero__q{font-size:1.8rem}}
 .hero__lead{margin-top:1.2rem;max-width:32em;color:var(--on-night-soft);font-size:1.05rem}
 .hero__covers{grid-area:covers;justify-self:center;width:min(100%,300px);min-width:0;display:grid;grid-template-columns:minmax(0,1fr);gap:.45rem}
 /* 表紙のスライド（1話〜5話）。スマホは指で横に動かせる */
@@ -367,8 +369,7 @@ a{color:inherit}
     </svg>
     <div class="wrap hero__in">
       <div class="hero__text">
-        <p class="eyebrow">YouTubeを見てくださった方へ</p>
-        <h1 class="hero__q" data-slot="question">あなたは今、何段目ですか。</h1>
+        <h1 class="hero__q" data-slot="question">あなたは今<br>何段目ですか</h1>
         <p class="hero__lead"><span data-slot="lead">動画でお話しした5つの段を、自分で確かめられるシートにしました。</span><br>明日そのまま使える言葉と、2つセットでお渡しします。</p>
       </div>
       <div class="hero__covers" data-slot="heroCovers"></div>
@@ -555,7 +556,7 @@ const LINE_URL = 'https://liff.line.me/2009844800-B6WEn0vn?liffId=2009844800-B6W
 // 特典名と説明は、各回の台本のCTAと1文字も変えない。keyword は、登録後にトークで送る言葉（無い回は友だち追加だけで届く）。
 const EPISODES = {
   1: {
-    question: 'あなたは今、何段目ですか。',
+    question: 'あなたは今\n何段目ですか',
     lead: '動画でお話しした5つの段を、自分で確かめられるシートにしました。',
     keyword: '特典',
     before: '僕みたいに、5段目まで下りてしまう前に。',
@@ -570,7 +571,7 @@ const EPISODES = {
       warn: '5段目に当てはまるときは、ほかより先に' },
   },
   2: {
-    question: 'あなたは、どの違いでつまずいていますか。',
+    question: 'あなたは\nどの違いで\nつまずいていますか',
     lead: '動画でお話しした5つの違いを、1分で確かめられるシートにしました。',
     keyword: null,
     before: '僕みたいに、優しさを軽く見られたまま、何年も過ごしてしまう前に。',
@@ -584,7 +585,7 @@ const EPISODES = {
       rows: [['1つ目', '共感して終わる'], ['2つ目', '全部引き受ける'], ['3つ目', 'なんとなく決める'], ['4つ目', 'その場の空気で変わる'], ['5つ目', '謝って頼む・押しつける']] },
   },
   3: {
-    question: 'あなたは、どの落とし穴にはまりやすいですか。',
+    question: 'あなたは\nどの落とし穴に\nはまりやすいですか',
     lead: '動画でお話しした7つのことを、自分で確かめられるセルフチェックにしました。',
     keyword: null,
     before: '僕みたいに、頼られるようになったあとで、陰でそう思われてしまう前に。',
@@ -598,7 +599,7 @@ const EPISODES = {
       rows: [['1つ目', '「自分は間違えない」と思い込む'], ['2つ目', '大事な判断を勘だけで決める'], ['3つ目', '都合のいい証拠だけを集める'], ['4つ目', 'カッとして、そのまま言い返す'], ['5つ目', '寝不足のまま決める'], ['6つ目', '同時にこなすのを能力だと思う'], ['7つ目', 'できる人を演じて指摘をかわす']] },
   },
   4: {
-    question: 'あなたに足りない対処は、どれですか。',
+    question: 'あなたに足りない\n対処はどれですか',
     lead: '動画でお話しした7つの対処を、自分で確かめられる診断シートにしました。',
     keyword: null,
     before: '僕みたいに、家に帰ってからも、頭の中で戦い続けてしまう前に。',
@@ -612,7 +613,7 @@ const EPISODES = {
       rows: [['1つ目', '腹が立った瞬間に返す'], ['2つ目', '人柄を裁いて頭の中で戦う'], ['3つ目', '長く言い返す'], ['4つ目', '呼ばれるまま相手の土俵に出る'], ['5つ目', '一人で抱えて戦い続ける'], ['6つ目', '相手を家に連れて帰る'], ['7つ目', '会社の問題まで一人で背負う']] },
   },
   5: {
-    question: 'あなたに今、どのサインが出ていますか。',
+    question: 'あなたに今\nどのサインが\n出ていますか',
     lead: '動画でお話しした9つのサインを、自分で確かめられる診断シートにしました。',
     keyword: null,
     before: '僕みたいに、会社のデスクで涙が出るまで、サインを見過ごしてしまう前に。',
