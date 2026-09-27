@@ -199,8 +199,13 @@ a{color:inherit}
 @media (min-width:960px){.series__hero img{aspect-ratio:21/8}}
 .ep__scene{position:relative;margin:0}
 .ep__scene>img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px}
+.ep__scene-controls{display:flex;justify-content:center;align-items:center;gap:.65rem;margin-top:.4rem}
+.ep__scene-step{display:grid;place-items:center;width:2rem;height:2rem;padding:0;border:1px solid var(--edge);border-radius:50%;background:#fff;color:var(--night);font-size:1.35rem;line-height:1;cursor:pointer}
+.ep__scene-step:hover{background:var(--dawn-soft)}
+.ep__scene-count{min-width:2.6rem;text-align:center;color:var(--ink-soft);font-size:.8rem;font-variant-numeric:tabular-nums}
 .ep.has-scene{grid-template-columns:1fr;gap:.7rem;padding:.7rem .7rem .9rem}
 .ep.has-scene .cover{position:absolute;right:.5rem;bottom:-1.4rem;width:24%;font-size:.4rem;box-shadow:0 6px 14px -4px rgba(18,32,59,.6),0 0 0 2px #fff}
+.ep__scene.has-gallery .cover{bottom:2.4rem}
 .ep.has-scene .ep__no{padding-right:30%}
 @media (max-width:959px){
   .series.is-scenes{grid-auto-flow:column;grid-auto-columns:min(78%,320px);overflow-x:auto;scroll-snap-type:x mandatory;
@@ -635,16 +640,64 @@ function render(n) {
   document.querySelector('[data-slot="steps"]').replaceChildren(...steps.map(s => el('li', {}, el('span', {}, s))));
 }
 
-// 「LINE特典は、5話まで」の予告。場面の画像が5話分そろっていれば場面の絵に、1枚でも無ければ表紙だけの形にする
+// 「LINE特典は、5話まで」の予告。2〜5話は導入の5場面を順に切り替える
 const PREVIEW = {
-  1: ['assets/preview/01.jpg', '廊下のベンチで、うなだれる都合さん'],
-  2: ['assets/preview/02.jpg', '断ったのに、早川さんに書類の束を机へ置かれる都合さん'],
-  3: ['assets/preview/03.jpg', '給湯室の前で、同僚たちの話し声に足を止める都合さん'],
-  4: ['assets/preview/04.jpg', '夜中の二時過ぎ、布団の中で目が冴えている都合さん'],
-  5: ['assets/preview/05.jpg', '朝の玄関で、恵子さんから弁当を受け取る都合さん'],
+  1: [['assets/preview/01.jpg', '廊下のベンチで、うなだれる都合さん']],
+  2: [
+    ['assets/preview/02-1.jpg', 'コピー機の前で後輩たちの話し声を聞く都合さん'],
+    ['assets/preview/02-2.jpg', '書類の束を抱えて都合さんの席へ来る早川さん'],
+    ['assets/preview/02-3.jpg', '早川さんに断る言葉を伝える都合さん'],
+    ['assets/preview/02.jpg', '断ったのに、早川さんに書類の束を机へ置かれる都合さん'],
+    ['assets/preview/02-5.jpg', '机に残された書類を見て困る都合さん'],
+  ],
+  3: [
+    ['assets/preview/03-1.jpg', '早川さんから仕事の相談を受ける都合さん'],
+    ['assets/preview/03-2.jpg', '経験をもとに早川さんへ答える都合さん'],
+    ['assets/preview/03-3.jpg', '書類を持って午後の廊下を歩く都合さん'],
+    ['assets/preview/03.jpg', '給湯室の前で、同僚たちの話し声に足を止める都合さん'],
+    ['assets/preview/03-5.jpg', '会議室の柏木さんと話を聞く同僚を見つめる都合さん'],
+  ],
+  4: [
+    ['assets/preview/04-1.jpg', '会議で片山課長が机を叩く'],
+    ['assets/preview/04-2.jpg', '片山課長へ直すところを聞く都合さん'],
+    ['assets/preview/04-3.jpg', '佐伯さんが会議の話に静かに割って入る'],
+    ['assets/preview/04-4.jpg', '夜の寝室で考え続ける都合さん'],
+    ['assets/preview/04.jpg', '夜中の二時過ぎ、布団の中で目が冴えている都合さん'],
+  ],
+  5: [
+    ['assets/preview/05-1.jpg', '同僚から資料の確認を頼まれる都合さん'],
+    ['assets/preview/05-2.jpg', '同じ資料を何度も見直す都合さん'],
+    ['assets/preview/05-3.jpg', '朝の玄関で身支度をする都合さん'],
+    ['assets/preview/05-4.jpg', '弁当を持って都合さんを心配する恵子さん'],
+    ['assets/preview/05.jpg', '朝の玄関で、恵子さんから弁当を受け取る都合さん'],
+  ],
 };
+const sceneIndex = { 2: 0, 3: 0, 4: 0, 5: 0 };
 let currentEp = 1;
 let scenesReady = false;
+
+function sceneArt(k, gift) {
+  const frames = PREVIEW[k];
+  const index = sceneIndex[k] || 0;
+  const img = el('img', { src: frames[index][0], alt: frames[index][1], width: '960', height: '540', loading: 'lazy' });
+  const art = el('figure', { class: 'ep__scene' + (frames.length > 1 ? ' has-gallery' : '') }, img, cover(gift, '', true));
+  if (frames.length > 1) {
+    const count = el('span', { class: 'ep__scene-count', 'aria-live': 'polite' }, `${index + 1} / ${frames.length}`);
+    const prev = el('button', { class: 'ep__scene-step', type: 'button', 'aria-label': `${k}話の前の予告画像` }, '‹');
+    const next = el('button', { class: 'ep__scene-step', type: 'button', 'aria-label': `${k}話の次の予告画像` }, '›');
+    const show = delta => {
+      sceneIndex[k] = (sceneIndex[k] + delta + frames.length) % frames.length;
+      const [src, alt] = frames[sceneIndex[k]];
+      img.src = src;
+      img.alt = alt;
+      count.textContent = `${sceneIndex[k] + 1} / ${frames.length}`;
+    };
+    prev.addEventListener('click', () => show(-1));
+    next.addEventListener('click', () => show(1));
+    art.append(el('div', { class: 'ep__scene-controls' }, prev, count, next));
+  }
+  return art;
+}
 
 function renderSeries(n) {
   const list = document.querySelector('[data-slot="series"]');
@@ -652,9 +705,7 @@ function renderSeries(n) {
   list.replaceChildren(...Object.keys(EPISODES).map(k => {
     const e = EPISODES[k];
     const current = Number(k) === n;
-    const art = scenesReady
-      ? el('figure', { class: 'ep__scene' }, el('img', { src: PREVIEW[k][0], alt: PREVIEW[k][1], width: '960', height: '540', loading: 'lazy' }), cover(e.gifts[0], '', true))
-      : cover(e.gifts[0], '', true);
+    const art = scenesReady ? sceneArt(k, e.gifts[0]) : cover(e.gifts[0], '', true);
     return el('li', { class: 'ep' + (current ? ' is-current' : '') + (scenesReady ? ' has-scene' : '') },
       art,
       el('div', {},
@@ -671,7 +722,8 @@ function imageExists(src) {
 render(currentEp = pickEpisode());
 window.addEventListener('hashchange', () => render(currentEp = pickEpisode()));
 
-Promise.all(Object.values(PREVIEW).map(([src]) => imageExists(src))).then(found => {
+// 確かめるのは各話の最初の1枚だけ（全部だと開いた時点で約2MB読む）。2枚目以降は「›」を押したときに読む
+Promise.all(Object.values(PREVIEW).map(frames => imageExists(frames[0][0]))).then(found => {
   if (!found.every(Boolean)) return;
   scenesReady = true;
   renderSeries(currentEp);
