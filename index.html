@@ -115,6 +115,11 @@ a{color:inherit}
   .hero .cover--b{animation:rise .9s .15s ease-out both}
 }
 @keyframes rise{from{translate:0 16px}to{translate:0 0}}
+/* 表紙を切り替えたときに、見出しと説明が横から入ってくる（止まっているときは普通に見える） */
+@media (prefers-reduced-motion:no-preference){
+  .hero__text.is-sliding .hero__q,.hero__text.is-sliding .hero__lead{animation:textSlide .45s ease-out both}
+}
+@keyframes textSlide{from{opacity:0;translate:var(--from,28px) 0}to{opacity:1;translate:0 0}}
 
 /* ── LINEのボタン ── */
 .cta{display:grid;gap:.75rem;justify-items:start}
@@ -706,6 +711,31 @@ function cover(gift, extraClass, lazy) {
 // いちばん上の表紙：1話〜5話をスライドで切り替える。最初はいま見ている回。
 // 触るまでは5秒ごとに次の回へ送り、ボタン・点・スワイプ・キーで触ったら止める（動きを減らす設定の人は送らない）
 let heroTimer = null;
+let heroShownEp = null;
+
+// 見出し・説明・受け取り方の一文も、表示中の回に合わせて切り替える
+function setHeroText(k) {
+  const e = EPISODES[k];
+  document.querySelector('[data-slot="question"]').textContent = e.question;
+  document.querySelector('[data-slot="lead"]').textContent = e.lead;
+  document.querySelector('#ctaHero [data-slot="how"]').replaceChildren(howText(e));
+}
+// 回によって行数が違うので、いちばん長い回の高さを先に取っておく（5秒ごとにLINEボタンが上下しないように）
+function reserveHeroHeight() {
+  const parts = [document.querySelector('.hero__q'), document.querySelector('.hero__lead'), document.querySelector('#ctaHero [data-slot="how"]')];
+  parts.forEach(p => { p.style.minHeight = ''; });
+  const tallest = parts.map(() => 0);
+  Object.keys(EPISODES).forEach(k => {
+    setHeroText(k);
+    parts.forEach((p, i) => { tallest[i] = Math.max(tallest[i], p.offsetHeight); });
+  });
+  parts.forEach((p, i) => { p.style.minHeight = tallest[i] + 'px'; });
+  if (heroShownEp) setHeroText(heroShownEp);
+}
+let heroResize = 0;
+window.addEventListener('resize', () => { clearTimeout(heroResize); heroResize = setTimeout(reserveHeroHeight, 150); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(reserveHeroHeight);
+
 function renderHeroSlider(n) {
   const keys = Object.keys(EPISODES).map(Number);
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -721,10 +751,22 @@ function renderHeroSlider(n) {
   const next = el('button', { class: 'slides__step', type: 'button', 'aria-label': '次の話の特典' }, '›');
   let index = keys.indexOf(n);
 
+  const heroText = document.querySelector('.hero__text');
   const mark = () => {
     const k = keys[index];
     cap.replaceChildren(k === n ? el('b', {}, `この動画の特典（${k}話）`) : `${k}話の特典`);
     dots.forEach((d, i) => d.setAttribute('aria-current', i === index ? 'true' : 'false'));
+    if (heroShownEp === k) return;
+    const before = heroShownEp;
+    heroShownEp = k;
+    setHeroText(k);
+    if (before === null || reduce) return;
+    // 進む向きから入ってくる（5話→1話のように一周するときも「進む」）
+    const step = (keys.indexOf(k) - keys.indexOf(before) + keys.length) % keys.length;
+    heroText.style.setProperty('--from', step <= keys.length / 2 ? '28px' : '-28px');
+    heroText.classList.remove('is-sliding');
+    void heroText.offsetWidth;
+    heroText.classList.add('is-sliding');
   };
   const show = (i, smooth) => {
     index = (i + keys.length) % keys.length;
@@ -754,7 +796,10 @@ function renderHeroSlider(n) {
 
   document.querySelector('[data-slot="heroCovers"]').replaceChildren(track, cap,
     el('div', { class: 'slides__nav' }, prev, el('div', { class: 'slides__dots' }, ...dots), next));
+  heroShownEp = null;
+  heroText.classList.remove('is-sliding');
   mark();
+  reserveHeroHeight();
   requestAnimationFrame(() => show(index, false));
   stopAuto();
   if (!reduce) heroTimer = setInterval(() => { if (!document.hidden) show(index + 1, true); }, 5000);
