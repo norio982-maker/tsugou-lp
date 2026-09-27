@@ -177,7 +177,7 @@ a{color:inherit}
 .cast__group::after{content:"";flex:1;height:1px;background:var(--rule)}
 .cast{list-style:none;margin:.9rem 0 0;padding:0;display:grid;gap:.8rem}
 @media (min-width:640px){.cast{grid-template-columns:repeat(2,minmax(0,1fr))}.cast--solo{grid-template-columns:1fr}}
-/* PCでは4列の中に、僕（1人）→会社（6人を3人ずつ2段）→喫茶店（1人）＋家（3人）と並べる。--n は使う列の数、--cols は段の中の人数 */
+/* PCでは4列の中に、僕（1人）→会社（7人を4人＋3人）→喫茶店（1人）＋家（3人）と並べる。--n は使う列の数、--cols は段の中の人数 */
 @media (min-width:960px){
   .cast-groups{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:.8rem}
   .cast-group{grid-column:span var(--n)}
@@ -196,6 +196,10 @@ a{color:inherit}
 .person__desc{margin-top:.35rem;font-size:.95rem;line-height:1.75}
 .person__quote{margin-top:.45rem;font-family:var(--f-hand);font-weight:600;font-size:.98rem;line-height:1.6;color:var(--night-2)}
 .cast__more{margin-top:1.2rem;font-size:.92rem;color:var(--ink-soft)}
+.cast__map{margin-top:2.2rem}
+.cast__map a{display:block;margin-top:.9rem;background:#fff;border:1px solid var(--edge);border-radius:8px;overflow:hidden}
+.cast__map img{display:block;width:100%;height:auto}
+.cast__map-note{margin-top:.5rem;font-size:.85rem;color:var(--ink-soft)}
 .person--wide{grid-column:1/-1;border-color:var(--dawn);box-shadow:0 0 0 2px var(--dawn-soft)}
 @media (min-width:960px){
   .person--wide{grid-template-columns:92px minmax(0,1fr);align-items:center;justify-items:stretch}
@@ -430,6 +434,14 @@ a{color:inherit}
       <p class="sec__sub">会社と、帰り道の喫茶店と、家。動画には、この人たちが出てきます。</p>
       <div class="cast-groups" data-slot="cast"></div>
       <p class="cast__more">家族はほかに、結婚して家を出た長女の美咲さん、一人暮らしの次女の七海さん、孫の結衣ちゃんも出てきます。</p>
+      <!-- 相関図。画像は 画像を取り込む.mjs が入れる（LPの人物に合わせた版ができたら、同じ名前のまま差し替わる） -->
+      <div class="cast__map">
+        <h3 class="cast__group">相関図</h3>
+        <a href="assets/cast/sokanzu.jpg" target="_blank" rel="noopener">
+          <img src="assets/cast/sokanzu.jpg" alt="都合さんと、家族・会社・喫茶店の人たちのつながりを表した相関図" width="1672" height="941" loading="lazy">
+        </a>
+        <p class="cast__map-note">押すと、大きな画像で開きます。</p>
+      </div>
     </div>
   </section>
 
@@ -633,8 +645,8 @@ const CAST = [
     { key: 'tsugo', name: '都合さん', role: '主人公', color: '#2E4A7F', initial: '都',
       desc: 'まだ断れずに引き受けることもあるけれど、自分の状況を伝える練習を続けています。', quote: '' },
   ] },
-  // 6人なので、PCでは横幅いっぱいに3人ずつ2段で並べる
-  { place: '会社', columns: 4, perRow: 3, people: [
+  // 7人なので、PCでは横幅いっぱいに4人＋3人の2段で並べる
+  { place: '会社', columns: 4, perRow: 4, people: [
     { key: 'katayama', name: '片山課長', role: '上司', color: '#4A3566', initial: '片',
       desc: '僕の上司。四つ年下で、怒鳴らない日のほうが少ない。', quote: '言い訳するな！' },
     { key: 'hayakawa', name: '早川さん', role: '主任', color: '#3B3350', initial: '早',
@@ -643,11 +655,13 @@ const CAST = [
       desc: '六つ上のベテラン。怒った顔を誰も見たことがないのに、誰からも軽く扱われない人。', quote: '都合さん、全部を一人で抱えなくていいんですよ' },
     { key: 'saeki', name: '佐伯さん', role: '同僚', color: '#A48E74', initial: '佐',
       desc: '人の変化に、いちばん先に気づいてくれる同僚。', quote: '都合さん、大丈夫ですか？' },
-    // 同僚と後輩は、台本でも設定でも名前が無い（会社の同僚たちのシートの男性B・男性A）
+    // シートの男性B・男性A・女性Cは、LPでは役割名で紹介する
     { key: 'doryo', name: '同僚', role: '同じ部署', color: '#557A9E', initial: '同',
       desc: '人の口ぐせに、よく気づく人。最近は資料を抱えて、僕のところへ確認を頼みに来る。', quote: '都合さん、この資料、穴がないか見てもらえませんか' },
     { key: 'kohai', name: '後輩', role: '同じ部署の若手', color: '#34466B', initial: '後',
       desc: '柏木さんには、まっすぐ目を見て相談するのに、僕のところには、書類を置いてすぐに帰っていく。', quote: '都合さんって優しいから、何を頼んでも大丈夫だよね' },
+    { key: 'doryo_c', name: '女性の同僚', role: '同じ部署', color: '#9A846E', initial: '同',
+      desc: 'まわりをよく見ていて、僕が手いっぱいのときも先に気づいてくれる。', quote: '一緒に確認しましょう' },
   ] },
   { place: '帰り道の喫茶店', people: [
     { key: 'onodera', name: '小野寺さん', role: 'メンター', color: '#2E2A2B', initial: '小',
