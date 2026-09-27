@@ -216,13 +216,13 @@ a{color:inherit}
 
 /* 5話までの予告 */
 .series{list-style:none;padding:0;margin:1.8rem 0 0;display:grid;gap:.8rem}
-.ep{position:relative;display:grid;grid-template-columns:clamp(60px,17vw,84px) minmax(0,1fr);gap:.95rem;align-items:start;padding:.9rem;background:#fff;border:1px solid var(--edge);border-radius:8px}
+.ep{position:relative;display:grid;grid-template-columns:clamp(60px,17vw,84px) minmax(0,1fr);gap:.95rem;align-items:start;padding:1.1rem;background:#fff;border:1px solid var(--edge);border-radius:8px}
 .ep.is-current{border-color:var(--dawn);box-shadow:0 0 0 2px var(--dawn-soft)}
 .ep .cover{box-shadow:0 6px 14px -8px rgba(18,32,59,.55);font-size:.5rem}
-.ep__no{font-family:var(--f-mincho);font-weight:900;font-size:1rem;color:var(--night-2);letter-spacing:.06em}
-.ep__badge{display:inline-block;margin-left:.5rem;font-family:var(--f-body);font-size:.72rem;font-weight:700;letter-spacing:.04em;padding:0 .55rem;border-radius:999px;background:var(--dawn-soft);color:var(--night);vertical-align:.12em}
-.ep__theme{margin-top:.15rem;font-weight:700;line-height:1.55}
-.ep__gifts{list-style:none;margin:.4rem 0 0;padding:0;font-size:.86rem;line-height:1.6;color:var(--ink-soft)}
+.ep__no{font-family:var(--f-mincho);font-weight:900;font-size:1.14rem;color:var(--night-2);letter-spacing:.06em}
+.ep__badge{display:inline-block;margin-left:.5rem;font-family:var(--f-body);font-size:.78rem;font-weight:700;letter-spacing:.04em;padding:0 .55rem;border-radius:999px;background:var(--dawn-soft);color:var(--night);vertical-align:.12em}
+.ep__theme{margin-top:.2rem;font-size:1.16rem;font-weight:700;line-height:1.5}
+.ep__gifts{list-style:none;margin:.55rem 0 0;padding:0;font-size:1rem;line-height:1.65;color:var(--ink-soft)}
 .ep__gifts li{padding-left:1em;text-indent:-1em}
 .ep__gifts li::before{content:"・"}
 .series__note{margin-top:1rem;font-size:.9rem;color:var(--ink-soft)}
@@ -232,23 +232,30 @@ a{color:inherit}
 @media (min-width:960px){.series__hero img{aspect-ratio:21/8}}
 .ep__scene{position:relative;margin:0}
 .ep__scene>img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px}
-.ep__scene-controls{display:flex;justify-content:center;align-items:center;gap:.65rem;margin-top:.4rem}
-.ep__scene-step{display:grid;place-items:center;width:2rem;height:2rem;padding:0;border:1px solid var(--edge);border-radius:50%;background:#fff;color:var(--night);font-size:1.35rem;line-height:1;cursor:pointer}
+.ep__scene-controls{display:flex;justify-content:center;align-items:center;gap:.9rem;margin-top:.65rem}
+.ep__scene-step{display:grid;place-items:center;width:2.5rem;height:2.5rem;padding:0;border:1px solid var(--edge);border-radius:50%;background:#fff;color:var(--night);font-size:1.55rem;line-height:1;cursor:pointer}
 .ep__scene-step:hover{background:var(--dawn-soft)}
-.ep__scene-count{min-width:2.6rem;text-align:center;color:var(--ink-soft);font-size:.8rem;font-variant-numeric:tabular-nums}
-.ep.has-scene{grid-template-columns:1fr;gap:.7rem;padding:.7rem .7rem .9rem}
+.ep__scene-count{min-width:3rem;text-align:center;color:var(--ink-soft);font-size:1rem;font-variant-numeric:tabular-nums}
+.ep.has-scene{grid-template-columns:1fr;gap:.9rem;padding:1rem 1rem 1.15rem}
 .ep.has-scene .cover{position:absolute;right:.5rem;bottom:-1.4rem;width:24%;font-size:.4rem;box-shadow:0 6px 14px -4px rgba(18,32,59,.6),0 0 0 2px #fff}
-.ep__scene.has-gallery .cover{bottom:2.4rem}
+.ep__scene.has-gallery .cover{bottom:3rem}
 .ep.has-scene .ep__no{padding-right:30%}
 @media (max-width:959px){
-  .series.is-scenes{grid-auto-flow:column;grid-auto-columns:min(78%,320px);overflow-x:auto;scroll-snap-type:x mandatory;
+  .series.is-scenes{grid-auto-flow:column;grid-auto-columns:min(86%,420px);overflow-x:auto;scroll-snap-type:x mandatory;
     margin-inline:calc(var(--gutter) * -1);padding:0 var(--gutter) .8rem;scroll-padding-inline:var(--gutter)}
   .series.is-scenes .ep{scroll-snap-align:start}
 }
+/* いま見ている回を先頭に。PCではその回を横幅いっぱいの大きな段にして、ほかの4話を2列×2段に並べる */
+.series .ep.is-current{order:-1}
 @media (min-width:960px){
-  .series{grid-template-columns:repeat(5,minmax(0,1fr))}
-  .ep{grid-template-columns:1fr;align-content:start}
-  .ep .cover{width:72%;justify-self:center;font-size:.62rem}
+  .series{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem}
+  .series .ep.is-current{grid-column:1 / -1}
+  .ep.has-scene .ep__theme{font-size:1.3rem}
+  .ep.has-scene .ep__gifts{font-size:1.04rem}
+  .ep.has-scene.is-current{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:1.8rem;align-items:center;padding:1.3rem}
+  .ep.has-scene.is-current .ep__no{padding-right:0;font-size:1.35rem}
+  .ep.has-scene.is-current .ep__theme{font-size:1.6rem;margin-top:.35rem}
+  .ep.has-scene.is-current .ep__gifts{font-size:1.1rem;margin-top:.8rem}
 }
 
 /* 受け取り方 */
