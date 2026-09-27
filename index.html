@@ -193,6 +193,20 @@ a{color:inherit}
 .ep__gifts li{padding-left:1em;text-indent:-1em}
 .ep__gifts li::before{content:"・"}
 .series__note{margin-top:1rem;font-size:.9rem;color:var(--ink-soft)}
+/* 予告の画像がそろったときの形（見出しの1枚＋各話の場面に、特典の表紙を小さく重ねる） */
+.series__hero{margin:1.6rem 0 0}
+.series__hero img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;box-shadow:0 14px 30px -18px rgba(18,32,59,.55)}
+@media (min-width:960px){.series__hero img{aspect-ratio:21/8}}
+.ep__scene{position:relative;margin:0}
+.ep__scene>img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px}
+.ep.has-scene{grid-template-columns:1fr;gap:.7rem;padding:.7rem .7rem .9rem}
+.ep.has-scene .cover{position:absolute;right:.5rem;bottom:-1.4rem;width:24%;font-size:.4rem;box-shadow:0 6px 14px -4px rgba(18,32,59,.6),0 0 0 2px #fff}
+.ep.has-scene .ep__no{padding-right:30%}
+@media (max-width:959px){
+  .series.is-scenes{grid-auto-flow:column;grid-auto-columns:min(78%,320px);overflow-x:auto;scroll-snap-type:x mandatory;
+    margin-inline:calc(var(--gutter) * -1);padding:0 var(--gutter) .8rem;scroll-padding-inline:var(--gutter)}
+  .series.is-scenes .ep{scroll-snap-align:start}
+}
 @media (min-width:960px){
   .series{grid-template-columns:repeat(5,minmax(0,1fr))}
   .ep{grid-template-columns:1fr;align-content:start}
@@ -359,6 +373,7 @@ a{color:inherit}
       <p class="kicker">この先の特典</p>
       <h2 class="sec__h">LINE特典は、5話まで用意しています。</h2>
       <p class="sec__sub">都合さんの話は、この先も続きます。回ごとに、その話に合わせた特典を2つずつ。新しい話が出たら、LINEでお知らせします。</p>
+      <figure class="series__hero" id="seriesHero" hidden></figure>
       <ol class="series" data-slot="series"></ol>
       <p class="series__note">※これからの話の特典は、名前や中身が変わることがあります。</p>
     </div>
@@ -607,16 +622,7 @@ function render(n) {
     el('ol', { class: 'rows' + (pk.stairs ? ' rows--stairs' : '') }, ...rows),
     warn);
 
-  document.querySelector('[data-slot="series"]').replaceChildren(...Object.keys(EPISODES).map(k => {
-    const e = EPISODES[k];
-    const current = Number(k) === n;
-    return el('li', { class: 'ep' + (current ? ' is-current' : '') },
-      cover(e.gifts[0], '', true),
-      el('div', {},
-        el('p', { class: 'ep__no' }, `${k}話`, current ? el('span', { class: 'ep__badge' }, 'この動画の特典') : null),
-        el('p', { class: 'ep__theme' }, THEMES[k]),
-        el('ul', { class: 'ep__gifts' }, ...e.gifts.map(g => el('li', {}, g.name)))));
-  }));
+  renderSeries(n);
 
   const steps = ['下のボタンを押して、LINEを友だち追加します。'];
   const kwStep = document.createDocumentFragment();
@@ -629,8 +635,53 @@ function render(n) {
   document.querySelector('[data-slot="steps"]').replaceChildren(...steps.map(s => el('li', {}, el('span', {}, s))));
 }
 
-render(pickEpisode());
-window.addEventListener('hashchange', () => render(pickEpisode()));
+// 「LINE特典は、5話まで」の予告。場面の画像が5話分そろっていれば場面の絵に、1枚でも無ければ表紙だけの形にする
+const PREVIEW = {
+  1: ['assets/preview/01.jpg', '廊下のベンチで、うなだれる都合さん'],
+  2: ['assets/preview/02.jpg', '断ったのに、早川さんに書類の束を机へ置かれる都合さん'],
+  3: ['assets/preview/03.jpg', '給湯室の前で、同僚たちの話し声に足を止める都合さん'],
+  4: ['assets/preview/04.jpg', '夜中の二時過ぎ、布団の中で目が冴えている都合さん'],
+  5: ['assets/preview/05.jpg', '朝の玄関で、恵子さんから弁当を受け取る都合さん'],
+};
+let currentEp = 1;
+let scenesReady = false;
+
+function renderSeries(n) {
+  const list = document.querySelector('[data-slot="series"]');
+  list.classList.toggle('is-scenes', scenesReady);
+  list.replaceChildren(...Object.keys(EPISODES).map(k => {
+    const e = EPISODES[k];
+    const current = Number(k) === n;
+    const art = scenesReady
+      ? el('figure', { class: 'ep__scene' }, el('img', { src: PREVIEW[k][0], alt: PREVIEW[k][1], width: '960', height: '540', loading: 'lazy' }), cover(e.gifts[0], '', true))
+      : cover(e.gifts[0], '', true);
+    return el('li', { class: 'ep' + (current ? ' is-current' : '') + (scenesReady ? ' has-scene' : '') },
+      art,
+      el('div', {},
+        el('p', { class: 'ep__no' }, `${k}話`, current ? el('span', { class: 'ep__badge' }, 'この動画の特典') : null),
+        el('p', { class: 'ep__theme' }, THEMES[k]),
+        el('ul', { class: 'ep__gifts' }, ...e.gifts.map(g => el('li', {}, g.name)))));
+  }));
+}
+
+function imageExists(src) {
+  return new Promise(resolve => { const img = new Image(); img.onload = () => resolve(true); img.onerror = () => resolve(false); img.src = src; });
+}
+
+render(currentEp = pickEpisode());
+window.addEventListener('hashchange', () => render(currentEp = pickEpisode()));
+
+Promise.all(Object.values(PREVIEW).map(([src]) => imageExists(src))).then(found => {
+  if (!found.every(Boolean)) return;
+  scenesReady = true;
+  renderSeries(currentEp);
+});
+imageExists('assets/preview/00.jpg').then(ok => {
+  if (!ok) return;
+  const hero = document.getElementById('seriesHero');
+  hero.replaceChildren(el('img', { src: 'assets/preview/00.jpg', alt: '夜明けの机で、ノートの次のページをめくろうとする都合さん', width: '1400', height: '788', loading: 'lazy' }));
+  hero.hidden = false;
+});
 
 // LINE登録のURL（LIFF）はスマホのLINEアプリで開く前提。パソコンのブラウザで開くと、
 // 登録後にLINE Harnessが飛ばす line.me/R/… がスマホ専用のため、LINEのトップページに行き着いてしまう。
