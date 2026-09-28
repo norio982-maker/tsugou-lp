@@ -136,6 +136,17 @@ a{color:inherit}
 .kw{display:inline-block;padding:0 .55em;margin-inline:.15em;border-radius:1em;background:#E4F7EA;color:#0A6A33;font-weight:700;border:1px solid #BDE8CB}
 .hero .kw,.final .kw{background:rgba(6,199,85,.16);color:#BFF3D2;border-color:rgba(6,199,85,.45)}
 @media (max-width:819px){.cta{justify-items:stretch}.line-btn{width:100%;padding-inline:1rem;font-size:clamp(.98rem,4.6vw,1.12rem);letter-spacing:.02em;white-space:nowrap}}
+/* ボタンのすぐ下の「無料・1分・すぐ止まる」。押す直前の迷いを消す */
+.assure{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.2rem 1.1rem;font-size:.92rem;font-weight:700;color:var(--on-night)}
+.assure li{display:inline-flex;align-items:center;gap:.3rem;white-space:nowrap}
+.assure li::before{content:"✓";color:var(--dawn);font-weight:900}
+.cta--paper .assure{color:var(--ink)}
+.cta--paper .assure li::before{color:var(--line-deep)}
+@media (max-width:819px){.assure{justify-content:center}.hero .cta__note,.final .cta__note{text-align:center}}
+/* 特典の中身のすぐ下のボタン（まん中にそろえる） */
+.cta--center{justify-items:center;text-align:center;margin-top:1.6rem}
+.cta__lead{font-family:var(--f-hand);font-weight:600;font-size:1.12rem;line-height:1.6;color:var(--night-2);white-space:pre-line}
+@media (max-width:819px){.cta--center{justify-items:stretch}}
 
 /* ── 各セクション ── */
 .sec{padding-block:clamp(3.2rem,8vw,5.2rem)}
@@ -159,6 +170,9 @@ a{color:inherit}
 .note__hand b{color:var(--redpen);font-weight:600}
 .note__foot{line-height:var(--lh);color:var(--ink-soft);font-size:.98rem}
 .note__foot a{color:var(--night-2);font-weight:700}
+/* 1つでも押したら、その場にLINEのボタンを出す */
+.note__cta{margin-top:calc(var(--lh) * .5);padding-bottom:calc(var(--lh) * .5)}
+.note__cta .cta__note{line-height:1.7}
 
 /* 都合さんの話 */
 .story__head{display:flex;gap:1.1rem;align-items:flex-start}
@@ -207,6 +221,18 @@ a{color:inherit}
   .person--wide{grid-template-columns:92px minmax(0,1fr);align-items:center;justify-items:stretch}
   .person--wide .person__desc{max-width:44em}
 }
+/* スマホ・タブレットでは、おもな5人だけ先に見せて、ほかの人は「ほかの◯人も見る」で開く（全員並べると画面4枚半になり、受け取り方の欄が遠くなる）。
+   PCは4列の並び（会社は4人＋3人）で組んであり、5人だけにすると段に大きな空きが出るので、はじめから全員 */
+.cast__unfold{all:unset;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:.7rem;width:100%;margin-top:.9rem;padding:.75rem .8rem;white-space:nowrap;border:1px solid var(--edge);border-radius:8px;background:#fff;color:var(--night-2);font-weight:700;cursor:pointer}
+.cast__unfold:hover{background:var(--mist)}
+.cast__unfold:focus-visible{outline:3px solid var(--dawn);outline-offset:2px}
+.cast__faces{display:flex}
+.cast__faces img{width:30px;height:30px;margin-left:-9px;border-radius:50%;object-fit:cover;background:var(--mist);box-shadow:0 0 0 2px #fff}
+.cast__faces img:first-child{margin-left:0}
+@media (max-width:959px){
+  #cast.is-folded .is-minor,#cast.is-folded .cast__more{display:none}
+}
+@media (min-width:960px){.cast__unfold{display:none!important}}
 
 /* 特典 */
 .gifts{display:grid;gap:1.3rem;margin-top:1.9rem}
@@ -260,6 +286,10 @@ a{color:inherit}
 .page img{width:100%;height:100%;object-fit:cover}
 .page a:hover img{opacity:.9}
 .page__more{position:absolute;left:6%;right:6%;top:50%;translate:0 -50%;padding:.75rem .3rem;border:1.5px solid rgba(232,182,76,.85);border-radius:8px;background:#10202B;color:#fff;text-align:center;font-weight:700;font-size:clamp(.8rem,2.4vw,1rem);line-height:1.4}
+/* ぼかしたページの「続きは特典で」は、押すとLINEへ（パソコンはQRコード） */
+a.page__more{display:block;height:auto;text-decoration:none}
+a.page__more small{display:block;margin-top:.3rem;font-size:.82em;color:#8FE3AE}
+a.page__more:hover{background:#15303F}
 /* スマホは3枚を横に並べると字がつぶれるので、大きめのページを指で横に送る（最後にぼかしのページが来る） */
 @media (max-width:639px){
   .book__pages{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:64%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:.6rem}
@@ -317,6 +347,25 @@ a{color:inherit}
 .steps{list-style:none;counter-reset:s;padding:0;margin:1.7rem 0 0;display:grid;gap:1.05rem}
 .steps li{counter-increment:s;display:grid;grid-template-columns:2.7rem 1fr;gap:.95rem;align-items:center;font-size:1.08rem}
 .steps li::before{content:counter(s);display:grid;place-items:center;width:2.7rem;height:2.7rem;border-radius:50%;background:var(--night);color:var(--dawn);font-family:var(--f-mincho);font-weight:900;font-size:1.3rem}
+.uketori__how{display:grid;gap:1.8rem;align-items:center}
+@media (min-width:760px){.uketori__how{grid-template-columns:minmax(0,1fr) 300px;column-gap:2.4rem;align-items:start}.uketori__how .chat-wrap{margin-top:1.7rem}}
+/* LINEに届くときのイメージ（トーク画面の見本） */
+.chat{margin:0;width:100%;max-width:320px;justify-self:center;border-radius:14px;overflow:hidden;background:#9CB2D1;box-shadow:0 16px 34px -18px rgba(18,32,59,.55);font-size:.9rem;line-height:1.6}
+.chat__bar{display:flex;align-items:center;gap:.5rem;padding:.55rem .8rem;background:#fff;border-bottom:1px solid var(--edge);font-weight:700;font-size:.88rem;color:var(--ink)}
+.chat__bar img{width:26px;height:26px;border-radius:50%}
+.chat__body{display:grid;gap:.55rem;padding:.9rem .75rem 1rem}
+.bubble{margin:0;padding:.5rem .8rem;border-radius:16px;background:#fff;color:var(--ink);width:fit-content;max-width:100%}
+.bubble--me{justify-self:end;background:#A6E88A;border-top-right-radius:4px;font-weight:700}
+.bubble-row{display:grid;grid-template-columns:30px minmax(0,1fr);gap:.45rem;align-items:start}
+.bubble-row>img{width:30px;height:30px;border-radius:50%}
+.bubble-row>div{display:grid;gap:.4rem}
+.bubble-row .bubble:first-child{border-top-left-radius:4px}
+.bubble__gift{display:grid;grid-template-columns:34px minmax(0,1fr);gap:.55rem;align-items:center;font-weight:700;font-size:.84rem;line-height:1.5}
+.bubble__gift+.bubble__gift{margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--edge)}
+.bubble__gift span{word-break:auto-phrase}
+.bubble__gift img{width:34px;height:51px;border-radius:3px;object-fit:cover;background:var(--night)}
+.chat__note{margin-top:.45rem;text-align:center;font-size:.8rem;color:var(--ink-soft)}
+.chat-wrap{display:grid;justify-items:center}
 .uketori{display:grid;gap:1.8rem;margin-top:2.2rem;align-items:center}
 .qr{display:none}
 @media (min-width:760px){
@@ -405,7 +454,8 @@ a{color:inherit}
       <div class="hero__covers" data-slot="heroCovers"></div>
       <div class="cta" id="ctaHero">
         <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで2つの特典を受け取る</a>
-        <p class="cta__note" data-slot="how">無料です。友だち追加のあと、トークで<span class="kw">特典</span>と送ると届きます。</p>
+        <ul class="assure"><li>無料</li><li>1分で受け取れる</li><li>ブロックすれば、すぐ止まる</li></ul>
+        <p class="cta__note" data-slot="how">友だち追加のあと、トークで<span class="kw">特典</span>と送ると届きます。</p>
       </div>
     </div>
   </section>
@@ -423,12 +473,30 @@ a{color:inherit}
           <li><button type="button" class="check" id="check5" aria-pressed="false"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 17 L13 25 L28 5" fill="none" stroke="#C8372D" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>迷惑をかけたくなくて、「手伝いましょうか」を断ってしまう</span></button></li>
         </ul>
         <p class="note__hand" id="checkResult" aria-live="polite">押したところに、赤ペンで印がつきます。</p>
-        <p class="note__foot">どこから手をつければいいかは、<a href="#tokuten">LINEでお渡しするシート</a>で分かります。</p>
+        <p class="note__foot" id="checkFoot">どこから手をつければいいかは、<a href="#tokuten">LINEでお渡しするシート</a>で分かります。</p>
+        <div class="cta cta--paper note__cta" id="ctaCheck" hidden>
+          <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで2つの特典を受け取る</a>
+          <p class="cta__note">どこから手をつければいいかは、シートで分かります。無料です。</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="sec sec--mist" id="story">
+  <section class="sec sec--mist" id="tokuten">
+    <div class="wrap">
+      <p class="kicker">LINEでお渡しするもの</p>
+      <h2 class="sec__h">無料の特典は、この2つです。</h2>
+      <div class="gifts" data-slot="gifts"></div>
+      <div class="peek" data-slot="peek"></div>
+      <div class="cta cta--paper cta--center" id="ctaGift">
+        <p class="cta__lead" data-slot="giftLead">続きは、LINEで2つともお渡しします。</p>
+        <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで2つの特典を受け取る</a>
+        <p class="cta__note" data-slot="how">無料です。友だち追加のあと、トークで<span class="kw">特典</span>と送ると届きます。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="story">
     <div class="wrap">
       <div class="story__head">
         <img class="story__face" src="assets/icon.jpg" alt="都合さん" width="92" height="92">
@@ -458,7 +526,7 @@ a{color:inherit}
     </div>
   </section>
 
-  <section class="sec sec--mist" id="cast" style="padding-top:0">
+  <section class="sec" id="cast" style="padding-top:0">
     <div class="wrap">
       <p class="kicker">登場人物</p>
       <h2 class="sec__h">僕と、まわりの人たち</h2>
@@ -477,15 +545,6 @@ a{color:inherit}
     </div>
   </section>
 
-  <section class="sec" id="tokuten">
-    <div class="wrap">
-      <p class="kicker">LINEでお渡しするもの</p>
-      <h2 class="sec__h">無料の特典は、この2つです。</h2>
-      <div class="gifts" data-slot="gifts"></div>
-      <div class="peek" data-slot="peek"></div>
-    </div>
-  </section>
-
   <section class="sec sec--mist" id="series">
     <div class="wrap">
       <p class="kicker">この先の特典</p>
@@ -500,7 +559,17 @@ a{color:inherit}
   <section class="sec" id="uketori">
     <div class="wrap narrow">
       <h2 class="sec__h">受け取り方</h2>
-      <ol class="steps" data-slot="steps"></ol>
+      <div class="uketori__how">
+        <ol class="steps" data-slot="steps"></ol>
+        <!-- 押したあとに何が起きるかを先に見せる。文面は LINE配信マニュアル 5章の1通目の書き出しに合わせた「イメージ」 -->
+        <div class="chat-wrap">
+          <figure class="chat" aria-label="LINEに届くときのイメージ">
+            <div class="chat__bar"><img src="assets/icon.jpg" alt="" width="26" height="26" loading="lazy">都合さんの逆転ノート</div>
+            <div class="chat__body" data-slot="chat"></div>
+          </figure>
+          <p class="chat__note">※届くときのイメージです。</p>
+        </div>
+      </div>
       <div class="uketori">
         <div class="cta cta--paper" id="ctaMid">
           <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEを友だち追加する</a>
@@ -519,7 +588,8 @@ a{color:inherit}
       <h2 class="sec__h">よくある質問</h2>
       <dl class="qa">
         <div><dt>お金はかかりますか？</dt><dd>かかりません。LINEの友だち追加だけで受け取れます。</dd></div>
-        <div><dt>登録すると、自分の情報はどこまで伝わりますか？</dt><dd>こちらから見えるのは、LINEの表示名やアイコンなど、プロフィールに出している内容だけです。電話番号や、ほかの人とのトークが見えることはありません。</dd></div>
+        <div><dt>スマホだけで読めますか？</dt><dd>読めます。トークに届いたものを押すと、スマホでそのまま開きます。印刷しなくても大丈夫です。</dd></div>
+        <div><dt>登録すると、自分の情報はどこまで伝わりますか？</dt><dd>こちらから見えるのは、LINEの表示名やアイコンなど、プロフィールに出している内容だけです。電話番号や、ほかの人とのトークが見えることはありません。友だち追加したことが、会社の人やほかの友だちに知られることもありません。</dd></div>
         <div><dt>特典のあとは、何が届きますか？</dt><dd>僕の日記や、職場で使える一言を、ときどきお送りします。いらなくなったら、ブロックすればすぐに止まります。</dd></div>
         <div><dt>シートで、病気かどうか分かりますか？</dt><dd>分かりません。今の自分の状態に気づくためのセルフチェックで、医学的な診断ではありません。</dd></div>
       </dl>
@@ -550,6 +620,7 @@ a{color:inherit}
       <div class="cta" id="ctaFinal">
         <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで2つの特典を受け取る</a>
         <p class="cta__note" data-slot="how">無料です。友だち追加のあと、トークで<span class="kw">特典</span>と送ると届きます。</p>
+        <ul class="assure"><li>1分で受け取れる</li><li>ブロックすれば、すぐ止まる</li></ul>
       </div>
     </div>
   </section>
@@ -565,7 +636,7 @@ a{color:inherit}
 </footer>
 
 <div class="bar" id="bar" hidden>
-  <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで特典を受け取る</a>
+  <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで無料の特典を受け取る</a>
 </div>
 
 <dialog class="qr-dialog" id="qrDialog" aria-labelledby="qrDialogTitle">
@@ -742,26 +813,51 @@ const CAST = [
   ] },
 ];
 
+// スマホ・タブレットで先に見せる5人（僕・課長・早川さん・小野寺さん・恵子さん）。ほかの人は「ほかの◯人も見る」で開く。PCは全員
+const CAST_MAIN = new Set(['tsugo', 'katayama', 'hayakawa', 'onodera', 'keiko']);
+
+// 同じ名前のまま差し替えた似顔絵は、見る人のブラウザに古い画像が残らないよう ?v= を付ける
+function faceSrc(p) {
+  const revised = p.key === 'saeki' ? '?v=20260928-3' :
+    ['doryo_c', 'eigyo', 'jinji', 'somu'].includes(p.key) ? '?v=20260928-2' : '';
+  return `assets/cast/${p.key}.jpg${revised}`;
+}
+
 function renderCast() {
-  document.querySelector('[data-slot="cast"]').replaceChildren(...CAST.map(group =>
-    el('div', { class: 'cast-group', style: `--n:${group.columns ?? group.people.length};--cols:${group.perRow ?? group.columns ?? group.people.length}` },
+  const slot = document.querySelector('[data-slot="cast"]');
+  const section = document.getElementById('cast');
+  slot.replaceChildren(...CAST.map(group =>
+    el('div', { class: 'cast-group' + (group.people.some(p => CAST_MAIN.has(p.key)) ? '' : ' is-minor'), style: `--n:${group.columns ?? group.people.length};--cols:${group.perRow ?? group.columns ?? group.people.length}` },
       el('h3', { class: 'cast__group' }, group.place),
       el('ul', { class: 'cast' + (group.people.length === 1 ? ' cast--solo' : '') }, ...group.people.map(p => {
         const face = el('figure', { class: 'person__face', style: `--c:${p.color}` });
         const img = el('img', { alt: p.name + 'のイラスト', width: '360', height: '360', loading: 'lazy' });
         img.addEventListener('error', () => face.classList.add('is-fallback'));
-        const revised = p.key === 'saeki' ? '?v=20260928-3' :
-          ['doryo_c', 'eigyo', 'jinji', 'somu'].includes(p.key) ? '?v=20260928-2' : '';
-        img.src = `assets/cast/${p.key}.jpg${revised}`;
+        img.src = faceSrc(p);
         face.append(img, el('span', { 'aria-hidden': 'true' }, p.initial));
         // 1人だけの段を4列ぶん使う（主人公の都合さん）ときは、横幅いっぱいのカードにする
         const wide = group.people.length === 1 && group.columns > 1;
-        return el('li', { class: 'person' + (wide ? ' person--wide' : '') }, face,
+        return el('li', { class: 'person' + (wide ? ' person--wide' : '') + (CAST_MAIN.has(p.key) ? '' : ' is-minor') }, face,
           el('div', {},
             el('p', { class: 'person__name' }, p.name, el('span', { class: 'person__role' }, p.role)),
             el('p', { class: 'person__desc' }, p.desc),
             p.quote ? el('p', { class: 'person__quote' }, `「${p.quote}」`) : null));
       })))));
+
+  const minor = CAST.flatMap(g => g.people).filter(p => !CAST_MAIN.has(p.key));
+  const unfold = el('button', { class: 'cast__unfold', type: 'button', 'aria-expanded': 'false' },
+    el('span', { class: 'cast__faces', 'aria-hidden': 'true' },
+      ...minor.slice(0, 4).map(p => el('img', { src: faceSrc(p), alt: '', width: '30', height: '30', loading: 'lazy' }))),
+    `ほかの${minor.length}人も見る`);
+  unfold.addEventListener('click', () => {
+    section.classList.remove('is-folded');
+    unfold.setAttribute('aria-expanded', 'true');
+    unfold.hidden = true;
+    const first = section.querySelector('.person.is-minor');
+    if (first) { first.setAttribute('tabindex', '-1'); first.focus({ preventScroll: true }); }
+  });
+  slot.after(unfold);
+  section.classList.add('is-folded');
 }
 
 function pickEpisode() {
@@ -796,8 +892,8 @@ function cover(gift, extraClass, lazy) {
 }
 
 // いちばん上の表紙：1話〜5話をスライドで切り替える。最初はいま見ている回。
-// 触るまでは5秒ごとに次の回へ送り、ボタン・点・スワイプ・キーで触ったら止める（動きを減らす設定の人は送らない）
-let heroTimer = null;
+// 自動では送らない（2026-09-29）。動画から来た人が5秒後にほかの回の見出しと表紙を見ると、「動画で言っていた特典はどれ？」と迷うため。
+// ほかの回は、‹ ›・点・スワイプ・矢印キーで見たい人だけが見る
 let heroShownEp = null;
 
 // 見出し・説明・受け取り方の一文も、表示中の回に合わせて切り替える
@@ -805,11 +901,12 @@ function setHeroText(k) {
   const e = EPISODES[k];
   document.querySelector('[data-slot="question"]').textContent = e.question;
   document.querySelector('[data-slot="lead"]').textContent = e.lead;
-  document.querySelector('#ctaHero [data-slot="how"]').replaceChildren(howText(e));
+  document.querySelector('#ctaHero [data-slot="how"]').replaceChildren(howText(e, false));
 }
-// 回によって行数が違うので、いちばん長い回の高さを先に取っておく（5秒ごとにLINEボタンが上下しないように）
+// 回によって行数が違うので、いちばん長い回の高さを先に取っておく（表紙を送ったときにLINEボタンや表紙が上下しないように）。
+// 見出しと説明はくっつけたまま、余りは説明の下に置く（見出しの下が空くと、途中で切れたように見える）
 function reserveHeroHeight() {
-  const parts = [document.querySelector('.hero__q'), document.querySelector('.hero__lead'), document.querySelector('#ctaHero [data-slot="how"]')];
+  const parts = [document.querySelector('.hero__text'), document.querySelector('#ctaHero [data-slot="how"]')];
   parts.forEach(p => { p.style.minHeight = ''; });
   const tallest = parts.map(() => 0);
   Object.keys(EPISODES).forEach(k => {
@@ -860,16 +957,13 @@ function renderHeroSlider(n) {
     track.scrollTo({ left: index * track.clientWidth, behavior: smooth && !reduce ? 'smooth' : 'auto' });
     mark();
   };
-  const stopAuto = () => { clearInterval(heroTimer); heroTimer = null; };
 
-  prev.addEventListener('click', () => { stopAuto(); show(index - 1, true); });
-  next.addEventListener('click', () => { stopAuto(); show(index + 1, true); });
-  dots.forEach((d, i) => d.addEventListener('click', () => { stopAuto(); show(i, true); }));
-  ['pointerdown', 'touchstart', 'wheel'].forEach(t => track.addEventListener(t, stopAuto, { passive: true }));
+  prev.addEventListener('click', () => show(index - 1, true));
+  next.addEventListener('click', () => show(index + 1, true));
+  dots.forEach((d, i) => d.addEventListener('click', () => show(i, true)));
   track.addEventListener('keydown', e => {
     if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
     e.preventDefault();
-    stopAuto();
     show(index + (e.key === 'ArrowRight' ? 1 : -1), true);
   });
   let frame = 0;
@@ -888,15 +982,30 @@ function renderHeroSlider(n) {
   mark();
   reserveHeroHeight();
   requestAnimationFrame(() => show(index, false));
-  stopAuto();
-  if (!reduce) heroTimer = setInterval(() => { if (!document.hidden) show(index + 1, true); }, 5000);
 }
 
-function howText(ep) {
+// free=false は、すぐ上に「✓無料」を出しているところ（いちばん上のボタン）
+function howText(ep, free = true) {
   const p = document.createDocumentFragment();
-  if (ep.keyword) p.append('無料です。友だち追加のあと、トークで', el('span', { class: 'kw' }, ep.keyword), 'と送ると届きます。');
-  else p.append('無料です。友だち追加すると、トークに届きます。');
+  const head = free ? '無料です。' : '';
+  if (ep.keyword) p.append(head + '友だち追加のあと、トークで', el('span', { class: 'kw' }, ep.keyword), 'と送ると届きます。');
+  else p.append(head + '友だち追加すると、トークに届きます。');
   return p;
+}
+
+// 受け取り方の欄の「届くときのイメージ」。キーワードのある回は、先に自分が送る吹き出しを出す
+function renderChat(ep) {
+  const gifts = el('div', { class: 'bubble' }, ...ep.gifts.map(g =>
+    el('div', { class: 'bubble__gift' },
+      el('img', { src: g.img, alt: '', width: '34', height: '51', loading: 'lazy' }),
+      el('span', {}, '▼', el('br', {}), g.name))));
+  document.querySelector('[data-slot="chat"]').replaceChildren(
+    ...(ep.keyword ? [el('p', { class: 'bubble bubble--me' }, ep.keyword)] : []),
+    el('div', { class: 'bubble-row' },
+      el('img', { src: 'assets/icon.jpg', alt: '', width: '30', height: '30', loading: 'lazy' }),
+      el('div', {},
+        el('p', { class: 'bubble' }, '都合です。最後まで見てくださって、ありがとうございます。'),
+        gifts)));
 }
 
 // 特典の中身：ページ画像がある回は、2・3ページ目（押すと大きく開く）と、ぼかした4ページ目に「続きは特典で」
@@ -914,7 +1023,7 @@ function peekPages(pk) {
             el('img', { src, alt: `「${title}」のページ`, width: '900', height: '1600', loading: 'lazy' })))),
         el('li', { class: 'page' },
           el('img', { src: b.blur, alt: '', width: '360', height: '640', loading: 'lazy' }),
-          el('p', { class: 'page__more' }, '続きは特典で')))))),
+          el('a', { class: 'page__more', href: LINE_URL, 'data-line': '' }, '続きは特典で', el('small', {}, 'LINEで受け取る ›'))))))),
     el('p', { class: 'peek__note' }, '押すと、ページが大きく開きます。'),
   ];
 }
@@ -936,7 +1045,14 @@ function render(n) {
   document.querySelector('[data-slot="question"]').textContent = ep.question;
   document.querySelector('[data-slot="lead"]').textContent = ep.lead;
   document.querySelector('[data-slot="before"]').textContent = ep.before;
-  document.querySelectorAll('[data-slot="how"]').forEach(node => node.replaceChildren(howText(ep)));
+  document.querySelectorAll('[data-slot="how"]').forEach(node => node.replaceChildren(howText(ep, !node.closest('#ctaHero'))));
+  // 特典の中身のすぐ下のボタンの一言。ページを見せている回は「全10ページ」まで言う（\n の位置で改行する）
+  const totals = ep.peek.pages ? [...new Set(ep.peek.pages.map(b => b.total))] : [];
+  document.querySelector('[data-slot="giftLead"]').textContent =
+    totals.length === 1 ? `2つとも全${totals[0]}ページ。\n続きは、LINEでお渡しします。`
+    : ep.peek.pages ? '続きは、LINEで\n2つともお渡しします。'
+    : '伏せたところも全部、\nLINEでお渡しします。';
+  renderChat(ep);
 
   renderHeroSlider(n);
 
@@ -952,7 +1068,7 @@ function render(n) {
   const warn = pk.warn ? el('p', { class: 'peek__warn' }, pk.warn, el('a', { href: '#soudan' }, 'このページの下の相談先'), 'を見てください。') : null;
   const peek = document.querySelector('[data-slot="peek"]');
   peek.classList.toggle('peek--pages', !!pk.pages);
-  peek.replaceChildren(...(pk.pages ? peekPages(pk) : peekRows(pk)), warn);
+  peek.replaceChildren(...(pk.pages ? peekPages(pk) : peekRows(pk)), ...(warn ? [warn] : []));
 
   renderSeries(n);
 
@@ -1080,13 +1196,14 @@ function makeQR(id, size) {
   } catch (e) { return false; }
 }
 
-document.querySelectorAll('[data-line]').forEach(a => {
-  a.href = LINE_URL;
-  a.addEventListener('click', e => {
-    if (IS_PHONE || typeof qrDialog.showModal !== 'function' || !makeQR('qrLarge', 440)) return;
-    e.preventDefault();
-    qrDialog.showModal();
-  });
+// LINEへ行くリンク（data-line）は全部ここで受ける。あとから描くもの（ぼかしたページの「続きは特典で」）も同じ
+document.querySelectorAll('[data-line]').forEach(a => { a.href = LINE_URL; });
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-line]');
+  if (!a) return;
+  if (IS_PHONE || typeof qrDialog.showModal !== 'function' || !makeQR('qrLarge', 440)) return;
+  e.preventDefault();
+  qrDialog.showModal();
 });
 document.getElementById('qrClose').addEventListener('click', () => qrDialog.close());
 qrDialog.addEventListener('click', e => { if (e.target === qrDialog) qrDialog.close(); });
@@ -1099,6 +1216,9 @@ const checks = [...document.querySelectorAll('.check')];
 const result = document.getElementById('checkResult');
 function updateChecks() {
   const n = checks.filter(b => b.getAttribute('aria-pressed') === 'true').length;
+  // 1つでも押したら、シートへの案内の一文をLINEのボタンに入れ替える（気持ちが動いたその場で受け取れるように）
+  document.getElementById('ctaCheck').hidden = n === 0;
+  document.getElementById('checkFoot').hidden = n > 0;
   if (n === 0) { result.textContent = '押したところに、赤ペンで印がつきます。'; return; }
   if (n === checks.length) { result.replaceChildren(el('b', {}, '5つ全部'), '。前の僕と、まったく同じです。'); return; }
   result.replaceChildren(el('b', {}, `${n}つ`), '当てはまりました。前の僕は、5つ全部でした。');
@@ -1117,7 +1237,7 @@ if ('IntersectionObserver' in window) {
     for (const e of entries) e.intersectionRatio >= 0.6 ? seen.add(e.target) : seen.delete(e.target);
     bar.hidden = seen.size > 0;
   }, { threshold: [0, 0.6, 1] });
-  ['ctaHero', 'ctaMid', 'ctaFinal'].forEach(id => io.observe(document.getElementById(id)));
+  ['ctaHero', 'ctaCheck', 'ctaGift', 'ctaMid', 'ctaFinal'].forEach(id => io.observe(document.getElementById(id)));
 }
 </script>
 </body>
