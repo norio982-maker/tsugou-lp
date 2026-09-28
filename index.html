@@ -439,8 +439,8 @@ a{color:inherit}
            同じ名前のまま差し替えると、見る人のブラウザに古い画像が残る（最大10分）ので、差し替えたら ?v= の日付を2か所とも変える -->
       <div class="cast__map">
         <h3 class="cast__group">相関図</h3>
-        <a href="assets/cast/sokanzu.jpg?v=20260928" target="_blank" rel="noopener">
-          <img src="assets/cast/sokanzu.jpg?v=20260928" alt="都合さんと、家族・会社・喫茶店の人たちのつながりを表した相関図" width="1672" height="941" loading="lazy">
+        <a href="assets/cast/sokanzu.jpg?v=20260928-3" target="_blank" rel="noopener">
+          <img src="assets/cast/sokanzu.jpg?v=20260928-3" alt="都合さんと、家族・会社・喫茶店の人たちのつながりを表した相関図" width="1672" height="941" loading="lazy">
         </a>
         <p class="cast__map-note">押すと、大きな画像で開きます。</p>
       </div>
@@ -672,23 +672,23 @@ const CAST = [
       desc: '隣の席の主任。僕より十三も下。課長の前でだけ、やたらと声が大きい。', quote: '都合さん、それはちょっと考えが甘いですよ' },
     { key: 'kashiwagi', name: '柏木さん', role: '営業企画部', color: '#56606E', initial: '柏',
       desc: '六つ上のベテラン。怒った顔を誰も見たことがないのに、誰からも軽く扱われない人。', quote: '都合さん、全部を一人で抱えなくていいんですよ' },
-    { key: 'saeki', name: '佐伯さん', role: '同僚', color: '#A48E74', initial: '佐',
+    { key: 'saeki', name: '佐伯さん', role: '同僚', color: '#B47D86', initial: '佐',
       desc: '人の変化に、いちばん先に気づいてくれる同僚。', quote: '都合さん、大丈夫ですか？' },
     // シートの男性B・男性A・女性Cは、LPでは役割名で紹介する
     { key: 'doryo', name: '同僚', role: '同じ部署', color: '#557A9E', initial: '同',
       desc: '人の口ぐせに、よく気づく人。最近は資料を抱えて、僕のところへ確認を頼みに来る。', quote: '都合さん、この資料、穴がないか見てもらえませんか' },
     { key: 'kohai', name: '後輩', role: '同じ部署の若手', color: '#34466B', initial: '後',
       desc: '柏木さんには、まっすぐ目を見て相談するのに、僕のところには、書類を置いてすぐに帰っていく。', quote: '都合さんって優しいから、何を頼んでも大丈夫だよね' },
-    { key: 'doryo_c', name: '女性の同僚', role: '同じ部署', color: '#9A846E', initial: '同',
+    { key: 'doryo_c', name: '女性の同僚', role: '同じ部署', color: '#4D787C', initial: '同',
       desc: 'まわりをよく見ていて、僕が手いっぱいのときも先に気づいてくれる。', quote: '一緒に確認しましょう' },
   ] },
   // 会社の段と縦の列をそろえる（4列の中に3人）
   { place: '他部署', columns: 4, perRow: 4, people: [
-    { key: 'eigyo', name: '営業部の人', role: '他部署', color: '#3E5875', initial: '営',
+    { key: 'eigyo', name: '営業部の人', role: '他部署', color: '#4B5059', initial: '営',
       desc: '明るく話しやすい人。必要な情報を、僕にもこまめに共有してくれる。', quote: 'こちらでも確認しておきます' },
-    { key: 'jinji', name: '人事部の人', role: '他部署', color: '#9A846E', initial: '人',
+    { key: 'jinji', name: '人事部の人', role: '他部署', color: '#6B5669', initial: '人',
       desc: '落ち着いて話を聞き、相談の要点を一緒に整理してくれる。', quote: '無理のない範囲で進めましょう' },
-    { key: 'somu', name: '総務部の人', role: '他部署', color: '#527389', initial: '総',
+    { key: 'somu', name: '総務部の人', role: '他部署', color: '#4F6156', initial: '総',
       desc: '職場の小さな困りごとに気づき、働く環境を整えてくれる。', quote: '何かあれば声をかけてください' },
   ] },
   { place: '帰り道の喫茶店', people: [
@@ -713,7 +713,9 @@ function renderCast() {
         const face = el('figure', { class: 'person__face', style: `--c:${p.color}` });
         const img = el('img', { alt: p.name + 'のイラスト', width: '360', height: '360', loading: 'lazy' });
         img.addEventListener('error', () => face.classList.add('is-fallback'));
-        img.src = `assets/cast/${p.key}.jpg`;
+        const revised = p.key === 'saeki' ? '?v=20260928-3' :
+          ['doryo_c', 'eigyo', 'jinji', 'somu'].includes(p.key) ? '?v=20260928-2' : '';
+        img.src = `assets/cast/${p.key}.jpg${revised}`;
         face.append(img, el('span', { 'aria-hidden': 'true' }, p.initial));
         // 1人だけの段を4列ぶん使う（主人公の都合さん）ときは、横幅いっぱいのカードにする
         const wide = group.people.length === 1 && group.columns > 1;
@@ -925,7 +927,7 @@ const PREVIEW = {
   4: [
     ['assets/preview/04-1.jpg', '会議で片山課長が机を叩く'],
     ['assets/preview/04-2.jpg', '片山課長へ直すところを聞く都合さん'],
-    ['assets/preview/04-3.jpg', '佐伯さんが会議の話に静かに割って入る'],
+    ['assets/preview/04-3.jpg?v=20260928-3', '佐伯さんが会議の話に静かに割って入る'],
     ['assets/preview/04-4.jpg', '夜の寝室で考え続ける都合さん'],
     ['assets/preview/04.jpg', '夜中の二時過ぎ、布団の中で目が冴えている都合さん'],
   ],
