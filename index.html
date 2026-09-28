@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>都合さんの逆転ノート</title>
-<meta name="description" content="YouTube「都合さんの逆転ノート」の動画でお話しした限界サインを、自分で確かめられるシートにしました。LINEの友だち追加で、無料でお渡しします。">
+<meta name="description" content="YouTube「都合さんの逆転ノート」の動画でお話しした限界サインを 自分で確かめられるシートにしました LINEの友だち追加で 無料でお渡しします">
 <meta property="og:type" content="website">
 <meta property="og:title" content="都合さんの逆転ノート">
-<meta property="og:description" content="動画でお話しした5つの段を、自分で確かめられるシートにしました。LINEで無料でお渡しします。">
+<meta property="og:description" content="動画でお話しした5つの段を 自分で確かめられるシートにしました LINEで無料でお渡しします">
 <!-- 公開先：GitHub Pages（norio982-maker/tsugou-lp）。公開先を変えたら、この2行のURLも変える -->
 <meta property="og:url" content="https://norio982-maker.github.io/tsugou-lp/">
 <meta property="og:image" content="https://norio982-maker.github.io/tsugou-lp/assets/ogp.jpg">
@@ -46,7 +46,9 @@
 [hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:1.0625rem;line-height:1.85;letter-spacing:.02em}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:1.0625rem;line-height:1.85;letter-spacing:.02em;
+  /* 日本語を1字ずつどこでも折らず、空白と BudouX が入れた文節の切れ目でだけ折る（入りきらないときだけ字の途中で折る） */
+  word-break:keep-all;overflow-wrap:break-word;line-break:strict}
 img{max-width:100%;height:auto;display:block}
 h1,h2,h3{font-family:var(--f-mincho);font-weight:700;line-height:1.45;text-wrap:balance;margin:0}
 p{margin:0}
@@ -171,7 +173,7 @@ a{color:inherit}
 .note__foot{line-height:var(--lh);color:var(--ink-soft);font-size:.98rem}
 .note__foot a{color:var(--night-2);font-weight:700}
 /* 1つでも押したら、その場にLINEのボタンを出す */
-.note__cta{margin-top:calc(var(--lh) * .5);padding-bottom:calc(var(--lh) * .5)}
+.note__cta{margin-top:calc(var(--lh) * .5);padding-block:.6rem;background:#fff}  /* ボタンのまわりは罫線を消す（下の小さな字に線が重ならないように） */
 .note__cta .cta__note{line-height:1.7}
 
 /* 都合さんの話 */
@@ -244,6 +246,8 @@ a{color:inherit}
 .gift__tag--sub{background:var(--mist);color:var(--ink-soft)}
 .gift__name{margin-top:.55rem;font-size:clamp(1.08rem,3.6vw,1.25rem);line-height:1.55;word-break:auto-phrase}
 .gift__name span{display:block}
+/* 特典名の「・」のあと（後半）はひとかたまりにして、折るなら「・」のところで折る */
+.nw{display:inline-block}
 .gift__desc{margin-top:.55rem;font-size:.98rem;color:var(--ink-soft)}
 
 /* シートの中身（少しだけ） */
@@ -260,6 +264,11 @@ a{color:inherit}
   .row{grid-template-columns:auto 1fr auto;grid-template-areas:"label text hide"}
 }
 .row__text,.hero__q,.sec__h,.final__h{word-break:auto-phrase}
+/* 句読点を使わないので、文の切れ目はデータの「\n」で改行する（2026-09-29）。
+   それ以外の折り返しは、下の BudouX が文節の切れ目だけに限る（「お渡/しします」のような切れ方をしない） */
+.hero__lead,.gift__desc,.peek__sub,.row__text,.peek__warn,.final__h,.person__desc,.person__quote,.ep__theme,.bubble,.steps li>span,.note__hand,.cta__note{white-space:pre-line}
+/* 最後の行に1語だけ残る折り方を避ける（対応しているブラウザだけ） */
+p,dd,li,.gift__desc,.person__desc{text-wrap:pretty}
 .peek__warn{margin-top:1rem;font-size:.95rem;color:var(--ink-soft)}
 .peek__warn a{color:var(--redpen);font-weight:700}
 /* 特典のページ画像がある回は、動画のCTA「2つのLINE特典の中身を公開」と同じ形：夜の紺に金の枠、2・3ページ目を見せて4ページ目はぼかす */
@@ -398,7 +407,7 @@ a.page__more:hover{background:#15303F}
 .final{color:var(--on-night);background:radial-gradient(90% 90% at 20% 115%,rgba(232,182,76,.45),transparent 60%),linear-gradient(180deg,#1A2A50 0%,var(--night) 100%)}
 .final__in{padding-block:clamp(3.2rem,8vw,5rem);display:grid;gap:1.4rem}
 .final__hand{font-family:var(--f-hand);font-weight:600;color:var(--dawn)}
-.final__h{font-size:clamp(1.6rem,5.4vw,2.5rem);font-weight:900;max-width:22em}
+.final__h{font-size:clamp(1.35rem,6.2vw,2.5rem);font-weight:900;max-width:22em}
 
 /* 下の帯 */
 .foot{background:#0C1528;color:var(--on-night-soft);font-size:.9rem}
@@ -449,34 +458,34 @@ a.page__more:hover{background:#15303F}
     <div class="wrap hero__in">
       <div class="hero__text">
         <h1 class="hero__q" data-slot="question">あなたは今<br>何段目ですか</h1>
-        <p class="hero__lead"><span data-slot="lead">動画でお話しした5つの段を、自分で確かめられるシートにしました。</span><br>明日そのまま使える言葉と、2つセットでお渡しします。</p>
+        <p class="hero__lead"><span data-slot="lead">動画でお話しした5つの段を<br>自分で確かめられるシートにしました</span><br>明日そのまま使える言葉と<br>2つセットでお渡しします</p>
       </div>
       <div class="hero__covers" data-slot="heroCovers"></div>
       <div class="cta" id="ctaHero">
         <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで2つの特典を受け取る</a>
-        <ul class="assure"><li>無料</li><li>1分で受け取れる</li><li>ブロックすれば、すぐ止まる</li></ul>
-        <p class="cta__note" data-slot="how">友だち追加のあと、トークで<span class="kw">特典</span>と送ると届きます。</p>
+        <ul class="assure"><li>無料</li><li>1分で受け取れる</li><li>ブロックすれば すぐ止まる</li></ul>
+        <p class="cta__note" data-slot="how">友だち追加のあと<br>トークで<span class="kw">特典</span>と送ると届きます</p>
       </div>
     </div>
   </section>
 
   <section class="sec" id="aruaru">
     <div class="wrap narrow">
-      <h2 class="sec__h">こんなこと、ありませんか。</h2>
-      <p class="sec__sub">当てはまるものを、押してみてください。</p>
+      <h2 class="sec__h">こんなこと ありませんか</h2>
+      <p class="sec__sub">当てはまるものを 押してみてください</p>
       <div class="note">
         <ul class="checks">
-          <li><button type="button" class="check" id="check1" aria-pressed="false"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 17 L13 25 L28 5" fill="none" stroke="#C8372D" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>頼まれると、つい「自分がやっておきます」と言ってしまう</span></button></li>
-          <li><button type="button" class="check" id="check2" aria-pressed="false"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 17 L13 25 L28 5" fill="none" stroke="#C8372D" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>しんどいのに、「まだ大丈夫です」と笑ってしまう</span></button></li>
-          <li><button type="button" class="check" id="check3" aria-pressed="false"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 17 L13 25 L28 5" fill="none" stroke="#C8372D" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>休みの日も、仕事の連絡を見てしまう</span></button></li>
-          <li><button type="button" class="check" id="check4" aria-pressed="false"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 17 L13 25 L28 5" fill="none" stroke="#C8372D" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>家に帰っても、仕事のことが頭から離れない</span></button></li>
-          <li><button type="button" class="check" id="check5" aria-pressed="false"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 17 L13 25 L28 5" fill="none" stroke="#C8372D" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>迷惑をかけたくなくて、「手伝いましょうか」を断ってしまう</span></button></li>
+          <li><button type="button" class="check" id="check1" aria-pressed="false"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 17 L13 25 L28 5" fill="none" stroke="#C8372D" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>頼まれると つい「自分がやっておきます」と言ってしまう</span></button></li>
+          <li><button type="button" class="check" id="check2" aria-pressed="false"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 17 L13 25 L28 5" fill="none" stroke="#C8372D" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>しんどいのに「まだ大丈夫です」と笑ってしまう</span></button></li>
+          <li><button type="button" class="check" id="check3" aria-pressed="false"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 17 L13 25 L28 5" fill="none" stroke="#C8372D" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>休みの日も 仕事の連絡を見てしまう</span></button></li>
+          <li><button type="button" class="check" id="check4" aria-pressed="false"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 17 L13 25 L28 5" fill="none" stroke="#C8372D" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>家に帰っても 仕事のことが頭から離れない</span></button></li>
+          <li><button type="button" class="check" id="check5" aria-pressed="false"><span class="check__box" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 17 L13 25 L28 5" fill="none" stroke="#C8372D" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>迷惑をかけたくなくて「手伝いましょうか」を断ってしまう</span></button></li>
         </ul>
-        <p class="note__hand" id="checkResult" aria-live="polite">押したところに、赤ペンで印がつきます。</p>
-        <p class="note__foot" id="checkFoot">どこから手をつければいいかは、<a href="#tokuten">LINEでお渡しするシート</a>で分かります。</p>
+        <p class="note__hand" id="checkResult" aria-live="polite">押したところに 赤ペンで印がつきます</p>
+        <p class="note__foot" id="checkFoot">どこから手をつければいいかは <a href="#tokuten">LINEでお渡しするシート</a>で分かります</p>
         <div class="cta cta--paper note__cta" id="ctaCheck" hidden>
           <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで2つの特典を受け取る</a>
-          <p class="cta__note">どこから手をつければいいかは、シートで分かります。無料です。</p>
+          <p class="cta__note">どこから手をつければいいかは<br>シートで分かります<br>無料です</p>
         </div>
       </div>
     </div>
@@ -485,13 +494,13 @@ a.page__more:hover{background:#15303F}
   <section class="sec sec--mist" id="tokuten">
     <div class="wrap">
       <p class="kicker">LINEでお渡しするもの</p>
-      <h2 class="sec__h">無料の特典は、この2つです。</h2>
+      <h2 class="sec__h">無料の特典は この2つです</h2>
       <div class="gifts" data-slot="gifts"></div>
       <div class="peek" data-slot="peek"></div>
       <div class="cta cta--paper cta--center" id="ctaGift">
-        <p class="cta__lead" data-slot="giftLead">続きは、LINEで2つともお渡しします。</p>
+        <p class="cta__lead" data-slot="giftLead">続きは LINEで2つともお渡しします</p>
         <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで2つの特典を受け取る</a>
-        <p class="cta__note" data-slot="how">無料です。友だち追加のあと、トークで<span class="kw">特典</span>と送ると届きます。</p>
+        <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">特典</span>と送ると届きます</p>
       </div>
     </div>
   </section>
@@ -501,38 +510,38 @@ a.page__more:hover{background:#15303F}
       <div class="story__head">
         <img class="story__face" src="assets/icon.jpg" alt="都合さん" width="92" height="92">
         <div>
-          <h2 class="sec__h">僕も、ずっと断れませんでした。</h2>
-          <p class="story__intro">はじめまして、都合です。52歳、会社員。会社に入って30年、頼まれた仕事は全部「自分がやっておきます」で引き受けてきました。</p>
+          <h2 class="sec__h">僕も ずっと断れませんでした</h2>
+          <p class="story__intro">はじめまして 都合です<br>52歳 会社員<br>会社に入って30年<br>頼まれた仕事は全部「自分がやっておきます」で引き受けてきました</p>
         </div>
       </div>
       <ol class="frames">
         <li class="frame">
           <img src="assets/scenes/1-busy.jpg" alt="電話を受けながら、書類の山に手を置く都合さん" width="960" height="540" loading="lazy">
           <p class="frame__when">前は</p>
-          <p>仕事を全部抱えこんで、夕方になっても電話と書類に追われていました。しんどくても「まだ大丈夫です」と笑っていました。</p>
+          <p>仕事を全部抱えこんで<br>夕方になっても電話と書類に追われていました<br>しんどくても「まだ大丈夫です」と笑っていました</p>
         </li>
         <li class="frame">
           <img src="assets/scenes/2-cafe.jpg" alt="喫茶店で、小野寺さんに話をする都合さん" width="960" height="540" loading="lazy">
           <p class="frame__when">喫茶店で</p>
-          <p>帰りに寄った喫茶店で、小野寺さんに本音をこぼしました。そこで、断らずに自分の状況を伝える言い方を教わりました。</p>
+          <p>帰りに寄った喫茶店で<br>小野寺さんに本音をこぼしました<br>そこで 断らずに自分の状況を伝える言い方を教わりました</p>
         </li>
         <li class="frame">
           <img src="assets/scenes/3-morning.jpg" alt="課長の机の前で、勇気を出して話す都合さん" width="960" height="540" loading="lazy">
           <p class="frame__when">次の朝</p>
-          <p>「この件、やっぱり厳しいかもしれません」。課長に言ってみると、怒鳴られませんでした。そんなことは、はじめてでした。</p>
+          <p>「この件 やっぱり厳しいかもしれません」<br>課長に言ってみると 怒鳴られませんでした<br>そんなことは はじめてでした</p>
         </li>
       </ol>
-      <p class="story__close">言い方を1つ変えただけで、毎日が少し変わりました。LINEでは、僕がそうやって覚えてきた言葉を、そのままお渡ししています。</p>
+      <p class="story__close">言い方を1つ変えただけで<br>毎日が少し変わりました<br>LINEでは<br>僕がそうやって覚えてきた言葉を<br>そのままお渡ししています</p>
     </div>
   </section>
 
   <section class="sec" id="cast" style="padding-top:0">
     <div class="wrap">
       <p class="kicker">登場人物</p>
-      <h2 class="sec__h">僕と、まわりの人たち</h2>
-      <p class="sec__sub">会社と、帰り道の喫茶店と、家。動画には、この人たちが出てきます。</p>
+      <h2 class="sec__h">僕と まわりの人たち</h2>
+      <p class="sec__sub">会社と 帰り道の喫茶店と 家<br>動画には この人たちが出てきます</p>
       <div class="cast-groups" data-slot="cast"></div>
-      <p class="cast__more">家族はほかに、結婚して家を出た長女の美咲さん、一人暮らしの次女の七海さん、孫の結衣ちゃんも出てきます。</p>
+      <p class="cast__more">家族はほかに<br>結婚して家を出た長女の美咲さん<br>一人暮らしの次女の七海さん<br>孫の結衣ちゃんも出てきます</p>
       <!-- 相関図。画像は 画像を取り込む.mjs が入れる。
            同じ名前のまま差し替えると、見る人のブラウザに古い画像が残る（最大10分）ので、差し替えたら ?v= の日付を2か所とも変える -->
       <div class="cast__map">
@@ -540,7 +549,7 @@ a.page__more:hover{background:#15303F}
         <a href="assets/cast/sokanzu.jpg?v=20260928-3" target="_blank" rel="noopener">
           <img src="assets/cast/sokanzu.jpg?v=20260928-3" alt="都合さんと、家族・会社・喫茶店の人たちのつながりを表した相関図" width="1672" height="941" loading="lazy">
         </a>
-        <p class="cast__map-note">押すと、大きな画像で開きます。</p>
+        <p class="cast__map-note">押すと 大きな画像で開きます</p>
       </div>
     </div>
   </section>
@@ -548,11 +557,11 @@ a.page__more:hover{background:#15303F}
   <section class="sec sec--mist" id="series">
     <div class="wrap">
       <p class="kicker">この先の特典</p>
-      <h2 class="sec__h">LINE特典は、5話まで用意しています。</h2>
-      <p class="sec__sub">都合さんの話は、この先も続きます。回ごとに、その話に合わせた特典を2つずつ。新しい話が出たら、LINEでお知らせします。</p>
+      <h2 class="sec__h">LINE特典は 5話まで用意しています</h2>
+      <p class="sec__sub">都合さんの話は この先も続きます<br>回ごとに その話に合わせた特典を2つずつ<br>新しい話が出たら LINEでお知らせします</p>
       <figure class="series__hero" id="seriesHero" hidden></figure>
       <ol class="series" data-slot="series"></ol>
-      <p class="series__note">※これからの話の特典は、名前や中身が変わることがあります。</p>
+      <p class="series__note">※これからの話の特典は 名前や中身が変わることがあります</p>
     </div>
   </section>
 
@@ -567,17 +576,17 @@ a.page__more:hover{background:#15303F}
             <div class="chat__bar"><img src="assets/icon.jpg" alt="" width="26" height="26" loading="lazy">都合さんの逆転ノート</div>
             <div class="chat__body" data-slot="chat"></div>
           </figure>
-          <p class="chat__note">※届くときのイメージです。</p>
+          <p class="chat__note">※届くときのイメージです</p>
         </div>
       </div>
       <div class="uketori">
         <div class="cta cta--paper" id="ctaMid">
           <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEを友だち追加する</a>
-          <p class="cta__note">登録は無料です。いらなくなったら、ブロックすればすぐに止まります。</p>
+          <p class="cta__note">登録は無料です<br>いらなくなったら<br>ブロックすればすぐに止まります</p>
         </div>
         <div class="qr" id="qrBox">
           <div class="qr__code" id="qr"></div>
-          <p>パソコンで見ている方は、スマホのカメラでこのQRコードを読み取ってください。</p>
+          <p>パソコンで見ている方は<br>スマホのカメラで この&#8288;QRコードを読み取ってください</p>
         </div>
       </div>
     </div>
@@ -587,11 +596,11 @@ a.page__more:hover{background:#15303F}
     <div class="wrap narrow">
       <h2 class="sec__h">よくある質問</h2>
       <dl class="qa">
-        <div><dt>お金はかかりますか？</dt><dd>かかりません。LINEの友だち追加だけで受け取れます。</dd></div>
-        <div><dt>スマホだけで読めますか？</dt><dd>読めます。トークに届いたものを押すと、スマホでそのまま開きます。印刷しなくても大丈夫です。</dd></div>
-        <div><dt>登録すると、自分の情報はどこまで伝わりますか？</dt><dd>こちらから見えるのは、LINEの表示名やアイコンなど、プロフィールに出している内容だけです。電話番号や、ほかの人とのトークが見えることはありません。友だち追加したことが、会社の人やほかの友だちに知られることもありません。</dd></div>
-        <div><dt>特典のあとは、何が届きますか？</dt><dd>僕の日記や、職場で使える一言を、ときどきお送りします。いらなくなったら、ブロックすればすぐに止まります。</dd></div>
-        <div><dt>シートで、病気かどうか分かりますか？</dt><dd>分かりません。今の自分の状態に気づくためのセルフチェックで、医学的な診断ではありません。</dd></div>
+        <div><dt>お金はかかりますか？</dt><dd>かかりません<br>LINEの友だち追加だけで受け取れます</dd></div>
+        <div><dt>スマホだけで読めますか？</dt><dd>読めます<br>トークに届いたものを押すと<br>スマホでそのまま開きます<br>印刷しなくても大丈夫です</dd></div>
+        <div><dt>登録すると 自分の情報はどこまで伝わりますか？</dt><dd>こちらから見えるのは<br>LINEの表示名やアイコンなど プロフィールに出している内容だけです<br>電話番号や ほかの人とのトークが見えることはありません<br>友だち追加したことが<br>会社の人やほかの友だちに知られることもありません</dd></div>
+        <div><dt>特典のあとは 何が届きますか？</dt><dd>僕の日記や 職場で使える一言を<br>ときどきお送りします<br>いらなくなったら<br>ブロックすればすぐに止まります</dd></div>
+        <div><dt>シートで病気かどうか分かりますか？</dt><dd>分かりません<br>今の自分の状態に気づくためのセルフチェックで<br>医学的な診断ではありません</dd></div>
       </dl>
     </div>
   </section>
@@ -599,28 +608,28 @@ a.page__more:hover{background:#15303F}
   <section class="sec sec--mist" id="soudan" style="padding-top:0">
     <div class="wrap narrow">
       <div class="help">
-        <h2 class="help__h">つらさが強いときは、先にこちらへ</h2>
-        <p>今つらさが強いときは、シートより先に、ここへ相談してください。ひとりで抱えなくて大丈夫です。</p>
+        <h2 class="help__h">つらさが強いときは 先にこちらへ</h2>
+        <p>今つらさが強いときは<br>シートより先に ここへ相談してください<br>ひとりで抱えなくて大丈夫です</p>
         <ul class="help__list">
           <li><b>いのちの電話</b>
             <a class="tel" href="tel:0570783556">0570-783-556</a><small>10時〜22時</small>
-            <a class="tel" href="tel:0120783556">0120-783-556</a><small>毎日16時〜21時、毎月10日は24時間</small></li>
+            <a class="tel" href="tel:0120783556">0120-783-556</a><small>毎日16時〜21時 毎月10日は24時間</small></li>
           <li><b>よりそいホットライン</b>
-            <a class="tel" href="tel:0120279338">0120-279-338</a><small>無料・24時間。岩手・宮城・福島からは 0120-279-226</small></li>
+            <a class="tel" href="tel:0120279338">0120-279-338</a><small>無料・24時間<br>岩手・宮城・福島からは 0120-279-226</small></li>
         </ul>
-        <p class="help__more">最新の受付時間は、厚生労働省「<a href="https://www.mhlw.go.jp/mamorouyokokoro/" rel="noopener">まもろうよ こころ</a>」で確かめられます。</p>
+        <p class="help__more">最新の受付時間は 厚生労働省「<a href="https://www.mhlw.go.jp/mamorouyokokoro/" rel="noopener">まもろうよ&nbsp;こころ</a>」で確かめられます</p>
       </div>
     </div>
   </section>
 
   <section class="final" id="final">
     <div class="wrap final__in">
-      <p class="final__hand">最後まで読んでくださって、ありがとうございます。</p>
-      <h2 class="final__h" data-slot="before">僕みたいに、5段目まで下りてしまう前に。</h2>
+      <p class="final__hand">最後まで読んでくださって ありがとうございます</p>
+      <h2 class="final__h" data-slot="before">僕みたいに<br>5段目まで下りてしまう前に</h2>
       <div class="cta" id="ctaFinal">
         <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで2つの特典を受け取る</a>
-        <p class="cta__note" data-slot="how">無料です。友だち追加のあと、トークで<span class="kw">特典</span>と送ると届きます。</p>
-        <ul class="assure"><li>1分で受け取れる</li><li>ブロックすれば、すぐ止まる</li></ul>
+        <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">特典</span>と送ると届きます</p>
+        <ul class="assure"><li>1分で受け取れる</li><li>ブロックすれば すぐ止まる</li></ul>
       </div>
     </div>
   </section>
@@ -629,7 +638,7 @@ a.page__more:hover{background:#15303F}
 <footer class="foot">
   <div class="wrap foot__in">
     <p class="foot__name">都合さんの逆転ノート</p>
-    <p>52歳の会社員・都合さんが、職場の人間関係の中で少しずつ前に進んでいく物語チャンネルです。</p>
+    <p>52歳の会社員・都合さんが<br>職場の人間関係の中で少しずつ前に進んでいく物語チャンネルです</p>
     <p><a href="https://www.youtube.com/channel/UCAhS5tyRsOXu5nNCndJELAQ">YouTubeチャンネルを見る</a></p>
     <p class="foot__c">© 2026 都合さんの逆転ノート</p>
   </div>
@@ -641,14 +650,24 @@ a.page__more:hover{background:#15303F}
 
 <dialog class="qr-dialog" id="qrDialog" aria-labelledby="qrDialogTitle">
   <h2 id="qrDialogTitle">スマホで読み取ってください</h2>
-  <p>LINEの友だち追加は、スマホのLINEで行います。スマホのカメラで、このQRコードを読み取ってください。</p>
+  <p>LINEの友だち追加は スマホのLINEで行います<br>スマホのカメラで この&#8288;QRコードを読み取ってください</p>
   <div class="qr-dialog__code" id="qrLarge"></div>
-  <p class="cta__note" data-slot="how">無料です。友だち追加のあと、トークで<span class="kw">特典</span>と送ると届きます。</p>
+  <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">特典</span>と送ると届きます</p>
   <button type="button" class="qr-dialog__close" id="qrClose">閉じる</button>
 </dialog>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
+// 文節の切れ目だけで折り返す（下の type="module" で BudouX を読み込むと window.budoux ができる）。
+// 読み込み前は何もしない。書き換えた場所は、書き換えたあとにこれを通す
+function phrase(root) { if (root && window.budoux) window.budoux(root); }
+document.addEventListener('budoux-ready', () => {
+  phrase(document.body);
+  // ボタンの中は BudouX が飛ばすので、チェック欄の文だけは直接わたす
+  document.querySelectorAll('.check > span:last-child').forEach(phrase);
+  reserveHeroHeight();
+});
+
 // 開いたとき・再読み込みしたときは、いつもいちばん上から見せる（ブラウザが前に見ていた位置へ戻すのを止める）。
 // ページの中の場所を指したURL（#soudan など）で開いたときだけは、その場所へ行かせる。#ep2 などは回の切り替えなので上から
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
@@ -675,14 +694,14 @@ const LINE_URL = 'https://liff.line.me/2009844800-B6WEn0vn?liffId=2009844800-B6W
 const EPISODES = {
   1: {
     question: 'あなたは今\n何段目ですか',
-    lead: '動画でお話しした5つの段を、自分で確かめられるシートにしました。',
+    lead: '動画でお話しした5つの段を\n自分で確かめられるシートにしました',
     keyword: '特典',
-    before: '僕みたいに、5段目まで下りてしまう前に。',
+    before: '僕みたいに\n5段目まで下りてしまう前に',
     gifts: [
       { img: 'assets/covers/ep1-a.jpg', name: '壊れる前に踏みとどまる・5段階セルフ診断シート',
-        desc: '自分や相手が今どの段にいるかチェックでき、それぞれの段で、何をすればいいかまで分かる中身です。' },
+        desc: '自分や相手が今どの段にいるかチェックでき\nそれぞれの段で 何をすればいいかまで分かる中身です' },
       { img: 'assets/covers/ep1-b.jpg', name: '断れない人のための魔法のフレーズ5選',
-        desc: '「NO」と言い切れないときでも、仕事の量や体調、時間を守れる言葉を5つ。今の自分に合う一言が選べます。' },
+        desc: '「NO」と言い切れないときでも\n仕事の量や体調 時間を守れる言葉を5つ\n今の自分に合う一言が選べます' },
     ],
     // 特典のページ画像がある回は、動画のCTAと同じく実際のページを見せる（画像は 特典ページを取り込む.py が作る）。
     // name は特典名を2行に分けたもの（動画のCTAと同じ切れ目）。shows は見せるページと、その見出し
@@ -692,64 +711,64 @@ const EPISODES = {
         { name: ['断れない人のための', '魔法のフレーズ5選'], total: 10,
           shows: [['assets/pages/ep1-b-02.jpg', '5つの魔法のフレーズ早見表'], ['assets/pages/ep1-b-03.jpg', '魔法のフレーズ1 優先順位']], blur: 'assets/pages/ep1-b-04-blur.jpg' },
       ],
-      warn: '5段目に当てはまるときは、ほかより先に' },
+      warn: '5段目に当てはまるときは\nほかより先に' },
   },
   2: {
     question: 'あなたは\nどの違いで\nつまずいていますか',
-    lead: '動画でお話しした5つの違いを、1分で確かめられるシートにしました。',
+    lead: '動画でお話しした5つの違いを\n1分で確かめられるシートにしました',
     keyword: null,
-    before: '僕みたいに、優しさを軽く見られたまま、何年も過ごしてしまう前に。',
+    before: '僕みたいに\n優しさを軽く見られたまま\n何年も過ごしてしまう前に',
     gifts: [
       { img: 'assets/covers/ep2-a.jpg', name: '舐められる原因に1分で気づける・5つの違い診断シート',
-        desc: '自分がどの違いでつまずいているかが分かり、いちばん先に直すところまで分かる中身です。' },
+        desc: '自分がどの違いで\nつまずいているかが分かり\nいちばん先に直すところまで\n分かる中身です' },
       { img: 'assets/covers/ep2-b.jpg', name: '優しい人でも舐められなくなる・そのまま使える一言5選',
-        desc: '相談・断り・会議・方針変更・頼みごと。5つの場面で、そのまま言える一言が分かります。' },
+        desc: '相談・断り・会議・方針変更・頼みごと\n5つの場面で そのまま言える一言が分かります' },
     ],
-    peek: { title: '軽く見られる人が、やってしまうこと', hidden: '信頼される人の一言',
+    peek: { title: '軽く見られる人が やってしまうこと', hidden: '信頼される人の一言',
       rows: [['1つ目', '共感して終わる'], ['2つ目', '全部引き受ける'], ['3つ目', 'なんとなく決める'], ['4つ目', 'その場の空気で変わる'], ['5つ目', '謝って頼む・押しつける']] },
   },
   3: {
     question: 'あなたは\nどの落とし穴に\nはまりやすいですか',
-    lead: '動画でお話しした7つのことを、自分で確かめられるセルフチェックにしました。',
+    lead: '動画でお話しした7つのことを\n自分で確かめられるセルフチェックにしました',
     keyword: null,
-    before: '僕みたいに、頼られるようになったあとで、陰でそう思われてしまう前に。',
+    before: '僕みたいに\n頼られるようになったあとで\n陰でそう思われてしまう前に',
     gifts: [
       { img: 'assets/covers/ep3-a.jpg', name: '賢そうに見える人の7つの落とし穴・セルフチェック',
-        desc: '自分がどの穴にはまりやすいかが分かり、いちばん先にふさぐ「一問」まで分かる中身です。' },
+        desc: '自分がどの穴に\nはまりやすいかが分かり\nいちばん先にふさぐ「一問」まで\n分かる中身です' },
       { img: 'assets/covers/ep3-b.jpg', name: '賢い人の一問7選',
-        desc: '会議や決めごと、指摘を受けたとき。7つの場面で、そのまま使える一問が分かります。' },
+        desc: '会議や決めごと\n指摘を受けたとき\n7つの場面で そのまま使える一問が分かります' },
     ],
-    peek: { title: '実は頭が悪いと思われる人が、やってしまうこと', hidden: '代わりの一問',
-      rows: [['1つ目', '「自分は間違えない」と思い込む'], ['2つ目', '大事な判断を勘だけで決める'], ['3つ目', '都合のいい証拠だけを集める'], ['4つ目', 'カッとして、そのまま言い返す'], ['5つ目', '寝不足のまま決める'], ['6つ目', '同時にこなすのを能力だと思う'], ['7つ目', 'できる人を演じて指摘をかわす']] },
+    peek: { title: '実は頭が悪いと思われる人が やってしまうこと', hidden: '代わりの一問',
+      rows: [['1つ目', '「自分は間違えない」と思い込む'], ['2つ目', '大事な判断を勘だけで決める'], ['3つ目', '都合のいい証拠だけを集める'], ['4つ目', 'カッとして そのまま言い返す'], ['5つ目', '寝不足のまま決める'], ['6つ目', '同時にこなすのを能力だと思う'], ['7つ目', 'できる人を演じて指摘をかわす']] },
   },
   4: {
     question: 'あなたに足りない\n対処はどれですか',
-    lead: '動画でお話しした7つの対処を、自分で確かめられる診断シートにしました。',
+    lead: '動画でお話しした7つの対処を\n自分で確かめられる診断シートにしました',
     keyword: null,
-    before: '僕みたいに、家に帰ってからも、頭の中で戦い続けてしまう前に。',
+    before: '僕みたいに\n家に帰ってからも\n頭の中で戦い続けてしまう前に',
     gifts: [
       { img: 'assets/covers/ep4-a.jpg', name: '振り回され度・7つの対処診断シート',
-        desc: '自分がどの対処が足りていないかが分かり、いちばん先に始める一手まで分かる中身です。' },
+        desc: '自分がどの対処が足りていないかが分かり\nいちばん先に始める一手まで分かる中身です' },
       { img: 'assets/covers/ep4-b.jpg', name: '振り回されない一言7選',
-        desc: 'すぐに言い返さない、話を戻す、相談をまとめる。7つの場面で、そのまま使える一言が分かります。' },
+        desc: 'すぐに言い返さない\n話を戻す 相談をまとめる\n7つの場面で そのまま使える一言が分かります' },
     ],
-    peek: { title: '振り回される人が、やってしまうこと', hidden: 'そのまま使える一言',
+    peek: { title: '振り回される人が やってしまうこと', hidden: 'そのまま使える一言',
       rows: [['1つ目', '腹が立った瞬間に返す'], ['2つ目', '人柄を裁いて頭の中で戦う'], ['3つ目', '長く言い返す'], ['4つ目', '呼ばれるまま相手の土俵に出る'], ['5つ目', '一人で抱えて戦い続ける'], ['6つ目', '相手を家に連れて帰る'], ['7つ目', '会社の問題まで一人で背負う']] },
   },
   5: {
     question: 'あなたに今\nどのサインが\n出ていますか',
-    lead: '動画でお話しした9つのサインを、自分で確かめられる診断シートにしました。',
+    lead: '動画でお話しした9つのサインを\n自分で確かめられる診断シートにしました',
     keyword: null,
-    before: '僕みたいに、会社のデスクで涙が出るまで、サインを見過ごしてしまう前に。',
+    before: '僕みたいに\n会社のデスクで涙が出るまで\nサインを見過ごしてしまう前に',
     gifts: [
       { img: 'assets/covers/ep5-a.jpg', name: '9つの危険サイン・セルフチェック診断シート',
-        desc: '自分に今どのサインが出ているかが分かり、当てはまった数に応じて、今やることまで分かる中身です。' },
+        desc: '自分に今どのサインが\n出ているかが分かり\n当てはまった数に応じて\n今やることまで分かる中身です' },
       { img: 'assets/covers/ep5-b.jpg', name: '対処の一手9選',
-        desc: '9つのサインそれぞれで、まずやることが1ページで分かります。' },
+        desc: '9つのサインそれぞれで\nまずやることが1ページで分かります' },
     ],
     peek: { title: '9つの危険サインの見分け方', hidden: '出たときの手当て',
-      rows: [['1つ目', '休んでも、疲れが取れない'], ['2つ目', '仕事が、どうでもよくなってくる'], ['3つ目', '集中できない、忘れっぽくなる'], ['4つ目', '夜、眠れない'], ['5つ目', 'イライラする、涙もろくなる'], ['6つ目', '好きなことが、楽しめない'], ['7つ目', '人を避けるようになる'], ['8つ目', '異常なしなのに、体が痛い'], ['9つ目', '先が、見えない']],
-      warn: 'いくつも当てはまるときや、9つ目に当てはまるときは、ひとりで抱えずに' },
+      rows: [['1つ目', '休んでも疲れが取れない'], ['2つ目', '仕事がどうでもよくなってくる'], ['3つ目', '集中できない 忘れっぽくなる'], ['4つ目', '夜眠れない'], ['5つ目', 'イライラする 涙もろくなる'], ['6つ目', '好きなことが楽しめない'], ['7つ目', '人を避けるようになる'], ['8つ目', '異常なしなのに 体が痛い'], ['9つ目', '先が見えない']],
+      warn: 'いくつも当てはまるときや 9つ目に当てはまるときは\nひとりで抱えずに' },
   },
 };
 
@@ -758,11 +777,11 @@ const BOOK_COLORS = [['var(--s1)', '#72D6C9'], ['#B5523B', '#F6997C']];
 
 // 「LINE特典は、5話まで」の予告に出す、各話のひとこと（動画のタイトルは変わることがあるので、中身の短い言い方にしてある）
 const THEMES = {
-  1: '壊れる前に出る、口ぐせのサイン',
-  2: '優しいのに、軽く見られる理由',
-  3: '賢い人が、しないこと',
-  4: '嫌な人に、振り回されない',
-  5: '心と体の、危険サイン',
+  1: '壊れる前に出る\n口ぐせのサイン',
+  2: '優しいのに 軽く見られる理由',
+  3: '賢い人がしないこと',
+  4: '嫌な人に振り回されない',
+  5: '心と体の危険サイン',
 };
 
 // 登場人物。紹介は都合さんの目から。役どころ・年の差・口ぐせは キャラクター設定.md と各話の台本のとおり
@@ -770,46 +789,46 @@ const THEMES = {
 const CAST = [
   { place: '僕', columns: 4, people: [
     { key: 'tsugo', name: '都合さん', role: '主人公', color: '#2E4A7F', initial: '都',
-      desc: 'まだ断れずに引き受けることもあるけれど、自分の状況を伝える練習を続けています。', quote: '' },
+      desc: 'まだ断れずに引き受けることもあるけれど\n自分の状況を伝える練習を続けています', quote: '' },
   ] },
   // 7人なので、PCでは横幅いっぱいに4人＋3人の2段で並べる
   { place: '会社', columns: 4, perRow: 4, people: [
     { key: 'katayama', name: '片山課長', role: '上司', color: '#4A3566', initial: '片',
-      desc: '僕の上司。四つ年下で、怒鳴らない日のほうが少ない。', quote: '言い訳するな！' },
+      desc: '僕の上司\n四つ年下で\n怒鳴らない日のほうが少ない', quote: '言い訳するな！' },
     { key: 'hayakawa', name: '早川さん', role: '主任', color: '#3B3350', initial: '早',
-      desc: '隣の席の主任。僕より十三も下。課長の前でだけ、やたらと声が大きい。', quote: '都合さん、それはちょっと考えが甘いですよ' },
+      desc: '隣の席の主任\n僕より十三も下\n課長の前でだけ\nやたらと声が大きい', quote: '都合さん それはちょっと考えが甘いですよ' },
     { key: 'kashiwagi', name: '柏木さん', role: '営業企画部', color: '#56606E', initial: '柏',
-      desc: '六つ上のベテラン。怒った顔を誰も見たことがないのに、誰からも軽く扱われない人。', quote: '都合さん、全部を一人で抱えなくていいんですよ' },
+      desc: '六つ上のベテラン\n怒った顔を誰も見たことがないのに\n誰からも軽く扱われない人', quote: '都合さん 全部を一人で抱えなくていいんですよ' },
     { key: 'saeki', name: '佐伯さん', role: '同僚', color: '#B47D86', initial: '佐',
-      desc: '人の変化に、いちばん先に気づいてくれる同僚。', quote: '都合さん、大丈夫ですか？' },
+      desc: '人の変化に いちばん先に気づいてくれる同僚', quote: '都合さん 大丈夫ですか？' },
     // シートの男性B・男性A・女性Cは、LPでは役割名で紹介する
     { key: 'doryo', name: '同僚', role: '同じ部署', color: '#557A9E', initial: '同',
-      desc: '人の口ぐせに、よく気づく人。最近は資料を抱えて、僕のところへ確認を頼みに来る。', quote: '都合さん、この資料、穴がないか見てもらえませんか' },
+      desc: '人の口ぐせに よく気づく人\n最近は資料を抱えて\n僕のところへ\n確認を頼みに来る', quote: '都合さん この資料 穴がないか見てもらえませんか' },
     { key: 'kohai', name: '後輩', role: '同じ部署の若手', color: '#34466B', initial: '後',
-      desc: '柏木さんには、まっすぐ目を見て相談するのに、僕のところには、書類を置いてすぐに帰っていく。', quote: '都合さんって優しいから、何を頼んでも大丈夫だよね' },
+      desc: '柏木さんには\nまっすぐ目を見て相談するのに\n僕のところには\n書類を置いてすぐに帰っていく', quote: '都合さんって優しいから\n何を頼んでも大丈夫だよね' },
     { key: 'doryo_c', name: '女性の同僚', role: '同じ部署', color: '#4D787C', initial: '同',
-      desc: 'まわりをよく見ていて、僕が手いっぱいのときも先に気づいてくれる。', quote: '一緒に確認しましょう' },
+      desc: 'まわりをよく見ていて\n僕が手いっぱいのときも先に気づいてくれる', quote: '一緒に確認しましょう' },
   ] },
   // 会社の段と縦の列をそろえる（4列の中に3人）
   { place: '他部署', columns: 4, perRow: 4, people: [
     { key: 'eigyo', name: '営業部の人', role: '他部署', color: '#4B5059', initial: '営',
-      desc: '明るく話しやすい人。必要な情報を、僕にもこまめに共有してくれる。', quote: 'こちらでも確認しておきます' },
+      desc: '明るく話しやすい人\n必要な情報を 僕にもこまめに共有してくれる', quote: 'こちらでも確認しておきます' },
     { key: 'jinji', name: '人事部の人', role: '他部署', color: '#6B5669', initial: '人',
-      desc: '落ち着いて話を聞き、相談の要点を一緒に整理してくれる。', quote: '無理のない範囲で進めましょう' },
+      desc: '落ち着いて話を聞き\n相談の要点を一緒に整理してくれる', quote: '無理のない範囲で進めましょう' },
     { key: 'somu', name: '総務部の人', role: '他部署', color: '#4F6156', initial: '総',
-      desc: '職場の小さな困りごとに気づき、働く環境を整えてくれる。', quote: '何かあれば声をかけてください' },
+      desc: '職場の小さな\n困りごとに気づき\n働く環境を整えてくれる', quote: '何かあれば声をかけてください' },
   ] },
   { place: '帰り道の喫茶店', people: [
     { key: 'onodera', name: '小野寺さん', role: 'メンター', color: '#2E2A2B', initial: '小',
-      desc: '黒いハットに、口元の大きな笑み。いつの間にか現れて、僕の話を最後まで聞いてくれる。', quote: '小さく変われば大丈夫です' },
+      desc: '黒いハットに\n口元の大きな笑み\nいつの間にか現れて\n僕の話を最後まで聞いてくれる', quote: '小さく変われば大丈夫です' },
   ] },
   { place: '家', people: [
     { key: 'keiko', name: '恵子さん', role: '妻', color: '#2E4A7F', initial: '恵',
-      desc: 'はっきり物を言うけれど、いちばん僕の体を気にかけてくれる。', quote: '無理しすぎじゃない？' },
+      desc: 'はっきり物を言うけれど\nいちばん僕の体を気にかけてくれる', quote: '無理しすぎじゃない？' },
     { key: 'hinata', name: 'ひなたさん', role: '三女', color: '#C9962A', initial: 'ひ',
-      desc: '一緒に暮らしている三女。家の空気を明るくしてくれる。', quote: 'お父さん、おかえり！' },
+      desc: '一緒に暮らしている三女\n家の空気を明るくしてくれる', quote: 'お父さん おかえり！' },
     { key: 'taeko', name: 'たえこ', role: '飼い犬', color: '#B97F45', initial: 'た',
-      desc: 'うちのトイプードル。僕が落ちこんでいると、そっとそばに寄ってくる。', quote: '' },
+      desc: 'うちのトイプードル\n僕が落ちこんでいると\nそっとそばに寄ってくる', quote: '' },
   ] },
 ];
 
@@ -879,6 +898,12 @@ function el(tag, attrs, ...kids) {
   return node;
 }
 
+// 特典名を「・」の前後に分け、後半をひとかたまりにする（予告の一覧・トーク画面の見本で使う）
+function nameParts(name) {
+  const i = name.indexOf('・');
+  return i < 0 ? [name] : [name.slice(0, i + 1), el('span', { class: 'nw' }, name.slice(i + 1))];
+}
+
 // 表紙。画像がまだ無いときは、文字だけの仮の表紙に切り替わる
 function cover(gift, extraClass, lazy) {
   const [first, second] = gift.name.split('・');
@@ -902,6 +927,8 @@ function setHeroText(k) {
   document.querySelector('[data-slot="question"]').textContent = e.question;
   document.querySelector('[data-slot="lead"]').textContent = e.lead;
   document.querySelector('#ctaHero [data-slot="how"]').replaceChildren(howText(e, false));
+  phrase(document.querySelector('.hero__text'));
+  phrase(document.getElementById('ctaHero'));
 }
 // 回によって行数が違うので、いちばん長い回の高さを先に取っておく（表紙を送ったときにLINEボタンや表紙が上下しないように）。
 // 見出しと説明はくっつけたまま、余りは説明の下に置く（見出しの下が空くと、途中で切れたように見える）
@@ -987,9 +1014,9 @@ function renderHeroSlider(n) {
 // free=false は、すぐ上に「✓無料」を出しているところ（いちばん上のボタン）
 function howText(ep, free = true) {
   const p = document.createDocumentFragment();
-  const head = free ? '無料です。' : '';
-  if (ep.keyword) p.append(head + '友だち追加のあと、トークで', el('span', { class: 'kw' }, ep.keyword), 'と送ると届きます。');
-  else p.append(head + '友だち追加すると、トークに届きます。');
+  const head = free ? '無料です\n' : '';
+  if (ep.keyword) p.append(head + '友だち追加のあと\nトークで', el('span', { class: 'kw' }, ep.keyword), 'と送ると届きます');
+  else p.append(head + '友だち追加すると トークに届きます');
   return p;
 }
 
@@ -998,20 +1025,20 @@ function renderChat(ep) {
   const gifts = el('div', { class: 'bubble' }, ...ep.gifts.map(g =>
     el('div', { class: 'bubble__gift' },
       el('img', { src: g.img, alt: '', width: '34', height: '51', loading: 'lazy' }),
-      el('span', {}, '▼', el('br', {}), g.name))));
+      el('span', {}, '▼', el('br', {}), ...nameParts(g.name)))));
   document.querySelector('[data-slot="chat"]').replaceChildren(
     ...(ep.keyword ? [el('p', { class: 'bubble bubble--me' }, ep.keyword)] : []),
     el('div', { class: 'bubble-row' },
       el('img', { src: 'assets/icon.jpg', alt: '', width: '30', height: '30', loading: 'lazy' }),
       el('div', {},
-        el('p', { class: 'bubble' }, '都合です。最後まで見てくださって、ありがとうございます。'),
+        el('p', { class: 'bubble' }, '都合です\n最後まで見てくださって ありがとうございます'),
         gifts)));
 }
 
 // 特典の中身：ページ画像がある回は、2・3ページ目（押すと大きく開く）と、ぼかした4ページ目に「続きは特典で」
 function peekPages(pk) {
   return [
-    el('h3', { class: 'peek__h' }, '2つの特典の中身を、少しだけ'),
+    el('h3', { class: 'peek__h' }, '2つの特典の中身を 少しだけ'),
     el('div', { class: 'books' }, ...pk.pages.map((b, i) => el('section', { class: 'book', style: `--tag:${BOOK_COLORS[i][0]};--accent:${BOOK_COLORS[i][1]}` },
       el('div', { class: 'book__head' },
         el('span', { class: 'book__tag' }, `特典${i + 1}`),
@@ -1024,14 +1051,14 @@ function peekPages(pk) {
         el('li', { class: 'page' },
           el('img', { src: b.blur, alt: '', width: '360', height: '640', loading: 'lazy' }),
           el('a', { class: 'page__more', href: LINE_URL, 'data-line': '' }, '続きは特典で', el('small', {}, 'LINEで受け取る ›'))))))),
-    el('p', { class: 'peek__note' }, '押すと、ページが大きく開きます。'),
+    el('p', { class: 'peek__note' }, '押すと ページが大きく開きます'),
   ];
 }
 
 // ページ画像がまだ無い回は、中身の一部を文字で並べ、残りを「LINEで」と伏せる
 function peekRows(pk) {
   return [
-    el('h3', { class: 'peek__h' }, 'シートの中身を、少しだけ'),
+    el('h3', { class: 'peek__h' }, 'シートの中身を 少しだけ'),
     el('p', { class: 'peek__sub' }, pk.title),
     el('ol', { class: 'rows' }, ...pk.rows.map(([label, text]) => el('li', { class: 'row' },
       el('span', { class: 'row__label' }, label),
@@ -1049,9 +1076,9 @@ function render(n) {
   // 特典の中身のすぐ下のボタンの一言。ページを見せている回は「全10ページ」まで言う（\n の位置で改行する）
   const totals = ep.peek.pages ? [...new Set(ep.peek.pages.map(b => b.total))] : [];
   document.querySelector('[data-slot="giftLead"]').textContent =
-    totals.length === 1 ? `2つとも全${totals[0]}ページ。\n続きは、LINEでお渡しします。`
-    : ep.peek.pages ? '続きは、LINEで\n2つともお渡しします。'
-    : '伏せたところも全部、\nLINEでお渡しします。';
+    totals.length === 1 ? `2つとも全${totals[0]}ページ\n続きは LINEでお渡しします`
+    : ep.peek.pages ? '続きは LINEで\n2つともお渡しします'
+    : '伏せたところも全部\nLINEでお渡しします';
   renderChat(ep);
 
   renderHeroSlider(n);
@@ -1065,22 +1092,24 @@ function render(n) {
         el('p', { class: 'gift__desc' }, g.desc)))));
 
   const pk = ep.peek;
-  const warn = pk.warn ? el('p', { class: 'peek__warn' }, pk.warn, el('a', { href: '#soudan' }, 'このページの下の相談先'), 'を見てください。') : null;
+  const warn = pk.warn ? el('p', { class: 'peek__warn' }, pk.warn, el('a', { href: '#soudan' }, 'このページの下の相談先'), 'を見てください') : null;
   const peek = document.querySelector('[data-slot="peek"]');
   peek.classList.toggle('peek--pages', !!pk.pages);
   peek.replaceChildren(...(pk.pages ? peekPages(pk) : peekRows(pk)), ...(warn ? [warn] : []));
 
   renderSeries(n);
 
-  const steps = ['下のボタンを押して、LINEを友だち追加します。'];
+  const steps = ['下のボタンを押して\nLINEを友だち追加します'];
   const kwStep = document.createDocumentFragment();
   if (ep.keyword) {
-    kwStep.append('トーク画面で', el('span', { class: 'kw' }, ep.keyword), 'と送ります。');
-    steps.push(kwStep, '2つの特典が、すぐにトークに届きます。');
+    kwStep.append('トーク画面で', el('span', { class: 'kw' }, ep.keyword), 'と送ります');
+    steps.push(kwStep, '2つの特典が\nすぐにトークに届きます');
   } else {
-    steps.push('2つの特典が、トークに届きます。');
+    steps.push('2つの特典がトークに届きます');
   }
   document.querySelector('[data-slot="steps"]').replaceChildren(...steps.map(s => el('li', {}, el('span', {}, s))));
+  phrase(document.querySelector('main'));
+  phrase(document.getElementById('qrDialog'));
 }
 
 // 「LINE特典は、5話まで」の予告。2〜5話は導入の5場面を順に切り替える
@@ -1154,8 +1183,9 @@ function renderSeries(n) {
       el('div', {},
         el('p', { class: 'ep__no' }, `${k}話`, current ? el('span', { class: 'ep__badge' }, 'この動画の特典') : null),
         el('p', { class: 'ep__theme' }, THEMES[k]),
-        el('ul', { class: 'ep__gifts' }, ...e.gifts.map(g => el('li', {}, g.name)))));
+        el('ul', { class: 'ep__gifts' }, ...e.gifts.map(g => el('li', {}, ...nameParts(g.name))))));
   }));
+  phrase(list);
 }
 
 function imageExists(src) {
@@ -1219,13 +1249,14 @@ function updateChecks() {
   // 1つでも押したら、シートへの案内の一文をLINEのボタンに入れ替える（気持ちが動いたその場で受け取れるように）
   document.getElementById('ctaCheck').hidden = n === 0;
   document.getElementById('checkFoot').hidden = n > 0;
-  if (n === 0) { result.textContent = '押したところに、赤ペンで印がつきます。'; return; }
-  if (n === checks.length) { result.replaceChildren(el('b', {}, '5つ全部'), '。前の僕と、まったく同じです。'); return; }
-  result.replaceChildren(el('b', {}, `${n}つ`), '当てはまりました。前の僕は、5つ全部でした。');
+  if (n === 0) { result.textContent = '押したところに 赤ペンで印がつきます'; return; }
+  if (n === checks.length) { result.replaceChildren(el('b', {}, '5つ全部'), '\n前の僕と まったく同じです'); return; }
+  result.replaceChildren(el('b', {}, `${n}つ`), '当てはまりました\n前の僕は 5つ全部でした');
 }
 checks.forEach(b => b.addEventListener('click', () => {
   b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
   updateChecks();
+  phrase(result);
 }));
 
 // スマホでは、ほかのボタンが見えていないときだけ、画面の下にボタンを出す
@@ -1239,6 +1270,52 @@ if ('IntersectionObserver' in window) {
   }, { threshold: [0, 0.6, 1] });
   ['ctaHero', 'ctaCheck', 'ctaGift', 'ctaMid', 'ctaFinal'].forEach(id => io.observe(document.getElementById(id)));
 }
+</script>
+<!-- 文節の切れ目だけで折り返すための BudouX（Google製・Apache-2.0。assets/budoux/ に置いた版を使い、外のサーバーからは読まない） -->
+<script type="module">
+import { HTMLProcessingParser } from './assets/budoux/html_processor.js';
+import { model } from './assets/budoux/ja.js';
+const parser = new HTMLProcessingParser(model);
+const ZWSP = /​/g;
+// BudouX が割ってしまう言葉。この中では折り返さない（足すときは、ここに書く）
+const KEEP = ['ありがとうございます', '一人暮らし', '気にかけて', '魔法のフレーズ5選', '笑み',
+  '踏みとどまる', '言い切れない', 'はまり', '当てはま', '仕事の連絡'].map(w => new RegExp([...w].join('​?'), 'g'));
+const textNodes = root => {
+  const list = [], walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  for (let t = walk.nextNode(); t; t = walk.nextNode()) list.push(t);
+  return list;
+};
+window.budoux = root => {
+  try {
+    // 前に入れた区切り（ゼロ幅スペース）と「折らない」印を外してから入れ直す（書き換えのたびに通しても増えないように）
+    for (const t of textNodes(root)) if (/[​⁠]/.test(t.nodeValue)) t.nodeValue = t.nodeValue.replace(/[​⁠]/g, '');
+    parser.applyToElement(root);
+    for (const t of textNodes(root)) {
+      let s = t.nodeValue;
+      for (const re of KEEP) s = s.replace(re, m => m.replace(ZWSP, ''));
+      s = s.replace(/「(?:[^「」​]​?){1,10}」/g, m => m.replace(ZWSP, ''))  // 10字までのかぎかっこの中では折らない
+           .replace(/​(?=しま[うい])/g, '')                 // 「言って／しまう」のように「しまう」だけ次の行に落とさない
+           .replace(/しまう​(?=前に)/g, 'しまう')             // 「〜してしまう／前に」と折らない
+           .replace(/​(?=かが)/g, '')                       // 「つまずいている／かが」と折らない
+           .replace(/」​?(?=(?:まで|と|を|で|が|は|に|の))/g, '」⁠') // 「「一問」／まで」と折らない（閉じかっこのあとは、もともと折れる所なので印を入れる）
+           .replace(/・(?=[^\s​])/g, '・​')              // 「・」のあとでは折ってよい（下の英数字の決まりで、「・5段階」がくっつかないように）
+           .replace(/​(?=か?[？！」』）・])/g, '')            // 行の頭に ？！」・ や「か？」を置かない
+           .replace(/の​(?=ための)/g, 'の')                 // 「断れない人の／ための…」と折らない
+           .replace(/(ための)(?=魔法)/g, '$1​')               // 「断れない人のための／魔法のフレーズ5選」と折れるように
+           .replace(/([こそあど])の​/g, '$1の');              // 「どの／違い」「この／QRコード」と折らない
+      // 特典のカードは幅がせまく、「5段階セルフ診断シート」が1行に入らない。そこだけ「5段階／セルフ診断シート」「セルフチェック／診断シート」で折れるようにする
+      if (t.parentElement && t.parentElement.closest('.gift__name')) {
+        s = s.replace(/([^\s​・])(セルフ)/g, '$1​$2').replace(/(チェック)(診断)/g, '$1​$2');
+      }
+      // 英字・数字と日本語のあいだは、ブラウザがもともと折ってよい場所にしている（「この／QRコード」「LINE／を」）。
+      // 文節の区切りが入っていないところには「ここでは折らない」印（U+2060）を入れる
+      s = s.replace(/([A-Za-z0-9])(?=[^\sA-Za-z0-9​⁠])/g, '$1⁠')
+           .replace(/([^\sA-Za-z0-9​⁠])(?=[A-Za-z0-9])/g, '$1⁠');
+      if (s !== t.nodeValue) t.nodeValue = s;
+    }
+  } catch (e) { /* うまくいかなくても、ふつうの折り返しで読める */ }
+};
+document.dispatchEvent(new Event('budoux-ready'));
 </script>
 </body>
 </html>
