@@ -232,12 +232,42 @@ a{color:inherit}
 .row__hide b{color:#0A6A33}
 @media (min-width:760px){
   .row{grid-template-columns:auto 1fr auto;grid-template-areas:"label text hide"}
-  .rows--stairs .row{margin-left:calc(var(--i) * 1.4rem)}
 }
-@media (max-width:759px){.rows--stairs .row{margin-left:calc(var(--i) * .35rem)}}
 .row__text,.hero__q,.sec__h,.final__h{word-break:auto-phrase}
 .peek__warn{margin-top:1rem;font-size:.95rem;color:var(--ink-soft)}
 .peek__warn a{color:var(--redpen);font-weight:700}
+/* 特典のページ画像がある回は、動画のCTA「2つのLINE特典の中身を公開」と同じ形：夜の紺に金の枠、2・3ページ目を見せて4ページ目はぼかす */
+.peek--pages{color:var(--on-night);border-color:rgba(232,182,76,.5);
+  background:radial-gradient(60% 45% at 100% 0%,rgba(232,182,76,.22),transparent 70%),radial-gradient(55% 45% at 0% 100%,rgba(232,182,76,.16),transparent 70%),linear-gradient(180deg,#0D172E 0%,var(--night) 100%)}
+.peek--pages .peek__h{width:fit-content;margin-inline:auto;padding:.4rem 1.6rem;border:1.5px solid rgba(232,182,76,.85);border-radius:14px;background:rgba(8,14,28,.55);color:var(--dawn);font-size:clamp(1.12rem,3.8vw,1.55rem);text-align:center}
+.books{display:grid;gap:2rem;margin-top:1.6rem}
+.book+.book{padding-top:2rem;border-top:1px solid rgba(232,182,76,.4)}
+@media (min-width:960px){
+  .books{grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
+  .book{padding-inline:1.3rem}
+  .book:first-child{padding-left:0}
+  .book+.book{padding-top:0;padding-right:0;border-top:0;border-left:1px solid rgba(232,182,76,.55)}
+}
+.book__head{display:flex;justify-content:space-between;align-items:center;gap:.8rem}
+.book__tag{font-size:.9rem;font-weight:700;letter-spacing:.08em;padding:.12rem .9rem;border-radius:6px;background:var(--tag);color:#fff}
+.book__count{font-size:.85rem;font-weight:700;padding:.08rem .8rem;border:1.5px solid rgba(232,182,76,.85);border-radius:8px;background:rgba(8,14,28,.6);color:#fff}
+.book__name{margin:.55rem 0 0;font-family:var(--f-mincho);font-weight:900;font-size:clamp(1.22rem,4.2vw,1.6rem);line-height:1.4;text-align:center;word-break:auto-phrase}
+.book__name span{display:block}
+.book__name span+span{color:var(--accent)}
+.book__pages{list-style:none;margin:1rem 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem}
+.page{position:relative;aspect-ratio:9/16;border:2px solid #C9A45A;border-radius:3px;overflow:hidden;background:#F6F2EA}
+.page a{display:block;height:100%}
+.page img{width:100%;height:100%;object-fit:cover}
+.page a:hover img{opacity:.9}
+.page__more{position:absolute;left:6%;right:6%;top:50%;translate:0 -50%;padding:.75rem .3rem;border:1.5px solid rgba(232,182,76,.85);border-radius:8px;background:#10202B;color:#fff;text-align:center;font-weight:700;font-size:clamp(.8rem,2.4vw,1rem);line-height:1.4}
+/* スマホは3枚を横に並べると字がつぶれるので、大きめのページを指で横に送る（最後にぼかしのページが来る） */
+@media (max-width:639px){
+  .book__pages{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:64%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:.6rem}
+  .page{scroll-snap-align:start}
+}
+.peek__note{margin-top:1.3rem;font-size:.88rem;color:var(--on-night-soft);text-align:center}
+.peek--pages .peek__warn{color:var(--on-night-soft)}
+.peek--pages .peek__warn a{color:#FF9C8F}
 
 /* 5話までの予告 */
 .series{list-style:none;padding:0;margin:1.8rem 0 0;display:grid;gap:.8rem}
@@ -583,8 +613,14 @@ const EPISODES = {
       { img: 'assets/covers/ep1-b.jpg', name: '断れない人のための魔法のフレーズ5選',
         desc: '「NO」と言い切れないときでも、仕事の量や体調、時間を守れる言葉を5つ。今の自分に合う一言が選べます。' },
     ],
-    peek: { title: '5つの段と、その段で口から出る言葉', hidden: 'その段でまずやること', stairs: true,
-      rows: [['1段目', '「私がやらないとダメなんで」'], ['2段目', '「ちゃんとやらなきゃです」'], ['3段目', '「まだ大丈夫です」'], ['4段目', '「迷惑をかけたくないです」'], ['5段目', '「もうどうでもいいです」']],
+    // 特典のページ画像がある回は、動画のCTAと同じく実際のページを見せる（画像は 特典ページを取り込む.py が作る）。
+    // name は特典名を2行に分けたもの（動画のCTAと同じ切れ目）。shows は見せるページと、その見出し
+    peek: { pages: [
+        { name: ['壊れる前に踏みとどまる', '5段階セルフ診断シート'], total: 10,
+          shows: [['assets/pages/ep1-a-02.jpg', '診断の進め方'], ['assets/pages/ep1-a-03.jpg', '1段目 抱え込みの段']], blur: 'assets/pages/ep1-a-04-blur.jpg' },
+        { name: ['断れない人のための', '魔法のフレーズ5選'], total: 10,
+          shows: [['assets/pages/ep1-b-02.jpg', '5つの魔法のフレーズ早見表'], ['assets/pages/ep1-b-03.jpg', '魔法のフレーズ1 優先順位']], blur: 'assets/pages/ep1-b-04-blur.jpg' },
+      ],
       warn: '5段目に当てはまるときは、ほかより先に' },
   },
   2: {
@@ -646,7 +682,8 @@ const EPISODES = {
   },
 };
 
-const STAIR_COLORS = ['var(--s1)', 'var(--s2)', 'var(--s3)', 'var(--s4)', 'var(--s5)'];
+// 特典1・特典2の札の色と、特典名の2行目の色（動画のCTAに合わせた）
+const BOOK_COLORS = [['var(--s1)', '#72D6C9'], ['#B5523B', '#F6997C']];
 
 // 「LINE特典は、5話まで」の予告に出す、各話のひとこと（動画のタイトルは変わることがあるので、中身の短い言い方にしてある）
 const THEMES = {
@@ -862,6 +899,38 @@ function howText(ep) {
   return p;
 }
 
+// 特典の中身：ページ画像がある回は、2・3ページ目（押すと大きく開く）と、ぼかした4ページ目に「続きは特典で」
+function peekPages(pk) {
+  return [
+    el('h3', { class: 'peek__h' }, '2つの特典の中身を、少しだけ'),
+    el('div', { class: 'books' }, ...pk.pages.map((b, i) => el('section', { class: 'book', style: `--tag:${BOOK_COLORS[i][0]};--accent:${BOOK_COLORS[i][1]}` },
+      el('div', { class: 'book__head' },
+        el('span', { class: 'book__tag' }, `特典${i + 1}`),
+        el('span', { class: 'book__count' }, `全${b.total}ページ`)),
+      el('h4', { class: 'book__name' }, ...b.name.map(line => el('span', {}, line))),
+      el('ul', { class: 'book__pages' },
+        ...b.shows.map(([src, title]) => el('li', { class: 'page' },
+          el('a', { href: src, target: '_blank', rel: 'noopener' },
+            el('img', { src, alt: `「${title}」のページ`, width: '900', height: '1600', loading: 'lazy' })))),
+        el('li', { class: 'page' },
+          el('img', { src: b.blur, alt: '', width: '360', height: '640', loading: 'lazy' }),
+          el('p', { class: 'page__more' }, '続きは特典で')))))),
+    el('p', { class: 'peek__note' }, '押すと、ページが大きく開きます。'),
+  ];
+}
+
+// ページ画像がまだ無い回は、中身の一部を文字で並べ、残りを「LINEで」と伏せる
+function peekRows(pk) {
+  return [
+    el('h3', { class: 'peek__h' }, 'シートの中身を、少しだけ'),
+    el('p', { class: 'peek__sub' }, pk.title),
+    el('ol', { class: 'rows' }, ...pk.rows.map(([label, text]) => el('li', { class: 'row' },
+      el('span', { class: 'row__label' }, label),
+      el('span', { class: 'row__text' }, text),
+      el('span', { class: 'row__hide' }, pk.hidden + '：', el('b', {}, 'LINEで'))))),
+  ];
+}
+
 function render(n) {
   const ep = EPISODES[n];
   document.querySelector('[data-slot="question"]').textContent = ep.question;
@@ -880,19 +949,10 @@ function render(n) {
         el('p', { class: 'gift__desc' }, g.desc)))));
 
   const pk = ep.peek;
-  const rows = pk.rows.map(([label, text], i) => {
-    const style = pk.stairs ? `--i:${i};--c:${STAIR_COLORS[i]}` : '';
-    return el('li', { class: 'row', style },
-      el('span', { class: 'row__label' }, label),
-      el('span', { class: 'row__text' }, text),
-      el('span', { class: 'row__hide' }, pk.hidden + '：', el('b', {}, 'LINEで')));
-  });
   const warn = pk.warn ? el('p', { class: 'peek__warn' }, pk.warn, el('a', { href: '#soudan' }, 'このページの下の相談先'), 'を見てください。') : null;
-  document.querySelector('[data-slot="peek"]').replaceChildren(
-    el('h3', { class: 'peek__h' }, 'シートの中身を、少しだけ'),
-    el('p', { class: 'peek__sub' }, pk.title),
-    el('ol', { class: 'rows' + (pk.stairs ? ' rows--stairs' : '') }, ...rows),
-    warn);
+  const peek = document.querySelector('[data-slot="peek"]');
+  peek.classList.toggle('peek--pages', !!pk.pages);
+  peek.replaceChildren(...(pk.pages ? peekPages(pk) : peekRows(pk)), warn);
 
   renderSeries(n);
 
