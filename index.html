@@ -78,20 +78,11 @@ a{color:inherit}
 @media (max-width:359px){.hero__q{font-size:1.8rem}}
 .hero__lead{margin-top:1.2rem;max-width:32em;color:var(--on-night-soft);font-size:1.05rem}
 .hero__covers{grid-area:covers;justify-self:center;width:min(100%,300px);min-width:0;display:grid;grid-template-columns:minmax(0,1fr);gap:.45rem}
-/* 表紙のスライド（1話〜5話）。スマホは指で横に動かせる */
-.slides{display:flex;width:100%;min-width:0;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-block:10px 18px;border-radius:8px}
-.slides::-webkit-scrollbar{display:none}
-.slide{flex:0 0 100%;scroll-snap-align:center;display:grid;place-items:center}
+/* いちばん上の表紙：いま開いている回の特典だけ（2026-09-29 スライドをやめた） */
+.slide{display:grid;place-items:center;padding-block:10px 18px}
 .slide__art{position:relative;width:92%;aspect-ratio:1/1}
 .slides__cap{text-align:center;font-size:.92rem;font-weight:700;color:var(--on-night-soft)}
 .slides__cap b{color:var(--dawn)}
-.slides__nav{display:flex;align-items:center;justify-content:center;gap:.8rem}
-.slides__step{all:unset;box-sizing:border-box;display:grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid rgba(232,182,76,.55);color:var(--dawn);font-size:1.5rem;line-height:1;cursor:pointer}
-.slides__step:hover{background:rgba(232,182,76,.14)}
-.slides__dots{display:flex;align-items:center;gap:.45rem}
-.slides__dot{all:unset;box-sizing:border-box;width:.7rem;height:.7rem;border-radius:999px;background:rgba(197,204,219,.35);cursor:pointer;transition:width .2s}
-.slides__dot[aria-current="true"]{width:1.5rem;background:var(--dawn)}
-.slides__step:focus-visible,.slides__dot:focus-visible,.slides:focus-visible{outline:3px solid var(--dawn);outline-offset:3px}
 .hero .cta{grid-area:cta}
 @media (min-width:820px){
   .hero__in{grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);grid-template-areas:"text covers" "cta covers";column-gap:3.2rem;row-gap:2rem;align-items:center;padding-block:4.2rem 4.8rem}
@@ -119,11 +110,6 @@ a{color:inherit}
   .hero .cover--b{animation:rise .9s .15s ease-out both}
 }
 @keyframes rise{from{translate:0 16px}to{translate:0 0}}
-/* 表紙を切り替えたときに、見出しと説明が横から入ってくる（止まっているときは普通に見える） */
-@media (prefers-reduced-motion:no-preference){
-  .hero__text.is-sliding .hero__q,.hero__text.is-sliding .hero__lead{animation:textSlide .45s ease-out both}
-}
-@keyframes textSlide{from{opacity:0;translate:var(--from,28px) 0}to{opacity:1;translate:0 0}}
 
 /* ── LINEのボタン ── */
 .cta{display:grid;gap:.75rem;justify-items:start}
@@ -464,7 +450,7 @@ a.page__more:hover{background:#15303F}
       <div class="cta" id="ctaHero">
         <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで特典を受け取る</a>
         <ul class="assure"><li>無料</li><li>1分で受け取れる</li><li>ブロックすれば すぐ止まる</li></ul>
-        <p class="cta__note" data-slot="how">友だち追加のあと<br>トークで<span class="kw">キーワード</span>と送ると届きます</p>
+        <p class="cta__note" data-slot="how">友だち追加のあと<br>トークで<span class="kw">合言葉</span>と送ると届きます</p>
       </div>
     </div>
   </section>
@@ -500,7 +486,7 @@ a.page__more:hover{background:#15303F}
       <div class="cta cta--paper cta--center" id="ctaGift">
         <p class="cta__lead" data-slot="giftLead">続きは LINEでお渡しします</p>
         <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで特典を受け取る</a>
-        <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">キーワード</span>と送ると届きます</p>
+        <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">合言葉</span>と送ると届きます</p>
       </div>
     </div>
   </section>
@@ -628,7 +614,7 @@ a.page__more:hover{background:#15303F}
       <h2 class="final__h" data-slot="before">僕みたいに<br>5段目まで下りてしまう前に</h2>
       <div class="cta" id="ctaFinal">
         <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで特典を受け取る</a>
-        <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">キーワード</span>と送ると届きます</p>
+        <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">合言葉</span>と送ると届きます</p>
         <ul class="assure"><li>1分で受け取れる</li><li>ブロックすれば すぐ止まる</li></ul>
       </div>
     </div>
@@ -652,7 +638,7 @@ a.page__more:hover{background:#15303F}
   <h2 id="qrDialogTitle">スマホで読み取ってください</h2>
   <p>LINEの友だち追加は スマホのLINEで行います<br>スマホのカメラで この&#8288;QRコードを読み取ってください</p>
   <div class="qr-dialog__code" id="qrLarge"></div>
-  <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">キーワード</span>と送ると届きます</p>
+  <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">合言葉</span>と送ると届きます</p>
   <button type="button" class="qr-dialog__close" id="qrClose">閉じる</button>
 </dialog>
 
@@ -666,7 +652,6 @@ document.addEventListener('budoux-ready', () => {
   phrase(document.body);
   // ボタンの中は BudouX が飛ばすので、チェック欄の文だけは直接わたす
   document.querySelectorAll('.check > span:last-child').forEach(phrase);
-  reserveHeroHeight();
 });
 
 // 開いたとき・再読み込みしたときは、いつもいちばん上から見せる（ブラウザが前に見ていた位置へ戻すのを止める）。
@@ -687,8 +672,20 @@ let movedByReader = false;
 addEventListener('load', () => { if (!movedByReader) toTop(); });
 
 // ── ここだけ書き換えれば、ボタンとQRコードの行き先が全部変わる ──
-// 動画のQRと同じLINE登録URL（2026-09-25のCTA画像より）。LPからの登録を分けて数えたいときは ref=YouTube を配信ツールに登録した別の名前に変える
-const LINE_URL = 'https://liff.line.me/2009844800-B6WEn0vn?liffId=2009844800-B6WEn0vn&ref=YouTube';
+// 動画のQRと同じLINE登録URL（2026-09-25のCTA画像より）。
+// 動画ごとに特典が違うので、開いた回に合わせて最後の ref だけ変える（2026-09-29）。LINE側は、この ref で「どの回の入口か」を見て特典を出し分ける。
+//   1話 ＝ ref=YouTube（動画1話のQRと同じ。すでに登録済みなので変えない）
+//   2話〜5話 ＝ ref=YouTube_ep2 〜 YouTube_ep5（LINEの流入経路に、この名前で登録しておく）
+const LINE_BASE = 'https://liff.line.me/2009844800-B6WEn0vn?liffId=2009844800-B6WEn0vn';
+const refFor = n => (n === 1 ? 'YouTube' : `YouTube_ep${n}`);
+let LINE_URL = `${LINE_BASE}&ref=${refFor(1)}`;
+// 回が変わったら、ボタン・QRコードの行き先を入れ替える
+function setLineUrl(n) {
+  LINE_URL = `${LINE_BASE}&ref=${refFor(n)}`;
+  document.querySelectorAll('[data-line]').forEach(a => { a.href = LINE_URL; });
+  const qr = document.getElementById('qr');
+  if (qr && qr.childElementCount) makeQR('qr', 264); // 受け取り方の欄のQR（作ってあれば、新しい行き先で作り直す）
+}
 
 // 回ごとの中身。URLの最後に #ep2 か ?ep=2 を付けると、その回の特典に切り替わる（何も付けなければ1話）。
 // 特典名と説明は、各回の台本のCTAと1文字も変えない。keyword は、登録後にトークで送る言葉（無い回は友だち追加だけで届く）。
@@ -696,7 +693,7 @@ const EPISODES = {
   1: {
     question: 'あなたは今\n何段目ですか',
     lead: '動画でお話しした5つの段を\n自分で確かめられるシートにしました',
-    keyword: 'キーワード',
+    keyword: '合言葉',
     before: '僕みたいに\n5段目まで下りてしまう前に',
     gifts: [
       { img: 'assets/covers/ep1-a.jpg', name: '壊れる前に踏みとどまる・5段階セルフ診断シート',
@@ -917,99 +914,17 @@ function cover(gift, extraClass, lazy) {
   return fig;
 }
 
-// いちばん上の表紙：1話〜5話をスライドで切り替える。最初はいま見ている回。
-// 自動では送らない（2026-09-29）。動画から来た人が5秒後にほかの回の見出しと表紙を見ると、「動画で言っていた特典はどれ？」と迷うため。
-// ほかの回は、‹ ›・点・スワイプ・矢印キーで見たい人だけが見る
-let heroShownEp = null;
-
-// 見出し・説明・受け取り方の一文も、表示中の回に合わせて切り替える
-function setHeroText(k) {
-  const e = EPISODES[k];
-  document.querySelector('[data-slot="question"]').textContent = e.question;
-  document.querySelector('[data-slot="lead"]').textContent = e.lead;
-  document.querySelector('#ctaHero [data-slot="how"]').replaceChildren(howText(e, false));
-  phrase(document.querySelector('.hero__text'));
-  phrase(document.getElementById('ctaHero'));
-}
-// 回によって行数が違うので、いちばん長い回の高さを先に取っておく（表紙を送ったときにLINEボタンや表紙が上下しないように）。
-// 見出しと説明はくっつけたまま、余りは説明の下に置く（見出しの下が空くと、途中で切れたように見える）
-function reserveHeroHeight() {
-  const parts = [document.querySelector('.hero__text'), document.querySelector('#ctaHero [data-slot="how"]')];
-  parts.forEach(p => { p.style.minHeight = ''; });
-  const tallest = parts.map(() => 0);
-  Object.keys(EPISODES).forEach(k => {
-    setHeroText(k);
-    parts.forEach((p, i) => { tallest[i] = Math.max(tallest[i], p.offsetHeight); });
-  });
-  parts.forEach((p, i) => { p.style.minHeight = tallest[i] + 'px'; });
-  if (heroShownEp) setHeroText(heroShownEp);
-}
-let heroResize = 0;
-window.addEventListener('resize', () => { clearTimeout(heroResize); heroResize = setTimeout(reserveHeroHeight, 150); });
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(reserveHeroHeight);
-
-function renderHeroSlider(n) {
-  const keys = Object.keys(EPISODES).map(Number);
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const track = el('div', { class: 'slides', tabindex: '0', 'aria-roledescription': 'カルーセル', 'aria-label': '1話〜5話の特典の表紙' });
-  keys.forEach(k => {
-    const e = EPISODES[k];
-    track.append(el('div', { class: 'slide', role: 'group', 'aria-roledescription': 'スライド', 'aria-label': `${k}話の特典` },
-      el('div', { class: 'slide__art' }, cover(e.gifts[1], 'cover--b', k !== n), cover(e.gifts[0], 'cover--a', k !== n))));
-  });
-  const cap = el('p', { class: 'slides__cap', 'aria-live': 'polite' });
-  const dots = keys.map(k => el('button', { class: 'slides__dot', type: 'button', 'aria-label': `${k}話の特典を見る` }));
-  const prev = el('button', { class: 'slides__step', type: 'button', 'aria-label': '前の話の特典' }, '‹');
-  const next = el('button', { class: 'slides__step', type: 'button', 'aria-label': '次の話の特典' }, '›');
-  let index = keys.indexOf(n);
-
-  const heroText = document.querySelector('.hero__text');
-  const mark = () => {
-    const k = keys[index];
-    cap.replaceChildren(k === n ? el('b', {}, `この動画の特典（${k}話）`) : `${k}話の特典`);
-    dots.forEach((d, i) => d.setAttribute('aria-current', i === index ? 'true' : 'false'));
-    if (heroShownEp === k) return;
-    const before = heroShownEp;
-    heroShownEp = k;
-    setHeroText(k);
-    if (before === null || reduce) return;
-    // 進む向きから入ってくる（5話→1話のように一周するときも「進む」）
-    const step = (keys.indexOf(k) - keys.indexOf(before) + keys.length) % keys.length;
-    heroText.style.setProperty('--from', step <= keys.length / 2 ? '28px' : '-28px');
-    heroText.classList.remove('is-sliding');
-    void heroText.offsetWidth;
-    heroText.classList.add('is-sliding');
-  };
-  const show = (i, smooth) => {
-    index = (i + keys.length) % keys.length;
-    track.scrollTo({ left: index * track.clientWidth, behavior: smooth && !reduce ? 'smooth' : 'auto' });
-    mark();
-  };
-
-  prev.addEventListener('click', () => show(index - 1, true));
-  next.addEventListener('click', () => show(index + 1, true));
-  dots.forEach((d, i) => d.addEventListener('click', () => show(i, true)));
-  track.addEventListener('keydown', e => {
-    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-    e.preventDefault();
-    show(index + (e.key === 'ArrowRight' ? 1 : -1), true);
-  });
-  let frame = 0;
-  track.addEventListener('scroll', () => {
-    cancelAnimationFrame(frame);
-    frame = requestAnimationFrame(() => {
-      const i = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
-      if (i !== index && i >= 0 && i < keys.length) { index = i; mark(); }
-    });
-  }, { passive: true });
-
-  document.querySelector('[data-slot="heroCovers"]').replaceChildren(track, cap,
-    el('div', { class: 'slides__nav' }, prev, el('div', { class: 'slides__dots' }, ...dots), next));
-  heroShownEp = null;
-  heroText.classList.remove('is-sliding');
-  mark();
-  reserveHeroHeight();
-  requestAnimationFrame(() => show(index, false));
+// いちばん上の表紙：いま開いている回の特典だけを見せる（2026-09-29）。
+// 動画ごとに特典が違うので、動画から来た人が「言っていた特典はどれ？」と迷わないよう、ほかの回は出さない（ほかの回は下の予告欄）。
+// 1話・2話は特典が2つ、それ以外は1つでも並べられる（後ろの1枚が無ければ手前の1枚だけ）
+function renderHeroCovers(n) {
+  const e = EPISODES[n];
+  const covers = [];
+  if (e.gifts[1]) covers.push(cover(e.gifts[1], 'cover--b'));
+  covers.push(cover(e.gifts[0], 'cover--a'));
+  document.querySelector('[data-slot="heroCovers"]').replaceChildren(
+    el('div', { class: 'slide' }, el('div', { class: 'slide__art' }, ...covers)),
+    el('p', { class: 'slides__cap' }, el('b', {}, 'この動画の特典')));
 }
 
 // free=false は、すぐ上に「✓無料」を出しているところ（いちばん上のボタン）
@@ -1021,7 +936,7 @@ function howText(ep, free = true) {
   return p;
 }
 
-// 受け取り方の欄の「届くときのイメージ」。キーワードのある回は、先に自分が送る吹き出しを出す
+// 受け取り方の欄の「届くときのイメージ」。合言葉のある回は、先に自分が送る吹き出しを出す
 function renderChat(ep) {
   const gifts = el('div', { class: 'bubble' }, ...ep.gifts.map(g =>
     el('div', { class: 'bubble__gift' },
@@ -1070,6 +985,7 @@ function peekRows(pk) {
 
 function render(n) {
   const ep = EPISODES[n];
+  setLineUrl(n);
   document.querySelector('[data-slot="question"]').textContent = ep.question;
   document.querySelector('[data-slot="lead"]').textContent = ep.lead;
   document.querySelector('[data-slot="before"]').textContent = ep.before;
@@ -1082,7 +998,7 @@ function render(n) {
     : '伏せたところも全部\nLINEでお渡しします';
   renderChat(ep);
 
-  renderHeroSlider(n);
+  renderHeroCovers(n);
 
   const tags = [['まず開くのはこちら', 'gift__tag'], ['あわせて使う', 'gift__tag gift__tag--sub']];
   document.querySelector('[data-slot="gifts"]').replaceChildren(...ep.gifts.map((g, i) =>
@@ -1219,9 +1135,11 @@ const qrDialog = document.getElementById('qrDialog');
 
 function makeQR(id, size) {
   const box = document.getElementById(id);
-  if (box.childElementCount) return true;
+  if (box.childElementCount && box.dataset.url === LINE_URL) return true;
   try {
+    box.replaceChildren(); // 別の回のQRが残っていたら消して作り直す
     new QRCode(box, { text: LINE_URL, width: size, height: size, colorDark: '#12203B', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+    box.dataset.url = LINE_URL;
     box.removeAttribute('title');
     return true;
   } catch (e) { return false; }
