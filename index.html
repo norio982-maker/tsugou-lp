@@ -656,7 +656,8 @@ a.page__more:hover{background:#15303F}
   <button type="button" class="qr-dialog__close" id="qrClose">閉じる</button>
 </dialog>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<!-- QRコードの部品。integrity は中身の照合用（cdnjsが公表している値）。中身がすり替えられていたら読み込まれず、QRコードの欄が隠れるだけで済む -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 // 文節の切れ目だけで折り返す（下の type="module" で BudouX を読み込むと window.budoux ができる）。
 // 読み込み前は何もしない。書き換えた場所は、書き換えたあとにこれを通す
