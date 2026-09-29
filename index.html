@@ -450,7 +450,7 @@ a.page__more:hover{background:#15303F}
       <div class="cta" id="ctaHero">
         <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで特典を受け取る</a>
         <ul class="assure"><li>無料</li><li>1分で受け取れる</li><li>ブロックすれば すぐ止まる</li></ul>
-        <p class="cta__note" data-slot="how">友だち追加のあと<br>トークで<span class="kw">合言葉</span>と送ると届きます</p>
+        <p class="cta__note" data-slot="how">友だち追加のあと<br>トークで<span class="kw">特典</span>と送ると届きます</p>
       </div>
     </div>
   </section>
@@ -486,7 +486,7 @@ a.page__more:hover{background:#15303F}
       <div class="cta cta--paper cta--center" id="ctaGift">
         <p class="cta__lead" data-slot="giftLead">続きは LINEでお渡しします</p>
         <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで特典を受け取る</a>
-        <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">合言葉</span>と送ると届きます</p>
+        <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">特典</span>と送ると届きます</p>
       </div>
     </div>
   </section>
@@ -614,7 +614,7 @@ a.page__more:hover{background:#15303F}
       <h2 class="final__h" data-slot="before">僕みたいに<br>5段目まで下りてしまう前に</h2>
       <div class="cta" id="ctaFinal">
         <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで特典を受け取る</a>
-        <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">合言葉</span>と送ると届きます</p>
+        <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">特典</span>と送ると届きます</p>
         <ul class="assure"><li>1分で受け取れる</li><li>ブロックすれば すぐ止まる</li></ul>
       </div>
     </div>
@@ -638,7 +638,7 @@ a.page__more:hover{background:#15303F}
   <h2 id="qrDialogTitle">スマホで読み取ってください</h2>
   <p>LINEの友だち追加は スマホのLINEで行います<br>スマホのカメラで この&#8288;QRコードを読み取ってください</p>
   <div class="qr-dialog__code" id="qrLarge"></div>
-  <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">合言葉</span>と送ると届きます</p>
+  <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">特典</span>と送ると届きます</p>
   <button type="button" class="qr-dialog__close" id="qrClose">閉じる</button>
 </dialog>
 
@@ -693,7 +693,7 @@ const EPISODES = {
   1: {
     question: 'あなたは今\n何段目ですか',
     lead: '動画でお話しした5つの段を\n自分で確かめられるシートにしました',
-    keyword: '合言葉',
+    keyword: '特典',
     before: '僕みたいに\n5段目まで下りてしまう前に',
     gifts: [
       { img: 'assets/covers/ep1-a.jpg', name: '壊れる前に踏みとどまる・5段階セルフ診断シート',
@@ -936,7 +936,7 @@ function howText(ep, free = true) {
   return p;
 }
 
-// 受け取り方の欄の「届くときのイメージ」。合言葉のある回は、先に自分が送る吹き出しを出す
+// 受け取り方の欄の「届くときのイメージ」。トークで送る言葉のある回は、先に自分が送る吹き出しを出す
 function renderChat(ep) {
   const gifts = el('div', { class: 'bubble' }, ...ep.gifts.map(g =>
     el('div', { class: 'bubble__gift' },
