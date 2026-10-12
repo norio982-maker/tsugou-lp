@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>都合さんの逆転ノート</title>
-<meta name="description" content="YouTube「都合さんの逆転ノート」の動画でお話しした限界サインを 自分で確かめられるシートにしました LINEの友だち追加で 無料でお渡しします">
+<meta name="description" content="優しさはそのままに 職場のやりとりを少しずつ変える 都合さんの動画に合わせたチェックシートと言葉の集を LINEで無料でお渡しします">
 <meta property="og:type" content="website">
 <meta property="og:title" content="都合さんの逆転ノート">
-<meta property="og:description" content="動画でお話しした5つの段を 自分で確かめられるシートにしました LINEで無料でお渡しします">
+<meta property="og:description" content="動画を見たあとの一歩に チェックシートと言葉の集を LINEで無料でお渡しします">
 <!-- 公開先：GitHub Pages（norio982-maker/tsugou-lp）。公開先を変えたら、この2行のURLも変える -->
 <meta property="og:url" content="https://norio982-maker.github.io/tsugou-lp/">
 <meta property="og:image" content="https://norio982-maker.github.io/tsugou-lp/assets/ogp.jpg">
@@ -418,14 +418,56 @@ a.page__more:hover{background:#15303F}
 .bar .line-btn{width:100%;min-height:54px;font-size:1.05rem;box-shadow:0 3px 0 var(--line-deep)}
 @media (max-width:819px){.foot__in{padding-bottom:calc(2.2rem + 84px)}}
 @media (min-width:820px){.bar{display:none!important}}
+/* 2026-10-12 動画を見たあとの一歩へ */
+.top__in{flex-wrap:wrap;justify-content:space-between}
+.top__brand{display:flex;align-items:center;gap:.65rem}
+.top__links{display:flex;gap:1.2rem;font-size:.85rem}
+.top__links a{text-decoration:none;padding:.35rem 0;border-bottom:1px solid #E8B64C80}
+.episode-nav{display:flex;gap:.65rem;flex-wrap:wrap;margin-bottom:1.25rem}
+.episode-nav a{border:1px solid #A8B4CD;padding:.3rem .9rem;border-radius:999px;text-decoration:none;font-size:.85rem;font-weight:700;color:var(--on-night-soft)}
+.episode-nav a[aria-current="page"]{background:var(--dawn);border-color:var(--dawn);color:var(--night)}
+.hero__eyebrow{color:var(--dawn);font-size:.88rem;font-weight:700;margin-bottom:.7rem;letter-spacing:.1em}
+.hero__sub-link{color:var(--on-night-soft);font-size:.9rem;text-underline-offset:.3em}
+.hero__in{padding-block:2.2rem 2.8rem;grid-template-areas:"text" "cta" "covers"}
+.hero .cover--portrait{aspect-ratio:9/16}
+.cover--portrait{aspect-ratio:9/16}
+.gift{box-shadow:0 12px 26px -22px #12203B60}
+.gift .cover--portrait{min-width:0}
+.usage{margin-top:2rem;border-left:4px solid var(--dawn);padding:1.3rem clamp(1rem,3vw,1.8rem);background:#fff}
+.usage__h{font-size:1.2rem}
+.usage__steps{padding:0;list-style:none;display:grid;gap:1rem;margin:1.2rem 0 0;counter-reset:use}
+.usage__steps li{counter-increment:use;display:flex;gap:.8rem;align-items:start;min-width:0}
+.usage__steps li::before{content:counter(use);flex:none;color:var(--night);background:var(--dawn-soft);width:1.8rem;height:1.8rem;display:grid;place-items:center;border-radius:50%;font-weight:700}
+.usage__steps b{display:block;font-size:1rem}.usage__steps p{font-size:.92rem;color:var(--ink-soft)}
+.usage__example{margin-top:1.2rem;padding:1rem;background:var(--mist);border-radius:6px;font-size:.95rem;white-space:pre-line}
+.ep__link{display:inline-block;margin-top:.85rem;font-weight:700;color:var(--night-2);text-underline-offset:.3em}
+.ep__keyword{font-size:.85rem;margin-top:.55rem;color:var(--ink-soft)}
+.receipt-note{padding:.8rem 1rem;border:1px solid var(--edge);background:var(--mist);border-radius:6px;margin-top:1rem;font-size:.92rem;color:var(--ink-soft)}
+.keyword-guide{margin-top:1.2rem;padding:1rem;background:var(--mist);border:1px solid var(--edge);border-radius:6px}
+.keyword-guide h3{font-family:var(--f-body);font-size:1rem}
+.keyword-guide dl{display:grid;grid-template-columns:auto 1fr;gap:.4rem .8rem;margin:.7rem 0 0;font-size:.95rem;align-items:center}
+.keyword-guide dt,.keyword-guide dd{margin:0}
+.chat-card{overflow:hidden;background:#fff;border-radius:10px;font-size:.8rem}
+.chat-card__head{background:#152C4F;color:#F2C46D;padding:.8rem .9rem;font-size:.72rem;font-weight:700}
+.chat-card__head strong{display:block;color:#fff;font-size:1rem;margin-top:.3rem}
+.chat-card__body{padding:.8rem .9rem;display:grid;gap:.7rem;color:#444}
+.chat-card__gift{border-top:1px solid var(--edge);padding-top:.6rem;line-height:1.65}
+.chat-card__button{display:block;background:#152C4F;color:#fff;border-radius:5px;padding:.5rem;text-align:center;font-weight:700}
+[data-slot="giftIntro"],.story__close{white-space:pre-line}
+.skip-link{position:absolute;left:1rem;top:-100px;z-index:100;background:#fff;color:var(--night);padding:.75rem}.skip-link:focus{top:1rem}
+section[id]{scroll-margin-top:1rem}
+@media(min-width:820px){.usage__steps{grid-template-columns:repeat(3,minmax(0,1fr))}.hero__in{padding-block:3.6rem 4rem;grid-template-areas:"text covers" "cta covers"}}
+@media(max-width:480px){.top__name{font-size:.88rem}.top__links{gap:.8rem;font-size:.78rem}.top__in{gap:.5rem}.hero__covers{width:min(100%,250px)}.hero__in{gap:1.25rem}.gift{grid-template-columns:92px minmax(0,1fr);gap:.9rem}.gift__name{font-size:1.08rem}.gift__desc{font-size:.9rem}.usage__example{font-size:.9rem}}
 </style>
 </head>
 <body>
 
+<a class="skip-link" href="#tokuten">特典の案内へ進む</a>
 <header class="top">
   <div class="wrap top__in">
-    <img class="top__icon" src="assets/icon.jpg" alt="" width="36" height="36">
-    <span class="top__name">都合さんの逆転ノート</span>
+    <div class="top__brand"><img class="top__icon" src="assets/icon.jpg" alt="" width="36" height="36">
+    <span class="top__name">都合さんの逆転ノート</span></div>
+    <nav class="top__links" aria-label="ページ内の案内"><a href="#tokuten">特典の中身</a><a href="#uketori">受け取り方</a></nav>
   </div>
 </header>
 
@@ -443,21 +485,40 @@ a.page__more:hover{background:#15303F}
     </svg>
     <div class="wrap hero__in">
       <div class="hero__text">
+        <nav class="episode-nav" aria-label="動画の特典を選ぶ"><a href="#ep1" data-episode="1">第1話の特典</a><a href="#ep2" data-episode="2">第2話の特典</a></nav>
+        <p class="hero__eyebrow" data-slot="episodeLabel">第1話を見たあなたへ</p>
         <h1 class="hero__q" data-slot="question">あなたは今<br>何段目ですか</h1>
         <p class="hero__lead"><span data-slot="lead">動画でお話しした5つの段を<br>自分で確かめられるシートにしました</span><br>明日そのまま使える言葉と<br>セットでお渡しします</p>
       </div>
       <div class="hero__covers" data-slot="heroCovers"></div>
       <div class="cta" id="ctaHero">
         <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで特典を受け取る</a>
-        <ul class="assure"><li>無料</li><li>1分で受け取れる</li><li>ブロックすれば すぐ止まる</li></ul>
-        <p class="cta__note" data-slot="how">友だち追加のあと<br>トークで<span class="kw">特典</span>と送ると届きます</p>
+        <ul class="assure"><li>無料</li><li>2つのPDF</li><li>ブロックすれば すぐ止まる</li></ul>
+        <p class="cta__note" data-slot="how">友だち追加のあと<br>各話の受け取りワードを<br>トークで送ると届きます</p>
+        <a class="hero__sub-link" href="#tokuten">受け取る前に 中身を見る ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec--mist" id="tokuten">
+    <div class="wrap">
+      <p class="kicker">LINEでお渡しするもの</p>
+      <h2 class="sec__h">動画の学びを 明日の一言に</h2>
+      <p class="sec__sub" data-slot="giftIntro">振り返るシートと言葉の集を 2つセットでお渡しします</p>
+      <div class="gifts" data-slot="gifts"></div>
+      <div class="peek" data-slot="peek"></div>
+      <div class="usage" data-slot="usage" hidden></div>
+      <div class="cta cta--paper cta--center" id="ctaGift">
+        <p class="cta__lead" data-slot="giftLead">続きは LINEでお渡しします</p>
+        <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで特典を受け取る</a>
+        <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>各話の受け取りワードを<br>トークで送ると届きます</p>
       </div>
     </div>
   </section>
 
   <section class="sec" id="aruaru">
     <div class="wrap narrow">
-      <h2 class="sec__h">こんなこと ありませんか</h2>
+      <h2 class="sec__h" data-slot="checkHeading">こんなこと ありませんか</h2>
       <p class="sec__sub">当てはまるものを 押してみてください</p>
       <div class="note">
         <ul class="checks">
@@ -471,22 +532,37 @@ a.page__more:hover{background:#15303F}
         <p class="note__foot" id="checkFoot">どこから手をつければいいかは <a href="#tokuten">LINEでお渡しするシート</a>で分かります</p>
         <div class="cta cta--paper note__cta" id="ctaCheck" hidden>
           <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで特典を受け取る</a>
-          <p class="cta__note">どこから手をつければいいかは<br>シートで分かります<br>無料です</p>
+          <p class="cta__note" data-slot="checkCta">最近の一場面から 次に試すことを選んでみませんか</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="sec sec--mist" id="tokuten">
-    <div class="wrap">
-      <p class="kicker">LINEでお渡しするもの</p>
-      <h2 class="sec__h">無料の特典は こちらです</h2>
-      <div class="gifts" data-slot="gifts"></div>
-      <div class="peek" data-slot="peek"></div>
-      <div class="cta cta--paper cta--center" id="ctaGift">
-        <p class="cta__lead" data-slot="giftLead">続きは LINEでお渡しします</p>
-        <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで特典を受け取る</a>
-        <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">特典</span>と送ると届きます</p>
+  <section class="sec" id="uketori">
+    <div class="wrap narrow">
+      <h2 class="sec__h">LINEで受け取る 3つの手順</h2>
+      <p class="sec__sub">受け取りワードは 各話で異なります<br>すでに友だちの方は 欲しい回のワードを送ってください</p>
+      <div class="keyword-guide"><h3>各話の受け取りワード</h3><dl data-slot="keywordGuide"></dl></div>
+      <div class="uketori__how">
+        <div><ol class="steps" data-slot="steps"></ol><p class="receipt-note">届いたカードの2つのボタンから<br>PDFをそれぞれ開いてください</p></div>
+        <!-- 押したあとに何が起きるかを先に見せる。文面は LINE配信マニュアル 5章の1通目の書き出しに合わせた「イメージ」 -->
+        <div class="chat-wrap">
+          <figure class="chat" aria-label="LINEに届くときのイメージ">
+            <div class="chat__bar"><img src="assets/icon.jpg" alt="" width="26" height="26" loading="lazy">都合さんの逆転ノート</div>
+            <div class="chat__body" data-slot="chat"></div>
+          </figure>
+          <p class="chat__note">※届くときのイメージです</p>
+        </div>
+      </div>
+      <div class="uketori">
+        <div class="cta cta--paper" id="ctaMid">
+          <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEを友だち追加する</a>
+          <p class="cta__note">登録は無料です<br>いらなくなったら<br>ブロックすればすぐに止まります</p>
+        </div>
+        <div class="qr" id="qrBox">
+          <div class="qr__code" id="qr"></div>
+          <p>パソコンで見ている方は<br>スマホのカメラで この&#8288;QRコードを読み取ってください</p>
+        </div>
       </div>
     </div>
   </section>
@@ -496,7 +572,7 @@ a.page__more:hover{background:#15303F}
       <div class="story__head">
         <img class="story__face" src="assets/icon.jpg" alt="都合さん" width="92" height="92">
         <div>
-          <h2 class="sec__h">僕も ずっと断れませんでした</h2>
+          <h2 class="sec__h" data-slot="storyHeading">僕も ずっと断れませんでした</h2>
           <p class="story__intro">はじめまして 都合です<br>52歳 会社員<br>会社に入って30年<br>頼まれた仕事は全部「自分がやっておきます」で引き受けてきました</p>
         </div>
       </div>
@@ -517,7 +593,7 @@ a.page__more:hover{background:#15303F}
           <p>「この件 やっぱり厳しいかもしれません」<br>課長に言ってみると 怒鳴られませんでした<br>そんなことは はじめてでした</p>
         </li>
       </ol>
-      <p class="story__close">言い方を1つ変えただけで<br>毎日が少し変わりました<br>LINEでは<br>僕がそうやって覚えてきた言葉を<br>そのままお渡ししています</p>
+      <p class="story__close" data-slot="storyClose">言い方を1つ変えただけで<br>毎日が少し変わりました<br>LINEでは<br>僕がそうやって覚えてきた言葉を<br>そのままお渡ししています</p>
     </div>
   </section>
 
@@ -542,39 +618,12 @@ a.page__more:hover{background:#15303F}
 
   <section class="sec sec--mist" id="series">
     <div class="wrap">
-      <p class="kicker">この先の特典</p>
-      <h2 class="sec__h">LINE特典は 5話まで用意しています</h2>
-      <p class="sec__sub">都合さんの話は この先も続きます<br>回ごとに その話に合わせた特典を用意します<br>新しい話が出たら LINEでお知らせします</p>
+      <p class="kicker">回ごとの学びと特典</p>
+      <h2 class="sec__h">今の悩みに近い回から 読んでみてください</h2>
+      <p class="sec__sub">抱え込む毎日から 自分の状況を伝える一歩へ<br>そして 相手と仕事の進め方を確かめる一歩へ<br>都合さんの学びに合わせて 特典も続きます</p>
       <figure class="series__hero" id="seriesHero" hidden></figure>
       <ol class="series" data-slot="series"></ol>
-      <p class="series__note">※これからの話の特典は 名前や中身が変わることがあります</p>
-    </div>
-  </section>
-
-  <section class="sec" id="uketori">
-    <div class="wrap narrow">
-      <h2 class="sec__h">受け取り方</h2>
-      <div class="uketori__how">
-        <ol class="steps" data-slot="steps"></ol>
-        <!-- 押したあとに何が起きるかを先に見せる。文面は LINE配信マニュアル 5章の1通目の書き出しに合わせた「イメージ」 -->
-        <div class="chat-wrap">
-          <figure class="chat" aria-label="LINEに届くときのイメージ">
-            <div class="chat__bar"><img src="assets/icon.jpg" alt="" width="26" height="26" loading="lazy">都合さんの逆転ノート</div>
-            <div class="chat__body" data-slot="chat"></div>
-          </figure>
-          <p class="chat__note">※届くときのイメージです</p>
-        </div>
-      </div>
-      <div class="uketori">
-        <div class="cta cta--paper" id="ctaMid">
-          <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEを友だち追加する</a>
-          <p class="cta__note">登録は無料です<br>いらなくなったら<br>ブロックすればすぐに止まります</p>
-        </div>
-        <div class="qr" id="qrBox">
-          <div class="qr__code" id="qr"></div>
-          <p>パソコンで見ている方は<br>スマホのカメラで この&#8288;QRコードを読み取ってください</p>
-        </div>
-      </div>
+      <p class="series__note">各回の案内から 特典の中身と受け取りワードを確認できます</p>
     </div>
   </section>
 
@@ -582,9 +631,10 @@ a.page__more:hover{background:#15303F}
     <div class="wrap narrow">
       <h2 class="sec__h">よくある質問</h2>
       <dl class="qa">
-        <div><dt>お金はかかりますか？</dt><dd>かかりません<br>LINEの友だち追加だけで受け取れます</dd></div>
+        <div><dt>お金はかかりますか？</dt><dd>かかりません<br>LINEを友だち追加し<br>案内の受け取りワードを送ると受け取れます</dd></div>
         <div><dt>スマホだけで読めますか？</dt><dd>読めます<br>トークに届いたものを押すと<br>スマホでそのまま開きます<br>印刷しなくても大丈夫です</dd></div>
-        <div><dt>登録すると 自分の情報はどこまで伝わりますか？</dt><dd>こちらから見えるのは<br>LINEの表示名やアイコンなど プロフィールに出している内容だけです<br>電話番号や ほかの人とのトークが見えることはありません<br>友だち追加したことが<br>会社の人やほかの友だちに知られることもありません</dd></div>
+        <div><dt>登録すると 自分の情報はどこまで伝わりますか？</dt><dd>こちらから見えるのは<br>LINEの表示名やアイコンなど プロフィールに出している内容だけです<br>電話番号や ほかの人とのトークが見えることはありません<br>特典を受け取るために<br>勤務先や電話番号を送る必要はありません</dd></div>
+        <div><dt>友だちなのに 特典が届きません</dt><dd>トーク画面で この回の受け取りワードを送ってください<br><span data-slot="faqKeyword"></span><br>届いたカードから 2つのPDFを開けます</dd></div>
         <div><dt>特典のあとは 何が届きますか？</dt><dd>僕の日記や 職場で使える一言を<br>ときどきお送りします<br>いらなくなったら<br>ブロックすればすぐに止まります</dd></div>
         <div><dt>シートで病気かどうか分かりますか？</dt><dd>分かりません<br>今の自分の状態に気づくためのセルフチェックで<br>医学的な診断ではありません</dd></div>
       </dl>
@@ -614,8 +664,8 @@ a.page__more:hover{background:#15303F}
       <h2 class="final__h" data-slot="before">僕みたいに<br>5段目まで下りてしまう前に</h2>
       <div class="cta" id="ctaFinal">
         <a class="line-btn" data-line href="#uketori"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.48 3 2 6.58 2 11c0 2.62 1.57 4.94 4 6.4-.18 1.06-.7 2.6-1.85 3.6 2.3-.08 4.2-1.1 5.33-1.98.83.13 1.67.2 2.52.2 5.52 0 10-3.58 10-8.02S17.52 3 12 3z"/></svg>LINEで特典を受け取る</a>
-        <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">特典</span>と送ると届きます</p>
-        <ul class="assure"><li>1分で受け取れる</li><li>ブロックすれば すぐ止まる</li></ul>
+        <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>各話の受け取りワードを<br>トークで送ると届きます</p>
+        <ul class="assure"><li>2つのPDF</li><li>ブロックすれば すぐ止まる</li></ul>
       </div>
     </div>
   </section>
@@ -638,7 +688,7 @@ a.page__more:hover{background:#15303F}
   <h2 id="qrDialogTitle">スマホで読み取ってください</h2>
   <p>LINEの友だち追加は スマホのLINEで行います<br>スマホのカメラで この&#8288;QRコードを読み取ってください</p>
   <div class="qr-dialog__code" id="qrLarge"></div>
-  <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>トークで<span class="kw">特典</span>と送ると届きます</p>
+  <p class="cta__note" data-slot="how">無料です<br>友だち追加のあと<br>各話の受け取りワードを<br>トークで送ると届きます</p>
   <button type="button" class="qr-dialog__close" id="qrClose">閉じる</button>
 </dialog>
 
@@ -659,7 +709,10 @@ document.addEventListener('budoux-ready', () => {
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 function toTop() {
   const id = decodeURIComponent(location.hash.slice(1));
-  if (id && !/^ep[1-9]$/.test(id) && document.getElementById(id)) return;
+  if (id && !/^ep[1-9]$/.test(id) && document.getElementById(id)) {
+    document.getElementById(id).scrollIntoView({ behavior: 'instant', block: 'start' });
+    return;
+  }
   const html = document.documentElement;
   html.style.scrollBehavior = 'auto'; // なめらかに動かさず、すぐ上へ
   window.scrollTo(0, 0);
@@ -712,23 +765,27 @@ const EPISODES = {
       warn: '5段目に当てはまるときは\nほかより先に' },
   },
   2: {
-    question: 'あなたは\nどの違いで\nつまずいていますか',
-    lead: '動画でお話しした5つの違いを\n1分で確かめられるシートにしました',
-    keyword: null,
-    before: '僕みたいに\n優しさを軽く見られたまま\n何年も過ごしてしまう前に',
+    question: '優しいままで\n伝え方を\n変えてみませんか',
+    lead: '動画でお話しした5つの違いを\n職場のやりとりから振り返るシートにしました',
+    keyword: '特典２',
+    before: '優しさは そのままに\n明日の職場で\n一言だけ試してみませんか',
     gifts: [
-      { img: 'assets/covers/ep2-a.jpg', name: '舐められる原因に1分で気づける・5つの違い診断シート',
-        desc: '自分がどの違いで\nつまずいているかが分かり\nいちばん先に直すところまで\n分かる中身です' },
-      { img: 'assets/covers/ep2-b.jpg', name: '優しい人でも舐められなくなる・そのまま使える一言5選',
-        desc: '相談・断り・会議・方針変更・頼みごと\n5つの場面で そのまま言える一言が分かります' },
+      { portrait: true, img: 'assets/covers/ep2-a.jpg', name: '職場のやりとりを振り返る・5つのチェックシート',
+        desc: '相談・追加の依頼・会議・方針変更・頼みごと\n最近の一場面を振り返り\n次に試すことを一つ選べるシートです' },
+      { portrait: true, img: 'assets/covers/ep2-b.jpg', name: '優しいまま伝える・そのまま使える一言5選',
+        desc: '5つの場面から今の自分に近い一言を選び\n仕事の内容や期限を置き換えて使えます' },
     ],
-    peek: { title: '軽く見られる人が やってしまうこと', hidden: '信頼される人の一言',
-      rows: [['1つ目', '共感して終わる'], ['2つ目', '全部引き受ける'], ['3つ目', 'なんとなく決める'], ['4つ目', 'その場の空気で変わる'], ['5つ目', '謝って頼む・押しつける']] },
+    peek: { pages: [
+      { name: ['職場のやりとりを振り返る', '5つのチェックシート'], total: 10,
+        shows: [['assets/pages/ep2-a-02.jpg', '最近のやりとりを 一つ選ぶ'], ['assets/pages/ep2-a-03.jpg', '相談されたとき']], blur: 'assets/pages/ep2-a-04-blur.jpg' },
+      { name: ['優しいまま伝える', 'そのまま使える一言5選'], total: 10,
+        shows: [['assets/pages/ep2-b-02.jpg', '使いたい場面から選ぶ'], ['assets/pages/ep2-b-04.jpg', '追加の仕事を頼まれたとき']], blur: 'assets/pages/ep2-b-05-blur.jpg' },
+    ] },
   },
   3: {
     question: 'あなたは\nどの落とし穴に\nはまりやすいですか',
     lead: '動画でお話しした7つのことを\n自分で確かめられるセルフチェックにしました',
-    keyword: null,
+    keyword: '特典３',
     before: '僕みたいに\n頼られるようになったあとで\n陰でそう思われてしまう前に',
     gifts: [
       { img: 'assets/covers/ep3-a.jpg', name: '賢そうに見える人の7つの落とし穴・セルフチェック',
@@ -742,7 +799,7 @@ const EPISODES = {
   4: {
     question: 'あなたに足りない\n対処はどれですか',
     lead: '動画でお話しした7つの対処を\n自分で確かめられる診断シートにしました',
-    keyword: null,
+    keyword: '特典４',
     before: '僕みたいに\n家に帰ってからも\n頭の中で戦い続けてしまう前に',
     gifts: [
       { img: 'assets/covers/ep4-a.jpg', name: '振り回され度・7つの対処診断シート',
@@ -756,7 +813,7 @@ const EPISODES = {
   5: {
     question: 'あなたに今\nどのサインが\n出ていますか',
     lead: '動画でお話しした9つのサインを\n自分で確かめられる診断シートにしました',
-    keyword: null,
+    keyword: '特典５',
     before: '僕みたいに\n会社のデスクで涙が出るまで\nサインを見過ごしてしまう前に',
     gifts: [
       { img: 'assets/covers/ep5-a.jpg', name: '9つの危険サイン・セルフチェック診断シート',
@@ -882,7 +939,7 @@ function pickEpisode() {
   try { n = new URLSearchParams(location.search).get('ep'); } catch (e) {}
   const m = location.hash.match(/^#ep([1-9])$/);
   if (m) n = m[1];
-  return EPISODES[n] ? Number(n) : 1;
+  return EPISODES[n] ? Number(n) : currentEp;
 }
 
 function el(tag, attrs, ...kids) {
@@ -905,8 +962,8 @@ function nameParts(name) {
 // 表紙。画像がまだ無いときは、文字だけの仮の表紙に切り替わる
 function cover(gift, extraClass, lazy) {
   const [first, second] = gift.name.split('・');
-  const fig = el('figure', { class: 'cover ' + (extraClass || '') });
-  const img = el('img', Object.assign({ alt: gift.name + 'の表紙', width: '600', height: '900' }, lazy ? { loading: 'lazy' } : {}));
+  const fig = el('figure', { class: 'cover ' + (gift.portrait ? 'cover--portrait ' : '') + (extraClass || '') });
+  const img = el('img', Object.assign({ alt: gift.name + 'の表紙', width: '600', height: gift.portrait ? '1067' : '900' }, lazy ? { loading: 'lazy' } : {}));
   img.addEventListener('error', () => fig.classList.add('is-fallback'));
   img.src = gift.img;
   const title = el('span', { class: 'cover__title' }, first, second ? el('span', {}, second) : null);
@@ -924,20 +981,33 @@ function renderHeroCovers(n) {
   covers.push(cover(e.gifts[0], 'cover--a'));
   document.querySelector('[data-slot="heroCovers"]').replaceChildren(
     el('div', { class: 'slide' }, el('div', { class: 'slide__art' }, ...covers)),
-    el('p', { class: 'slides__cap' }, el('b', {}, 'この動画の特典')));
+    el('p', { class: 'slides__cap' }, el('b', {}, `第${n}話の特典 2つセット`)));
 }
 
 // free=false は、すぐ上に「✓無料」を出しているところ（いちばん上のボタン）
-function howText(ep, free = true) {
+function howText(ep, free = true, n = currentEp) {
   const p = document.createDocumentFragment();
   const head = free ? '無料です\n' : '';
-  if (ep.keyword) p.append(head + '友だち追加のあと\nトークで', el('span', { class: 'kw' }, ep.keyword), 'と送ると届きます');
+  if (ep.keyword) p.append(head + '受け取りワードは 各話で異なります\n友だち追加のあと\n第' + n + '話の特典は トークで', el('span', { class: 'kw' }, ep.keyword), 'と送ると届きます');
   else p.append(head + '友だち追加すると トークに届きます');
   return p;
 }
 
 // 受け取り方の欄の「届くときのイメージ」。トークで送る言葉のある回は、先に自分が送る吹き出しを出す
 function renderChat(ep) {
+  if (currentEp > 1) {
+    const card = el('div', { class: 'chat-card' },
+      el('div', { class: 'chat-card__head' }, '【無料特典】都合さんの逆転ノート', el('strong', {}, '特典をお届けします')),
+      el('div', { class: 'chat-card__body' },
+        el('p', {}, `第${currentEp}話をご覧いただき ありがとうございます\n下のボタンから2つの特典をご覧いただけます`),
+        ...ep.gifts.map((g, i) => el('p', { class: 'chat-card__gift' }, `${i + 1} `, ...nameParts(g.name))),
+        el('span', { class: 'chat-card__button' }, '① チェックシートを開く'),
+        el('span', { class: 'chat-card__button' }, '② 一言集を開く')));
+    document.querySelector('[data-slot="chat"]').replaceChildren(
+      el('p', { class: 'bubble bubble--me' }, ep.keyword),
+      el('div', { class: 'bubble-row' }, el('img', { src: 'assets/icon.jpg', alt: '', width: '30', height: '30', loading: 'lazy' }), card));
+    return;
+  }
   const gifts = el('div', { class: 'bubble' }, ...ep.gifts.map(g =>
     el('div', { class: 'bubble__gift' },
       el('img', { src: g.img, alt: '', width: '34', height: '51', loading: 'lazy' }),
@@ -983,13 +1053,59 @@ function peekRows(pk) {
   ];
 }
 
+const originalChecks = [...document.querySelectorAll('.check > span:last-child')].map(x => x.textContent);
+const originalFrames = document.querySelector('.frames').innerHTML;
+const originalStoryClose = document.querySelector('[data-slot="storyClose"]').innerHTML;
+const EP2_CHECKS = ['相談を聞くうちに 仕事まで全部引き取ってしまう', '難しい依頼にも「かもしれません」で止まってしまう', '会議で意見を言っても 理由を伝えられない', '方針を変えた理由を うまく説明できない', '頼みごとの内容や期限が 曖昧になってしまう'];
+function renderEpisodeContext(n) {
+  document.querySelector('[data-slot="episodeLabel"]').textContent = `第${n}話の学びを 職場で使うために`;
+  document.querySelectorAll('[data-episode]').forEach(a => {
+    if (Number(a.dataset.episode) === n) a.setAttribute('aria-current', 'page');
+    else a.removeAttribute('aria-current');
+  });
+  document.title = `第${n}話の無料特典｜都合さんの逆転ノート`;
+  document.querySelector('[data-slot="faqKeyword"]').replaceChildren('この回は', el('span', { class: 'kw' }, EPISODES[n].keyword));
+  document.querySelector('[data-slot="checkHeading"]').textContent = n === 2 ? 'こんな場面で 言葉に迷っていませんか' : 'こんなこと ありませんか';
+  const checks = n === 2 ? EP2_CHECKS : originalChecks;
+  document.querySelectorAll('.check').forEach((b, i) => { b.setAttribute('aria-pressed', 'false'); b.lastElementChild.textContent = checks[i]; });
+  updateChecks(n);
+  document.querySelector('[data-slot="giftIntro"]').textContent = n === 2 ? '点数をつけるためではなく 次のやりとりを考えるために\n最近の一場面を振り返るシートと 5つの場面の例文をセットにしました' : '振り返るシートと言葉の集を 2つセットでお渡しします';
+  const use = document.querySelector('[data-slot="usage"]');
+  use.hidden = n !== 2;
+  if (n === 2) use.replaceChildren(
+    el('h3', { class: 'usage__h' }, '全部を変えなくて大丈夫 まず一場面から'),
+    el('ol', { class: 'usage__steps' },
+      el('li', {}, el('div', {}, el('b', {}, '最近の場面を選ぶ'), el('p', {}, '追加の依頼など 気になったやりとりを一つ'))),
+      el('li', {}, el('div', {}, el('b', {}, 'シートで振り返る'), el('p', {}, 'できたことと 次に試したいことを確かめる'))),
+      el('li', {}, el('div', {}, el('b', {}, '自分の一言にする'), el('p', {}, '例文の仕事や期限を 自分の状況に置き換える')))),
+    el('p', { class: 'usage__example' }, 'たとえば 追加の仕事を頼まれたら\n「今日は難しいです A社の締め切りがあるので\n明日の午前なら出せます それで間に合いますか？」'));
+  document.querySelector('[data-slot="storyHeading"]').textContent = n === 2 ? '断る言葉を覚えても まだ迷います' : '僕も ずっと断れませんでした';
+  const frames = document.querySelector('.frames');
+  if (n === 2) frames.replaceChildren(...[
+    ['assets/scenes/3-morning.jpg', '課長に状況を伝える都合さん', '前回の一歩', '自分の状況を伝える言葉を覚えました\nそれでも 相手を思うと引き受けてしまうことがあります'],
+    ['assets/preview/02-1.jpg', '後輩たちの話を耳にする都合さん', '今回の迷い', '同じように優しいのに\n信頼される人と 軽く見られる人は何が違うのか'],
+    ['assets/scenes/2-cafe.jpg', '喫茶店で話す都合さんと小野寺さん', '次に覚えること', '小野寺さんに教わった5つの違い\n仕事の条件や 自分の考えを具体的に伝える練習をします'],
+  ].map(([src, alt, when, text]) => el('li', { class: 'frame' }, el('img', { src, alt, width: '960', height: '540', loading: 'lazy' }), el('p', { class: 'frame__when' }, when), el('p', { style: 'white-space:pre-line' }, text))));
+  else frames.innerHTML = originalFrames;
+  const close = document.querySelector('[data-slot="storyClose"]');
+  if (n === 2) close.textContent = '優しさを捨てるのではなく 伝え方を少しずつ変える\nうまく言えない日があっても\n次の一言を 一緒に選んでいきませんか';
+  else close.innerHTML = originalStoryClose;
+}
 function render(n) {
   const ep = EPISODES[n];
+  // ページ内の案内へ移動したあとも 再読み込みで選んだ回を保つ
+  const pageUrl = new URL(location.href);
+  pageUrl.searchParams.set('ep', String(n));
+  history.replaceState(null, '', pageUrl);
   setLineUrl(n);
+  renderEpisodeContext(n);
   document.querySelector('[data-slot="question"]').textContent = ep.question;
   document.querySelector('[data-slot="lead"]').textContent = ep.lead;
   document.querySelector('[data-slot="before"]').textContent = ep.before;
-  document.querySelectorAll('[data-slot="how"]').forEach(node => node.replaceChildren(howText(ep, !node.closest('#ctaHero'))));
+  document.querySelectorAll('[data-slot="how"]').forEach(node => node.replaceChildren(howText(ep, !node.closest('#ctaHero'), n)));
+  document.querySelector('[data-slot="keywordGuide"]').replaceChildren(...Object.entries(EPISODES).flatMap(([k, episode]) => [
+    el('dt', {}, `第${k}話`), el('dd', {}, el('span', { class: 'kw' }, episode.keyword)),
+  ]));
   // 特典の中身のすぐ下のボタンの一言。ページを見せている回は「全10ページ」まで言う（\n の位置で改行する）
   const totals = ep.peek.pages ? [...new Set(ep.peek.pages.map(b => b.total))] : [];
   document.querySelector('[data-slot="giftLead"]').textContent =
@@ -1020,7 +1136,7 @@ function render(n) {
   const kwStep = document.createDocumentFragment();
   if (ep.keyword) {
     kwStep.append('トーク画面で', el('span', { class: 'kw' }, ep.keyword), 'と送ります');
-    steps.push(kwStep, '特典が\nすぐにトークに届きます');
+    steps.push(kwStep, '届いたカードのボタンから\n2つのPDFを開きます');
   } else {
     steps.push('特典がトークに届きます');
   }
@@ -1098,9 +1214,11 @@ function renderSeries(n) {
     return el('li', { class: 'ep' + (current ? ' is-current' : '') + (scenesReady ? ' has-scene' : '') },
       art,
       el('div', {},
-        el('p', { class: 'ep__no' }, `${k}話`, current ? el('span', { class: 'ep__badge' }, 'この動画の特典') : null),
+        el('p', { class: 'ep__no' }, `${k}話`, current ? el('span', { class: 'ep__badge' }, '今見ている特典') : null),
         el('p', { class: 'ep__theme' }, THEMES[k]),
-        el('ul', { class: 'ep__gifts' }, ...e.gifts.map(g => el('li', {}, ...nameParts(g.name))))));
+        el('ul', { class: 'ep__gifts' }, ...e.gifts.map(g => el('li', {}, ...nameParts(g.name)))),
+        el('p', { class: 'ep__keyword' }, '受け取りワード ', el('span', { class: 'kw' }, e.keyword)),
+        el('a', { class: 'ep__link', href: `#ep${k}` }, 'この回の特典を見る →')));
   }));
   phrase(list);
 }
@@ -1111,7 +1229,11 @@ function imageExists(src) {
 
 renderCast();
 render(currentEp = pickEpisode());
-window.addEventListener('hashchange', () => render(currentEp = pickEpisode()));
+window.addEventListener('hashchange', () => {
+  if (!/^#ep[1-9]$/.test(location.hash)) return;
+  render(currentEp = pickEpisode());
+  window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+});
 
 // 確かめるのは各話の最初の1枚だけ（全部だと開いた時点で約2MB読む）。2枚目以降は「›」を押したときに読む
 Promise.all(Object.values(PREVIEW).map(frames => imageExists(frames[0][0]))).then(found => {
@@ -1163,12 +1285,15 @@ if (!makeQR('qr', 264)) document.getElementById('qrBox').hidden = true;
 // こんなこと、ありませんか：押すと赤ペンの印
 const checks = [...document.querySelectorAll('.check')];
 const result = document.getElementById('checkResult');
-function updateChecks() {
+function updateChecks(epNumber = currentEp) {
+  const checks = [...document.querySelectorAll('.check')];
+  const result = document.getElementById('checkResult');
   const n = checks.filter(b => b.getAttribute('aria-pressed') === 'true').length;
   // 1つでも押したら、シートへの案内の一文をLINEのボタンに入れ替える（気持ちが動いたその場で受け取れるように）
   document.getElementById('ctaCheck').hidden = n === 0;
   document.getElementById('checkFoot').hidden = n > 0;
   if (n === 0) { result.textContent = '押したところに 赤ペンで印がつきます'; return; }
+  if (epNumber === 2) { result.replaceChildren(el('b', {}, `${n}つ`), 'の場面が気になりました\n最近の一場面から 振り返ってみましょう'); return; }
   if (n === checks.length) { result.replaceChildren(el('b', {}, '5つ全部'), '\n前の僕と まったく同じです'); return; }
   result.replaceChildren(el('b', {}, `${n}つ`), '当てはまりました\n前の僕は 5つ全部でした');
 }
