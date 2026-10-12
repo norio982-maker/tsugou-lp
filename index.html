@@ -1069,7 +1069,7 @@ function renderEpisodeContext(n) {
     if (Number(a.dataset.episode) === n) a.setAttribute('aria-current', 'page');
     else a.removeAttribute('aria-current');
   });
-  document.title = `第${n}話の無料特典｜都合さんの逆転ノート`;
+  document.title = '都合さんの逆転ノート';
   document.querySelector('[data-slot="faqKeyword"]').replaceChildren('この回は', el('span', { class: 'kw' }, EPISODES[n].keyword));
   document.querySelector('[data-slot="checkHeading"]').textContent = n === 2 ? 'こんな場面で 言葉に迷っていませんか' : 'こんなこと ありませんか';
   const checks = n === 2 ? EP2_CHECKS : originalChecks;
