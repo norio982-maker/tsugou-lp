@@ -485,7 +485,7 @@ section[id]{scroll-margin-top:1rem}
     </svg>
     <div class="wrap hero__in">
       <div class="hero__text">
-        <nav class="episode-nav" aria-label="動画の特典を選ぶ"><a href="#ep1" data-episode="1">第1話の特典</a><a href="#ep2" data-episode="2">第2話の特典</a></nav>
+        <nav class="episode-nav" aria-label="動画の特典を選ぶ"><a href="#ep1" data-episode="1">第1話の特典</a><a href="#ep2" data-episode="2" hidden>第2話の特典</a></nav>
         <p class="hero__eyebrow" data-slot="episodeLabel">第1話を見たあなたへ</p>
         <h1 class="hero__q" data-slot="question">あなたは今<br>何段目ですか</h1>
         <p class="hero__lead"><span data-slot="lead">動画でお話しした5つの段を<br>自分で確かめられるシートにしました</span><br>明日そのまま使える言葉と<br>セットでお渡しします</p>
@@ -551,12 +551,12 @@ section[id]{scroll-margin-top:1rem}
 
   <section class="sec sec--mist" id="series">
     <div class="wrap">
-      <p class="kicker">回ごとの学びと特典</p>
-      <h2 class="sec__h">今の悩みに近い回から 読んでみてください</h2>
-      <p class="sec__sub">抱え込む毎日から 自分の状況を伝える一歩へ<br>そして 相手と仕事の進め方を確かめる一歩へ<br>都合さんの学びに合わせて 特典も続きます</p>
+      <p class="kicker">公開中の回と特典</p>
+      <h2 class="sec__h">都合さんの物語と 一緒に使える特典</h2>
+      <p class="sec__sub">抱え込む毎日から 自分の状況を伝える一歩へ<br>動画の学びを振り返る特典も ご覧ください</p>
       <figure class="series__hero" id="seriesHero" hidden></figure>
       <ol class="series" data-slot="series"></ol>
-      <p class="series__note">各回の案内から 特典の中身と受け取りワードを確認できます</p>
+      <p class="series__note">続きの回は 動画の公開後にご案内します</p>
     </div>
   </section>
 
@@ -602,7 +602,7 @@ section[id]{scroll-margin-top:1rem}
     <div class="wrap narrow">
       <h2 class="sec__h">LINEで受け取る 3つの手順</h2>
       <p class="sec__sub">受け取りワードは 各話で異なります<br>すでに友だちの方は 欲しい回のワードを送ってください</p>
-      <div class="keyword-guide"><h3>各話の受け取りワード</h3><dl data-slot="keywordGuide"></dl></div>
+      <div class="keyword-guide"><h3>公開中の回の受け取りワード</h3><dl data-slot="keywordGuide"></dl></div>
       <div class="uketori__how">
         <div><ol class="steps" data-slot="steps"></ol><p class="receipt-note">届いたカードの2つのボタンから<br>PDFをそれぞれ開いてください</p></div>
         <!-- 押したあとに何が起きるかを先に見せる。文面は LINE配信マニュアル 5章の1通目の書き出しに合わせた「イメージ」 -->
@@ -827,6 +827,11 @@ const EPISODES = {
   },
 };
 
+// 動画を公開した回だけをLPに表示する 公開後はこの一覧に回の番号を追加する
+const PUBLISHED_EPISODES = [1];
+const isPublished = n => PUBLISHED_EPISODES.includes(Number(n));
+const publishedEpisodes = () => Object.entries(EPISODES).filter(([n]) => isPublished(n));
+
 // 特典1・特典2の札の色と、特典名の2行目の色（動画のCTAに合わせた）
 const BOOK_COLORS = [['var(--s1)', '#72D6C9'], ['#B5523B', '#F6997C']];
 
@@ -939,7 +944,7 @@ function pickEpisode() {
   try { n = new URLSearchParams(location.search).get('ep'); } catch (e) {}
   const m = location.hash.match(/^#ep([1-9])$/);
   if (m) n = m[1];
-  return EPISODES[n] ? Number(n) : currentEp;
+  return EPISODES[n] && isPublished(n) ? Number(n) : currentEp;
 }
 
 function el(tag, attrs, ...kids) {
@@ -1060,6 +1065,7 @@ const EP2_CHECKS = ['相談を聞くうちに 仕事まで全部引き取って�
 function renderEpisodeContext(n) {
   document.querySelector('[data-slot="episodeLabel"]').textContent = `第${n}話の学びを 職場で使うために`;
   document.querySelectorAll('[data-episode]').forEach(a => {
+    a.hidden = !isPublished(a.dataset.episode);
     if (Number(a.dataset.episode) === n) a.setAttribute('aria-current', 'page');
     else a.removeAttribute('aria-current');
   });
@@ -1092,10 +1098,13 @@ function renderEpisodeContext(n) {
   else close.innerHTML = originalStoryClose;
 }
 function render(n) {
+  if (!isPublished(n)) n = PUBLISHED_EPISODES[0];
   const ep = EPISODES[n];
   // ページ内の案内へ移動したあとも 再読み込みで選んだ回を保つ
   const pageUrl = new URL(location.href);
   pageUrl.searchParams.set('ep', String(n));
+  const hashEpisode = pageUrl.hash.match(/^#ep([1-9])$/);
+  if (hashEpisode && !isPublished(hashEpisode[1])) pageUrl.hash = `#ep${n}`;
   history.replaceState(null, '', pageUrl);
   setLineUrl(n);
   renderEpisodeContext(n);
@@ -1103,7 +1112,7 @@ function render(n) {
   document.querySelector('[data-slot="lead"]').textContent = ep.lead;
   document.querySelector('[data-slot="before"]').textContent = ep.before;
   document.querySelectorAll('[data-slot="how"]').forEach(node => node.replaceChildren(howText(ep, !node.closest('#ctaHero'), n)));
-  document.querySelector('[data-slot="keywordGuide"]').replaceChildren(...Object.entries(EPISODES).flatMap(([k, episode]) => [
+  document.querySelector('[data-slot="keywordGuide"]').replaceChildren(...publishedEpisodes().flatMap(([k, episode]) => [
     el('dt', {}, `第${k}話`), el('dd', {}, el('span', { class: 'kw' }, episode.keyword)),
   ]));
   // 特典の中身のすぐ下のボタンの一言。ページを見せている回は「全10ページ」まで言う（\n の位置で改行する）
@@ -1207,7 +1216,7 @@ function sceneArt(k, gift) {
 function renderSeries(n) {
   const list = document.querySelector('[data-slot="series"]');
   list.classList.toggle('is-scenes', scenesReady);
-  list.replaceChildren(...Object.keys(EPISODES).map(k => {
+  list.replaceChildren(...publishedEpisodes().map(([k]) => {
     const e = EPISODES[k];
     const current = Number(k) === n;
     const art = scenesReady ? sceneArt(k, e.gifts[0]) : cover(e.gifts[0], '', true);
@@ -1236,7 +1245,7 @@ window.addEventListener('hashchange', () => {
 });
 
 // 確かめるのは各話の最初の1枚だけ（全部だと開いた時点で約2MB読む）。2枚目以降は「›」を押したときに読む
-Promise.all(Object.values(PREVIEW).map(frames => imageExists(frames[0][0]))).then(found => {
+Promise.all(publishedEpisodes().map(([k]) => imageExists(PREVIEW[k][0][0]))).then(found => {
   if (!found.every(Boolean)) return;
   scenesReady = true;
   renderSeries(currentEp);
