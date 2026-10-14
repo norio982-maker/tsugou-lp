@@ -828,7 +828,7 @@ const EPISODES = {
 };
 
 // 動画を公開した回だけをLPに表示する 公開後はこの一覧に回の番号を追加する
-const PUBLISHED_EPISODES = [1];
+const PUBLISHED_EPISODES = [1, 2];
 const isPublished = n => PUBLISHED_EPISODES.includes(Number(n));
 const publishedEpisodes = () => Object.entries(EPISODES).filter(([n]) => isPublished(n));
 
