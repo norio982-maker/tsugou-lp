@@ -485,7 +485,7 @@ section[id]{scroll-margin-top:1rem}
     </svg>
     <div class="wrap hero__in">
       <div class="hero__text">
-        <nav class="episode-nav" aria-label="動画の特典を選ぶ"><a href="#ep1" data-episode="1">第1話の特典</a><a href="#ep2" data-episode="2" hidden>第2話の特典</a></nav>
+        <nav class="episode-nav" aria-label="動画の特典を選ぶ"><a href="#ep1" data-episode="1">第1話の特典</a><a href="#sp1" data-episode="sp1" hidden>第1話 番外編の特典</a><a href="#ep2" data-episode="2" hidden>第2話の特典</a></nav>
         <p class="hero__eyebrow" data-slot="episodeLabel">第1話を見たあなたへ</p>
         <h1 class="hero__q" data-slot="question">あなたは今<br>何段目ですか</h1>
         <p class="hero__lead"><span data-slot="lead">動画でお話しした5つの段を<br>自分で確かめられるシートにしました</span><br>明日そのまま使える言葉と<br>セットでお渡しします</p>
@@ -707,9 +707,19 @@ document.addEventListener('budoux-ready', () => {
 // 開いたとき・再読み込みしたときは、いつもいちばん上から見せる（ブラウザが前に見ていた位置へ戻すのを止める）。
 // ページの中の場所を指したURL（#soudan など）で開いたときだけは、その場所へ行かせる。#ep2 などは回の切り替えなので上から
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+// 回の呼び名。本編は数字（1〜9・URLは #ep2）、番外編は 'sp1' のような文字（URLは #sp1。sp のあとの数字は、どの回の番外編か）
+const EP_HASH = /^#(?:ep([1-9])|(sp[1-9]))$/;
+const isSpecial = n => /^sp[1-9]$/.test(String(n));
+const normEp = n => (isSpecial(n) ? String(n) : Number(n));
+const epLabel = n => (isSpecial(n) ? `第${String(n).slice(2)}話 番外編` : `第${n}話`);
+const epShort = n => (isSpecial(n) ? `${String(n).slice(2)}話 番外編` : `${n}話`);
+const hashFor = n => (isSpecial(n) ? `#${n}` : `#ep${n}`);
+const sameEp = (a, b) => String(a) === String(b);
+
 function toTop() {
   const id = decodeURIComponent(location.hash.slice(1));
-  if (id && !/^ep[1-9]$/.test(id) && document.getElementById(id)) {
+  if (id && !/^(ep|sp)[1-9]$/.test(id) && document.getElementById(id)) {
     document.getElementById(id).scrollIntoView({ behavior: 'instant', block: 'start' });
     return;
   }
@@ -729,8 +739,9 @@ addEventListener('load', () => { if (!movedByReader) toTop(); });
 // 動画ごとに特典が違うので、開いた回に合わせて最後の ref だけ変える（2026-09-29）。LINE側は、この ref で「どの回の入口か」を見て特典を出し分ける。
 //   1話 ＝ ref=YouTube（動画1話のQRと同じ。すでに登録済みなので変えない）
 //   2話〜5話 ＝ ref=YouTube_ep2 〜 YouTube_ep5（LINEの流入経路に、この名前で登録しておく）
+//   番外編 ＝ ref=YouTube_sp1（2026-10-14。動画のQRも同じ ref にする）
 const LINE_BASE = 'https://liff.line.me/2009844800-B6WEn0vn?liffId=2009844800-B6WEn0vn';
-const refFor = n => (n === 1 ? 'YouTube' : `YouTube_ep${n}`);
+const refFor = n => (sameEp(n, 1) ? 'YouTube' : isSpecial(n) ? `YouTube_${n}` : `YouTube_ep${n}`);
 let LINE_URL = `${LINE_BASE}&ref=${refFor(1)}`;
 // 回が変わったら、ボタン・QRコードの行き先を入れ替える
 function setLineUrl(n) {
@@ -763,6 +774,29 @@ const EPISODES = {
           shows: [['assets/pages/ep1-b-02.jpg', '5つの魔法のフレーズ早見表'], ['assets/pages/ep1-b-03.jpg', '魔法のフレーズ1 優先順位']], blur: 'assets/pages/ep1-b-04-blur.jpg' },
       ],
       warn: '5段目に当てはまるときは\nほかより先に' },
+  },
+  // 番外編「第1話の裏側（家族編）」（2026-10-14。YouTubeの長編の番外編。URLは #sp1）。
+  // 特典名と特典①の説明は、台本 `【台本】LINE特典動画_第1話の裏側_家族編.md` のCTAのまま（句読点だけ外した）
+  sp1: {
+    question: '大切な人の\n限界サインに\n気づけていますか',
+    lead: '動画の3つのサインに4つを足して\n家族のいつもとの違いを\n確かめられるチェックにしました',
+    keyword: '番外編',
+    before: '大切な人が\n僕みたいに\n何も言えなくなってしまう前に',
+    giftIntro: '家で見える7つの変化を確かめるチェックと\n疲れている家族に届く声かけを\n2つセットでお渡しします',
+    gifts: [
+      { portrait: true, img: 'assets/covers/sp1-a.jpg', name: '大切な人の限界サインに1分で気づける・家で見える7つの変化チェック',
+        desc: '今日の3つのサインに4つを足して\n家族のいつもとの違いを\n確かめられる中身です',
+        button: '① 家で見える変化チェックを開く' },
+      { portrait: true, img: 'assets/covers/sp1-b.jpg', name: '『頑張れ』の代わりに届く・今夜から使える声かけ7選',
+        desc: '気づいたことの伝え方\n体のことからの聞き方\n打ち明けられたときの受け止め方まで\n今夜そのまま使える一言を7つまとめました',
+        button: '② 今夜から使える声かけ7選を開く' },
+    ],
+    peek: { pages: [
+      { name: ['大切な人の限界サインに1分で気づける', '家で見える7つの変化チェック'], total: 10,
+        shows: [['assets/pages/sp1-a-03.jpg', '食事のときも 仕事の連絡を見ている'], ['assets/pages/sp1-a-04.jpg', '夜中まで起きている']], blur: 'assets/pages/sp1-a-05-blur.jpg' },
+      { name: ['『頑張れ』の代わりに届く', '今夜から使える声かけ7選'], total: 10,
+        shows: [['assets/pages/sp1-b-03.jpg', '見たことを そのまま言う'], ['assets/pages/sp1-b-04.jpg', '問い詰めずに 待つ']], blur: 'assets/pages/sp1-b-05-blur.jpg' },
+    ], warn: 'つらさが強いときは 特典を受け取る前に\n相談先へつながってください\n' },
   },
   2: {
     question: '優しいままで\n伝え方を\n変えてみませんか',
@@ -828,9 +862,15 @@ const EPISODES = {
 };
 
 // 動画を公開した回だけをLPに表示する 公開後はこの一覧に回の番号を追加する
-const PUBLISHED_EPISODES = [1, 2];
-const isPublished = n => PUBLISHED_EPISODES.includes(Number(n));
-const publishedEpisodes = () => Object.entries(EPISODES).filter(([n]) => isPublished(n));
+// 番外編は 'sp1' のように文字で書く（第1話の番外編を公開したら 'sp1' を足す）
+const PUBLISHED_EPISODES = [1, 'sp1', 2];
+const isPublished = n => PUBLISHED_EPISODES.some(p => sameEp(p, n));
+// 手元では未公開回も確認できる。公開サイトの公開回一覧は変えない。
+const IS_LOCAL_PREVIEW = location.protocol === 'file:' || ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
+const canViewEpisode = n => isPublished(n) || (IS_LOCAL_PREVIEW && !!EPISODES[n]);
+// 並びは物語の順（番外編は、その回のすぐあと）
+const EP_ORDER = [1, 'sp1', 2, 3, 4, 5];
+const publishedEpisodes = () => EP_ORDER.filter(n => EPISODES[n] && isPublished(n)).map(n => [String(n), EPISODES[n]]);
 
 // 特典1・特典2の札の色と、特典名の2行目の色（動画のCTAに合わせた）
 const BOOK_COLORS = [['var(--s1)', '#72D6C9'], ['#B5523B', '#F6997C']];
@@ -838,6 +878,7 @@ const BOOK_COLORS = [['var(--s1)', '#72D6C9'], ['#B5523B', '#F6997C']];
 // 「LINE特典は、5話まで」の予告に出す、各話のひとこと（動画のタイトルは変わることがあるので、中身の短い言い方にしてある）
 const THEMES = {
   1: '壊れる前に出る\n口ぐせのサイン',
+  sp1: '家族がいちばん近くで\n見ていた限界サイン',
   2: '優しいのに 軽く見られる理由',
   3: '賢い人がしないこと',
   4: '嫌な人に振り回されない',
@@ -942,9 +983,9 @@ function renderCast() {
 function pickEpisode() {
   let n = null;
   try { n = new URLSearchParams(location.search).get('ep'); } catch (e) {}
-  const m = location.hash.match(/^#ep([1-9])$/);
-  if (m) n = m[1];
-  return EPISODES[n] && isPublished(n) ? Number(n) : currentEp;
+  const m = location.hash.match(EP_HASH);
+  if (m) n = m[1] || m[2];
+  return EPISODES[n] && canViewEpisode(n) ? normEp(n) : currentEp;
 }
 
 function el(tag, attrs, ...kids) {
@@ -986,28 +1027,28 @@ function renderHeroCovers(n) {
   covers.push(cover(e.gifts[0], 'cover--a'));
   document.querySelector('[data-slot="heroCovers"]').replaceChildren(
     el('div', { class: 'slide' }, el('div', { class: 'slide__art' }, ...covers)),
-    el('p', { class: 'slides__cap' }, el('b', {}, `第${n}話の特典 2つセット`)));
+    el('p', { class: 'slides__cap' }, el('b', {}, `${epLabel(n)}の特典 2つセット`)));
 }
 
 // free=false は、すぐ上に「✓無料」を出しているところ（いちばん上のボタン）
 function howText(ep, free = true, n = currentEp) {
   const p = document.createDocumentFragment();
   const head = free ? '無料です\n' : '';
-  if (ep.keyword) p.append(head + '受け取りワードは 各話で異なります\n友だち追加のあと\n第' + n + '話の特典は トークで', el('span', { class: 'kw' }, ep.keyword), 'と送ると届きます');
+  if (ep.keyword) p.append(head + '受け取りワードは 各話で異なります\n友だち追加のあと\n' + epLabel(n) + 'の特典は トークで', el('span', { class: 'kw' }, ep.keyword), 'と送ると届きます');
   else p.append(head + '友だち追加すると トークに届きます');
   return p;
 }
 
 // 受け取り方の欄の「届くときのイメージ」。トークで送る言葉のある回は、先に自分が送る吹き出しを出す
 function renderChat(ep) {
-  if (currentEp > 1) {
+  if (!sameEp(currentEp, 1)) {
     const card = el('div', { class: 'chat-card' },
       el('div', { class: 'chat-card__head' }, '【無料特典】都合さんの逆転ノート', el('strong', {}, '特典をお届けします')),
       el('div', { class: 'chat-card__body' },
-        el('p', {}, `第${currentEp}話をご覧いただき ありがとうございます\n下のボタンから2つの特典をご覧いただけます`),
+        el('p', {}, `${epLabel(currentEp)}をご覧いただき ありがとうございます\n下のボタンから2つの特典をご覧いただけます`),
         ...ep.gifts.map((g, i) => el('p', { class: 'chat-card__gift' }, `${i + 1} `, ...nameParts(g.name))),
-        el('span', { class: 'chat-card__button' }, '① チェックシートを開く'),
-        el('span', { class: 'chat-card__button' }, '② 一言集を開く')));
+        el('span', { class: 'chat-card__button' }, ep.gifts[0].button || '① チェックシートを開く'),
+        el('span', { class: 'chat-card__button' }, ep.gifts[1].button || '② 一言集を開く')));
     document.querySelector('[data-slot="chat"]').replaceChildren(
       el('p', { class: 'bubble bubble--me' }, ep.keyword),
       el('div', { class: 'bubble-row' }, el('img', { src: 'assets/icon.jpg', alt: '', width: '30', height: '30', loading: 'lazy' }), card));
@@ -1062,20 +1103,23 @@ const originalChecks = [...document.querySelectorAll('.check > span:last-child')
 const originalFrames = document.querySelector('.frames').innerHTML;
 const originalStoryClose = document.querySelector('[data-slot="storyClose"]').innerHTML;
 const EP2_CHECKS = ['相談を聞くうちに 仕事まで全部引き取ってしまう', '難しい依頼にも「かもしれません」で止まってしまう', '会議で意見を言っても 理由を伝えられない', '方針を変えた理由を うまく説明できない', '頼みごとの内容や期限が 曖昧になってしまう'];
+// 番外編は 家族の様子を見る5つ（特典①の7つの変化から。動画の場面にあるもの）
+const SP1_CHECKS = ['食事のときも スマホで仕事の連絡を見ている', '夜中まで 起きている', 'ご飯を残す日が 増えた', '何を聞いても「まだ大丈夫」と答える', '家族や 好きだったものに 反応しなくなった'];
 function renderEpisodeContext(n) {
-  document.querySelector('[data-slot="episodeLabel"]').textContent = `第${n}話の学びを 職場で使うために`;
+  const sp = sameEp(n, 'sp1');
+  document.querySelector('[data-slot="episodeLabel"]').textContent = sp ? `${epLabel(n)}の学びを 家で使うために` : `${epLabel(n)}の学びを 職場で使うために`;
   document.querySelectorAll('[data-episode]').forEach(a => {
     a.hidden = !isPublished(a.dataset.episode);
-    if (Number(a.dataset.episode) === n) a.setAttribute('aria-current', 'page');
+    if (sameEp(a.dataset.episode, n)) a.setAttribute('aria-current', 'page');
     else a.removeAttribute('aria-current');
   });
   document.title = '都合さんの逆転ノート';
   document.querySelector('[data-slot="faqKeyword"]').replaceChildren('この回は', el('span', { class: 'kw' }, EPISODES[n].keyword));
-  document.querySelector('[data-slot="checkHeading"]').textContent = n === 2 ? 'こんな場面で 言葉に迷っていませんか' : 'こんなこと ありませんか';
-  const checks = n === 2 ? EP2_CHECKS : originalChecks;
+  document.querySelector('[data-slot="checkHeading"]').textContent = n === 2 ? 'こんな場面で 言葉に迷っていませんか' : sp ? '家族に こんな様子はありませんか' : 'こんなこと ありませんか';
+  const checks = n === 2 ? EP2_CHECKS : sp ? SP1_CHECKS : originalChecks;
   document.querySelectorAll('.check').forEach((b, i) => { b.setAttribute('aria-pressed', 'false'); b.lastElementChild.textContent = checks[i]; });
   updateChecks(n);
-  document.querySelector('[data-slot="giftIntro"]').textContent = n === 2 ? '点数をつけるためではなく 次のやりとりを考えるために\n最近の一場面を振り返るシートと 5つの場面の例文をセットにしました' : '振り返るシートと言葉の集を 2つセットでお渡しします';
+  document.querySelector('[data-slot="giftIntro"]').textContent = EPISODES[n].giftIntro || (n === 2 ? '点数をつけるためではなく 次のやりとりを考えるために\n最近の一場面を振り返るシートと 5つの場面の例文をセットにしました' : '振り返るシートと言葉の集を 2つセットでお渡しします');
   const use = document.querySelector('[data-slot="usage"]');
   use.hidden = n !== 2;
   if (n === 2) use.replaceChildren(
@@ -1085,26 +1129,32 @@ function renderEpisodeContext(n) {
       el('li', {}, el('div', {}, el('b', {}, 'シートで振り返る'), el('p', {}, 'できたことと 次に試したいことを確かめる'))),
       el('li', {}, el('div', {}, el('b', {}, '自分の一言にする'), el('p', {}, '例文の仕事や期限を 自分の状況に置き換える')))),
     el('p', { class: 'usage__example' }, 'たとえば 追加の仕事を頼まれたら\n「今日は難しいです A社の締め切りがあるので\n明日の午前なら出せます それで間に合いますか？」'));
-  document.querySelector('[data-slot="storyHeading"]').textContent = n === 2 ? '断る言葉を覚えても まだ迷います' : '僕も ずっと断れませんでした';
+  document.querySelector('[data-slot="storyHeading"]').textContent = n === 2 ? '断る言葉を覚えても まだ迷います' : sp ? 'いちばん近くで 見ていたのは家族でした' : '僕も ずっと断れませんでした';
   const frames = document.querySelector('.frames');
-  if (n === 2) frames.replaceChildren(...[
+  const frameList = n === 2 ? [
     ['assets/scenes/3-morning.jpg', '課長に状況を伝える都合さん', '前回の一歩', '自分の状況を伝える言葉を覚えました\nそれでも 相手を思うと引き受けてしまうことがあります'],
     ['assets/preview/02-1.jpg', '後輩たちの話を耳にする都合さん', '今回の迷い', '同じように優しいのに\n信頼される人と 軽く見られる人は何が違うのか'],
     ['assets/scenes/2-cafe.jpg', '喫茶店で話す都合さんと小野寺さん', '次に覚えること', '小野寺さんに教わった5つの違い\n仕事の条件や 自分の考えを具体的に伝える練習をします'],
-  ].map(([src, alt, when, text]) => el('li', { class: 'frame' }, el('img', { src, alt, width: '960', height: '540', loading: 'lazy' }), el('p', { class: 'frame__when' }, when), el('p', { style: 'white-space:pre-line' }, text))));
+  ] : sp ? [
+    ['assets/preview/sp1-2.jpg', '夜中の居間で資料を直す都合さんと 起きてきたひなたさん', '会社で壊れていくころ', '夜中まで資料を直し\n娘の「今日は私がやるよ」まで\n「自分がやっておくから」と断っていました'],
+    ['assets/scenes/sp1-limit.jpg', '居間のソファで 都合さんの背中に手を当てる恵子さん', 'あの夜', '家族に「僕 もう限界です」と言えました\n恵子は「頑張れ」と言わず\n「ちゃんと食べたの？」と聞いてくれました'],
+    ['assets/scenes/sp1-walk.jpg', '夕方の道を ひなたさんとたえこと歩く都合さん', '明るいうちに', 'ひなたとたえこと 夕方の道を歩きました\n家族の顔を まっすぐ見られるようになりました'],
+  ] : null;
+  if (frameList) frames.replaceChildren(...frameList.map(([src, alt, when, text]) => el('li', { class: 'frame' }, el('img', { src, alt, width: '960', height: '540', loading: 'lazy' }), el('p', { class: 'frame__when' }, when), el('p', { style: 'white-space:pre-line' }, text))));
   else frames.innerHTML = originalFrames;
   const close = document.querySelector('[data-slot="storyClose"]');
   if (n === 2) close.textContent = '優しさを捨てるのではなく 伝え方を少しずつ変える\nうまく言えない日があっても\n次の一言を 一緒に選んでいきませんか';
+  else if (sp) close.textContent = '会社では見えにくいサインも\n家では出ていました\nLINEでは 大切な人のサインに気づくチェックと\n疲れている家族に届く一言を お渡ししています';
   else close.innerHTML = originalStoryClose;
 }
 function render(n) {
-  if (!isPublished(n)) n = PUBLISHED_EPISODES[0];
+  if (!canViewEpisode(n)) n = PUBLISHED_EPISODES[0];
   const ep = EPISODES[n];
   // ページ内の案内へ移動したあとも 再読み込みで選んだ回を保つ
   const pageUrl = new URL(location.href);
   pageUrl.searchParams.set('ep', String(n));
-  const hashEpisode = pageUrl.hash.match(/^#ep([1-9])$/);
-  if (hashEpisode && !isPublished(hashEpisode[1])) pageUrl.hash = `#ep${n}`;
+  const hashEpisode = pageUrl.hash.match(EP_HASH);
+  if (hashEpisode && !canViewEpisode(hashEpisode[1] || hashEpisode[2])) pageUrl.hash = hashFor(n);
   history.replaceState(null, '', pageUrl);
   setLineUrl(n);
   renderEpisodeContext(n);
@@ -1113,7 +1163,7 @@ function render(n) {
   document.querySelector('[data-slot="before"]').textContent = ep.before;
   document.querySelectorAll('[data-slot="how"]').forEach(node => node.replaceChildren(howText(ep, !node.closest('#ctaHero'), n)));
   document.querySelector('[data-slot="keywordGuide"]').replaceChildren(...publishedEpisodes().flatMap(([k, episode]) => [
-    el('dt', {}, `第${k}話`), el('dd', {}, el('span', { class: 'kw' }, episode.keyword)),
+    el('dt', {}, epLabel(k)), el('dd', {}, el('span', { class: 'kw' }, episode.keyword)),
   ]));
   // 特典の中身のすぐ下のボタンの一言。ページを見せている回は「全10ページ」まで言う（\n の位置で改行する）
   const totals = ep.peek.pages ? [...new Set(ep.peek.pages.map(b => b.total))] : [];
@@ -1185,8 +1235,16 @@ const PREVIEW = {
     ['assets/preview/05-4.jpg', '弁当を持って都合さんを心配する恵子さん'],
     ['assets/preview/05.jpg', '朝の玄関で、恵子さんから弁当を受け取る都合さん'],
   ],
+  // 番外編の絵は 台本\台本\【画像】LINE特典動画_第1話の裏側_家族編\ から（2026-10-14・960×540に縮めた）
+  sp1: [
+    ['assets/preview/sp1-1.jpg', '夕飯のあいだも、スマホで仕事のメールを見る都合さんと恵子さん'],
+    ['assets/preview/sp1-2.jpg', '夜中の二時、居間で資料を直す都合さんと、起きてきたひなたさん'],
+    ['assets/preview/sp1-3.jpg', '夕飯の席で「最近、笑わないね」と声をかける恵子さん'],
+    ['assets/preview/sp1-4.jpg', '「おじいちゃん、あそぼ！」の結衣ちゃんに、動けない都合さん'],
+    ['assets/preview/sp1-5.jpg', '足元に来たたえこにも、手が伸びない都合さん'],
+  ],
 };
-const sceneIndex = { 2: 0, 3: 0, 4: 0, 5: 0 };
+const sceneIndex = { sp1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 let currentEp = 1;
 let scenesReady = false;
 
@@ -1197,8 +1255,8 @@ function sceneArt(k, gift) {
   const art = el('figure', { class: 'ep__scene' + (frames.length > 1 ? ' has-gallery' : '') }, img, cover(gift, '', true));
   if (frames.length > 1) {
     const count = el('span', { class: 'ep__scene-count', 'aria-live': 'polite' }, `${index + 1} / ${frames.length}`);
-    const prev = el('button', { class: 'ep__scene-step', type: 'button', 'aria-label': `${k}話の前の予告画像` }, '‹');
-    const next = el('button', { class: 'ep__scene-step', type: 'button', 'aria-label': `${k}話の次の予告画像` }, '›');
+    const prev = el('button', { class: 'ep__scene-step', type: 'button', 'aria-label': `${epShort(k)}の前の予告画像` }, '‹');
+    const next = el('button', { class: 'ep__scene-step', type: 'button', 'aria-label': `${epShort(k)}の次の予告画像` }, '›');
     const show = delta => {
       sceneIndex[k] = (sceneIndex[k] + delta + frames.length) % frames.length;
       const [src, alt] = frames[sceneIndex[k]];
@@ -1218,16 +1276,16 @@ function renderSeries(n) {
   list.classList.toggle('is-scenes', scenesReady);
   list.replaceChildren(...publishedEpisodes().map(([k]) => {
     const e = EPISODES[k];
-    const current = Number(k) === n;
+    const current = sameEp(k, n);
     const art = scenesReady ? sceneArt(k, e.gifts[0]) : cover(e.gifts[0], '', true);
     return el('li', { class: 'ep' + (current ? ' is-current' : '') + (scenesReady ? ' has-scene' : '') },
       art,
       el('div', {},
-        el('p', { class: 'ep__no' }, `${k}話`, current ? el('span', { class: 'ep__badge' }, '今見ている特典') : null),
+        el('p', { class: 'ep__no' }, epShort(k), current ? el('span', { class: 'ep__badge' }, '今見ている特典') : null),
         el('p', { class: 'ep__theme' }, THEMES[k]),
         el('ul', { class: 'ep__gifts' }, ...e.gifts.map(g => el('li', {}, ...nameParts(g.name)))),
         el('p', { class: 'ep__keyword' }, '受け取りワード ', el('span', { class: 'kw' }, e.keyword)),
-        el('a', { class: 'ep__link', href: `#ep${k}` }, 'この回の特典を見る →')));
+        el('a', { class: 'ep__link', href: hashFor(k) }, 'この回の特典を見る →')));
   }));
   phrase(list);
 }
@@ -1239,7 +1297,7 @@ function imageExists(src) {
 renderCast();
 render(currentEp = pickEpisode());
 window.addEventListener('hashchange', () => {
-  if (!/^#ep[1-9]$/.test(location.hash)) return;
+  if (!EP_HASH.test(location.hash)) return;
   render(currentEp = pickEpisode());
   window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
 });
@@ -1303,6 +1361,10 @@ function updateChecks(epNumber = currentEp) {
   document.getElementById('checkFoot').hidden = n > 0;
   if (n === 0) { result.textContent = '押したところに 赤ペンで印がつきます'; return; }
   if (epNumber === 2) { result.replaceChildren(el('b', {}, `${n}つ`), 'の場面が気になりました\n最近の一場面から 振り返ってみましょう'); return; }
+  if (sameEp(epNumber, 'sp1')) {
+    if (n === checks.length) { result.replaceChildren(el('b', {}, '5つ全部'), '\nあの頃の僕と 同じです\nひとりで抱えず 下の相談先も見てください'); return; }
+    result.replaceChildren(el('b', {}, `${n}つ`), '当てはまりました\n特典の7つの変化チェックで\nいつもとの違いを確かめてみましょう'); return;
+  }
   if (n === checks.length) { result.replaceChildren(el('b', {}, '5つ全部'), '\n前の僕と まったく同じです'); return; }
   result.replaceChildren(el('b', {}, `${n}つ`), '当てはまりました\n前の僕は 5つ全部でした');
 }
@@ -1349,7 +1411,7 @@ const parser = new HTMLProcessingParser(model);
 const ZWSP = /​/g;
 // BudouX が割ってしまう言葉。この中では折り返さない（足すときは、ここに書く）
 const KEEP = ['ありがとうございます', '一人暮らし', '気にかけて', '魔法のフレーズ5選', '笑み',
-  '踏みとどまる', '言い切れない', 'はまり', '当てはま', '仕事の連絡'].map(w => new RegExp([...w].join('​?'), 'g'));
+  '踏みとどまる', '言い切れない', 'はまり', '当てはま', '仕事の連絡', '明るいうち', '見えにくい'].map(w => new RegExp([...w].join('​?'), 'g'));
 const textNodes = root => {
   const list = [], walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
   for (let t = walk.nextNode(); t; t = walk.nextNode()) list.push(t);
