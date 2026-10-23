@@ -1112,6 +1112,8 @@ const originalStoryClose = document.querySelector('[data-slot="storyClose"]').in
 const EP2_CHECKS = ['相談を聞くうちに 仕事まで全部引き取ってしまう', '難しい依頼にも「かもしれません」で止まってしまう', '会議で意見を言っても 理由を伝えられない', '方針を変えた理由を うまく説明できない', '頼みごとの内容や期限が 曖昧になってしまう'];
 // 番外編は 家族の様子を見る5つ（特典①の7つの変化から。動画の場面にあるもの）
 const SP1_CHECKS = ['食事のときも スマホで仕事の連絡を見ている', '夜中まで 起きている', 'ご飯を残す日が 増えた', '何を聞いても「まだ大丈夫」と答える', '家族や 好きだったものに 反応しなくなった'];
+// 3話は 動画の5つ（特典の5項目）に上から1つずつ対応させた。言葉は台本で都合さんが実際にしていたこと
+const EP3_CHECKS = ['「前と同じなので」で 書類を見ずに答えてしまう', '嫌味を言われると 言い返す言葉がのどまで出てくる', '夜中に急いで返したメールに 朝になって間違いを見つける', '話しかけられると 画面を見たまま答えてしまう', '指摘されると 直す場所より先に 事情の説明が出てしまう'];
 function renderEpisodeContext(n) {
   const sp = sameEp(n, 'sp1');
   document.querySelector('[data-slot="episodeLabel"]').textContent = sp ? `${epLabel(n)}の学びを 家で使うために` : `${epLabel(n)}の学びを 職場で使うために`;
@@ -1122,8 +1124,8 @@ function renderEpisodeContext(n) {
   });
   document.title = '都合さんの逆転ノート';
   document.querySelector('[data-slot="faqKeyword"]').replaceChildren('この回は', el('span', { class: 'kw' }, EPISODES[n].keyword));
-  document.querySelector('[data-slot="checkHeading"]').textContent = n === 2 ? 'こんな場面で 言葉に迷っていませんか' : sp ? '家族に こんな様子はありませんか' : 'こんなこと ありませんか';
-  const checks = n === 2 ? EP2_CHECKS : sp ? SP1_CHECKS : originalChecks;
+  document.querySelector('[data-slot="checkHeading"]').textContent = n === 2 ? 'こんな場面で 言葉に迷っていませんか' : n === 3 ? 'こんなこと 心当たりはありませんか' : sp ? '家族に こんな様子はありませんか' : 'こんなこと ありませんか';
+  const checks = n === 2 ? EP2_CHECKS : n === 3 ? EP3_CHECKS : sp ? SP1_CHECKS : originalChecks;
   document.querySelectorAll('.check').forEach((b, i) => { b.setAttribute('aria-pressed', 'false'); b.lastElementChild.textContent = checks[i]; });
   updateChecks(n);
   document.querySelector('[data-slot="giftIntro"]').textContent = EPISODES[n].giftIntro || (n === 2 ? '点数をつけるためではなく 次のやりとりを考えるために\n最近の一場面を振り返るシートと 5つの場面の例文をセットにしました' : '振り返るシートと言葉の集を 2つセットでお渡しします');
@@ -1136,12 +1138,17 @@ function renderEpisodeContext(n) {
       el('li', {}, el('div', {}, el('b', {}, 'シートで振り返る'), el('p', {}, 'できたことと 次に試したいことを確かめる'))),
       el('li', {}, el('div', {}, el('b', {}, '自分の一言にする'), el('p', {}, '例文の仕事や期限を 自分の状況に置き換える')))),
     el('p', { class: 'usage__example' }, 'たとえば 追加の仕事を頼まれたら\n「今日は難しいです A社の締め切りがあるので\n明日の午前なら出せます それで間に合いますか？」'));
-  document.querySelector('[data-slot="storyHeading"]').textContent = n === 2 ? '断る言葉を覚えても まだ迷います' : sp ? 'いちばん近くで 見ていたのは家族でした' : '僕も ずっと断れませんでした';
+  document.querySelector('[data-slot="storyHeading"]').textContent = n === 2 ? '断る言葉を覚えても まだ迷います' : n === 3 ? '頼られはじめても 落とし穴がありました' : sp ? 'いちばん近くで 見ていたのは家族でした' : '僕も ずっと断れませんでした';
   const frames = document.querySelector('.frames');
   const frameList = n === 2 ? [
     ['assets/scenes/3-morning.jpg', '課長に状況を伝える都合さん', '前回の一歩', '自分の状況を伝える言葉を覚えました\nそれでも 相手を思うと引き受けてしまうことがあります'],
     ['assets/preview/02-1.jpg', '後輩たちの話を耳にする都合さん', '今回の迷い', '同じように優しいのに\n信頼される人と 軽く見られる人は何が違うのか'],
     ['assets/scenes/2-cafe.jpg', '喫茶店で話す都合さんと小野寺さん', '次に覚えること', '小野寺さんに教わった5つの違い\n仕事の条件や 自分の考えを具体的に伝える練習をします'],
+  ] : n === 3 ? [
+    // 3話は導入と喫茶店で教わることまで（課長に詰められる場面と立て直す結末は見せない）
+    ['assets/scenes/ep3-answer.jpg', '早川さんの相談に笑顔で答える都合さん', '前回の一歩', '理由を添えて 自分の考えを言えるようになり\n相談に来てくれる人が 少しずつ増えました'],
+    ['assets/scenes/ep3-kyutoshitsu.jpg', '給湯室の前で足を止める都合さん', '今回のつまずき', '給湯室から\n「あの人 実は頭が悪いんじゃないか」\n「前と同じなので」で済ませる早川さんのうわさでした\nその言葉 僕もさっき言ったばかりでした'],
+    ['assets/scenes/ep3-cafe.jpg', '夜の喫茶店で小野寺さんの席に着く都合さん', '次に覚えること', '小野寺さんに教わった\n賢い人がしない5つのこと\n決める前に確かめて\n指摘されたら直す場所を聞く練習をします'],
   ] : sp ? [
     ['assets/preview/sp1-2.jpg', '夜中の居間で資料を直す都合さんと 起きてきたひなたさん', '会社で壊れていくころ', '夜中まで資料を直し\n娘の「今日は私がやるよ」まで\n「自分がやっておくから」と断っていました'],
     ['assets/scenes/sp1-limit.jpg', '居間のソファで 都合さんの背中に手を当てる恵子さん', 'あの夜', '家族に「僕 もう限界です」と言えました\n恵子は「頑張れ」と言わず\n「ちゃんと食べたの？」と聞いてくれました'],
@@ -1151,6 +1158,7 @@ function renderEpisodeContext(n) {
   else frames.innerHTML = originalFrames;
   const close = document.querySelector('[data-slot="storyClose"]');
   if (n === 2) close.textContent = '優しさを捨てるのではなく 伝え方を少しずつ変える\nうまく言えない日があっても\n次の一言を 一緒に選んでいきませんか';
+  else if (n === 3) close.textContent = '間違えない人を目指すより\n間違いに気づいてから 何をするか\n次に聞く一言を 一緒に決めていきませんか';
   else if (sp) close.textContent = '会社では見えにくいサインも\n家では出ていました\nLINEでは 大切な人のサインに気づくチェックと\n疲れている家族に届く一言を お渡ししています';
   else close.innerHTML = originalStoryClose;
 }
@@ -1368,6 +1376,11 @@ function updateChecks(epNumber = currentEp) {
   document.getElementById('checkFoot').hidden = n > 0;
   if (n === 0) { result.textContent = '押したところに 赤ペンで印がつきます'; return; }
   if (epNumber === 2) { result.replaceChildren(el('b', {}, `${n}つ`), 'の場面が気になりました\n最近の一場面から 振り返ってみましょう'); return; }
+  // 3話の冒頭「少し前の僕がまさにそれでした」に合わせる
+  if (epNumber === 3) {
+    if (n === checks.length) { result.replaceChildren(el('b', {}, '5つ全部'), '\n少し前の僕と まったく同じです'); return; }
+    result.replaceChildren(el('b', {}, `${n}つ`), '当てはまりました\n少し前の僕は 5つ全部でした'); return;
+  }
   if (sameEp(epNumber, 'sp1')) {
     if (n === checks.length) { result.replaceChildren(el('b', {}, '5つ全部'), '\nあの頃の僕と 同じです\nひとりで抱えず 下の相談先も見てください'); return; }
     result.replaceChildren(el('b', {}, `${n}つ`), '当てはまりました\n特典の7つの変化チェックで\nいつもとの違いを確かめてみましょう'); return;
@@ -1418,7 +1431,7 @@ const parser = new HTMLProcessingParser(model);
 const ZWSP = /​/g;
 // BudouX が割ってしまう言葉。この中では折り返さない（足すときは、ここに書く）
 const KEEP = ['ありがとうございます', '一人暮らし', '気にかけて', '魔法のフレーズ5選', '笑み',
-  '踏みとどまる', '言い切れない', 'はまり', '当てはま', '仕事の連絡', '明るいうち', '見えにくい'].map(w => new RegExp([...w].join('​?'), 'g'));
+  '踏みとどまる', '言い切れない', 'はまり', '当てはま', '仕事の連絡', '明るいうち', '見えにくい', '頭が悪い', '直す場所', '朝になって', '言い返す言葉', 'のどまで', '事情の説明'].map(w => new RegExp([...w].join('​?'), 'g'));
 const textNodes = root => {
   const list = [], walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
   for (let t = walk.nextNode(); t; t = walk.nextNode()) list.push(t);
