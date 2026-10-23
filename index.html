@@ -485,7 +485,7 @@ section[id]{scroll-margin-top:1rem}
     </svg>
     <div class="wrap hero__in">
       <div class="hero__text">
-        <nav class="episode-nav" aria-label="動画の特典を選ぶ"><a href="#ep1" data-episode="1">第1話の特典</a><a href="#sp1" data-episode="sp1" hidden>第1話 番外編の特典</a><a href="#ep2" data-episode="2" hidden>第2話の特典</a></nav>
+        <nav class="episode-nav" aria-label="動画の特典を選ぶ"><a href="#ep1" data-episode="1">第1話の特典</a><a href="#sp1" data-episode="sp1" hidden>第1話 番外編の特典</a><a href="#ep2" data-episode="2" hidden>第2話の特典</a><a href="#ep3" data-episode="3" hidden>第3話の特典</a></nav>
         <p class="hero__eyebrow" data-slot="episodeLabel">第1話を見たあなたへ</p>
         <h1 class="hero__q" data-slot="question">あなたは今<br>何段目ですか</h1>
         <p class="hero__lead"><span data-slot="lead">動画でお話しした5つの段を<br>自分で確かめられるシートにしました</span><br>明日そのまま使える言葉と<br>セットでお渡しします</p>
@@ -817,18 +817,25 @@ const EPISODES = {
     ] },
   },
   3: {
-    question: 'あなたは\nどの落とし穴に\nはまりやすいですか',
-    lead: '動画でお話しした7つのことを\n自分で確かめられるセルフチェックにしました',
+    question: '自分の判断を\n一度\n確かめてみませんか',
+    lead: '仕事の判断を見直す5つのチェックと\n迷ったときに使える質問をまとめました',
     keyword: '特典３',
-    before: '僕みたいに\n頼られるようになったあとで\n陰でそう思われてしまう前に',
+    before: '頼られるようになっても\n決める前に\n一つ確かめる習慣を',
+    giftIntro: '判断を見直すチェックと 迷ったときの質問を\nSDキャラの場面・例文・書き込みメモで振り返れます',
     gifts: [
-      { img: 'assets/covers/ep3-a.jpg', name: '賢そうに見える人の7つの落とし穴・セルフチェック',
-        desc: '自分がどの穴に\nはまりやすいかが分かり\nいちばん先にふさぐ「一問」まで\n分かる中身です' },
-      { img: 'assets/covers/ep3-b.jpg', name: '賢い人の一問7選',
-        desc: '会議や決めごと\n指摘を受けたとき\n7つの場面で そのまま使える一問が分かります' },
+      { portrait: true, img: 'assets/covers/ep3-a.jpg', name: '賢いつもりの落とし穴',
+        desc: '仕事の判断を見直す5つのチェック\n予定・時刻・直す場所を確かめる場面から\n次に聞くことと 行動を一つ選べます',
+        button: '① 賢いつもりの落とし穴を開く' },
+      { portrait: true, img: 'assets/covers/ep3-b.jpg', name: 'できる人は、こう聞く',
+        desc: '迷ったときの質問5選\n自分の案を決める前や 指摘を受けたときに\nそのまま使える質問と 確認する一歩をまとめました',
+        button: '② できる人は、こう聞くを開く' },
     ],
-    peek: { title: '実は頭が悪いと思われる人が やってしまうこと', hidden: '代わりの一問',
-      rows: [['1つ目', '「自分は間違えない」と思い込む'], ['2つ目', '大事な判断を勘だけで決める'], ['3つ目', '都合のいい証拠だけを集める'], ['4つ目', 'カッとして そのまま言い返す'], ['5つ目', '寝不足のまま決める'], ['6つ目', '同時にこなすのを能力だと思う'], ['7つ目', 'できる人を演じて指摘をかわす']] },
+    peek: { pages: [
+      { name: ['賢いつもりの落とし穴', '仕事の判断を見直す5つのチェック'], total: 8,
+        shows: [['assets/pages/ep3-a-03.jpg', '自分の案の見落としを聞く'], ['assets/pages/ep3-a-04.jpg', '言い返す前に直す場所を聞く']], blur: 'assets/pages/ep3-a-05-blur.jpg' },
+      { name: ['できる人は、こう聞く', '迷ったときの質問5選'], total: 8,
+        shows: [['assets/pages/ep3-b-03.jpg', '自分の案の見落としを聞く'], ['assets/pages/ep3-b-04.jpg', '言い返す前に直す場所を聞く']], blur: 'assets/pages/ep3-b-05-blur.jpg' },
+    ] },
   },
   4: {
     question: 'あなたに足りない\n対処はどれですか',
@@ -863,7 +870,7 @@ const EPISODES = {
 
 // 動画を公開した回だけをLPに表示する 公開後はこの一覧に回の番号を追加する
 // 番外編は 'sp1' のように文字で書く（第1話の番外編を公開したら 'sp1' を足す）
-const PUBLISHED_EPISODES = [1, 'sp1', 2];
+const PUBLISHED_EPISODES = [1, 'sp1', 2, 3];
 const isPublished = n => PUBLISHED_EPISODES.some(p => sameEp(p, n));
 // 手元では未公開回も確認できる。公開サイトの公開回一覧は変えない。
 const IS_LOCAL_PREVIEW = location.protocol === 'file:' || ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
