@@ -485,7 +485,7 @@ section[id]{scroll-margin-top:1rem}
     </svg>
     <div class="wrap hero__in">
       <div class="hero__text">
-        <nav class="episode-nav" aria-label="動画の特典を選ぶ"><a href="#ep1" data-episode="1">第1話の特典</a><a href="#sp1" data-episode="sp1" hidden>第1話 番外編の特典</a><a href="#ep2" data-episode="2" hidden>第2話の特典</a><a href="#ep3" data-episode="3" hidden>第3話の特典</a></nav>
+        <nav class="episode-nav" aria-label="動画の特典を選ぶ"><a href="#ep1" data-episode="1">第1話の特典</a><a href="#sp1" data-episode="sp1" hidden>第1話 番外編の特典</a><a href="#ep2" data-episode="2" hidden>第2話の特典</a><a href="#ep3" data-episode="3" hidden>第3話の特典</a><a href="#ep4" data-episode="4" hidden>第4話の特典</a><a href="#ep5" data-episode="5" hidden>第5話の特典</a><a href="#ep6" data-episode="6" hidden>第6話の特典</a></nav>
         <p class="hero__eyebrow" data-slot="episodeLabel">第1話を見たあなたへ</p>
         <h1 class="hero__q" data-slot="question">あなたは今<br>何段目ですか</h1>
         <p class="hero__lead"><span data-slot="lead">動画でお話しした5つの段を<br>自分で確かめられるシートにしました</span><br>明日そのまま使える言葉と<br>セットでお渡しします</p>
@@ -838,45 +838,80 @@ const EPISODES = {
     ] },
   },
   4: {
-    question: 'あなたに足りない\n対処はどれですか',
-    lead: '動画でお話しした7つの対処を\n自分で確かめられる診断シートにしました',
+    question: 'あの人との\nやりとりを\n抱え込んでいませんか',
+    lead: '振り回される場面を見直す5つのチェックと\n職場で使える一言をまとめました',
     keyword: '特典４',
-    before: '僕みたいに\n家に帰ってからも\n頭の中で戦い続けてしまう前に',
+    before: '家に帰ってからも\n頭の中で戦い続けてしまう前に\n言葉と記録を 一つ選んでみませんか',
+    giftIntro: '振り回される場面を振り返るチェックと 職場で使える一言\nSDキャラの場面・例文・書き込みメモを2冊にまとめました',
     gifts: [
-      { img: 'assets/covers/ep4-a.jpg', name: '振り回され度・7つの対処診断シート',
-        desc: '自分がどの対処が足りていないかが分かり\nいちばん先に始める一手まで分かる中身です' },
-      { img: 'assets/covers/ep4-b.jpg', name: '振り回されない一言7選',
-        desc: 'すぐに言い返さない\n話を戻す 相談をまとめる\n7つの場面で そのまま使える一言が分かります' },
+      { portrait: true, img: 'assets/covers/ep4-a.jpg', name: 'あの人に、心を持っていかれない',
+        desc: '振り回され方を見直す5つのチェック\n返信の前・会議・帰宅後のやりとりを振り返り\n言葉や記録 相談の一歩を選べます',
+        button: '① 心を持っていかれないを開く' },
+      { portrait: true, img: 'assets/covers/ep4-b.jpg', name: '優しいまま、線を引く',
+        desc: '職場で使える一言5選\n確認してから返す・論点に戻す・人事にも確認する\n場面に合わせて使える一言と メモの型をまとめました',
+        button: '② 優しいまま、線を引くを開く' },
     ],
-    peek: { title: '振り回される人が やってしまうこと', hidden: 'そのまま使える一言',
-      rows: [['1つ目', '腹が立った瞬間に返す'], ['2つ目', '人柄を裁いて頭の中で戦う'], ['3つ目', '長く言い返す'], ['4つ目', '呼ばれるまま相手の土俵に出る'], ['5つ目', '一人で抱えて戦い続ける'], ['6つ目', '相手を家に連れて帰る'], ['7つ目', '会社の問題まで一人で背負う']] },
+    peek: { pages: [
+      { name: ['あの人に、心を持っていかれない', '振り回され方を見直す5つのチェック'], total: 8,
+        shows: [['assets/pages/ep4-a-03.jpg', '感情のピークで返さない'], ['assets/pages/ep4-a-04.jpg', '短い言葉で論点に戻す']], blur: 'assets/pages/ep4-a-05-blur.jpg' },
+      { name: ['優しいまま、線を引く', '職場で使える一言5選'], total: 8,
+        shows: [['assets/pages/ep4-b-03.jpg', '感情のピークで返さない'], ['assets/pages/ep4-b-04.jpg', '短い言葉で論点に戻す']], blur: 'assets/pages/ep4-b-05-blur.jpg' },
+    ] },
   },
   5: {
-    question: 'あなたに今\nどのサインが\n出ていますか',
-    lead: '動画でお話しした9つのサインを\n自分で確かめられる診断シートにしました',
+    question: '「まだ大丈夫」で\nいつもとの違いを\n見過ごしていませんか',
+    lead: 'いつもと違う9つの変化を振り返るノートと\n助けを求める言葉をまとめました',
     keyword: '特典５',
-    before: '僕みたいに\n会社のデスクで涙が出るまで\nサインを見過ごしてしまう前に',
+    before: '「まだ大丈夫」を重ねる前に\n今の変化と\n頼みたい助けを言葉に',
+    giftIntro: '普段との違いをメモするノートと 助けを求める一言\nSDキャラの場面・例文・書き込みメモを2冊にまとめました',
     gifts: [
-      { img: 'assets/covers/ep5-a.jpg', name: '9つの危険サイン・セルフチェック診断シート',
-        desc: '自分に今どのサインが\n出ているかが分かり\n当てはまった数に応じて\n今やることまで分かる中身です' },
-      { img: 'assets/covers/ep5-b.jpg', name: '対処の一手9選',
-        desc: '9つのサインそれぞれで\nまずやることが1ページで分かります' },
+      { portrait: true, img: 'assets/covers/ep5-a.jpg', name: '「まだ大丈夫」を見直すノート',
+        desc: 'いつもと違う9つの変化チェック\n普段との違いをメモし 相談で伝えたいことを整理します\n数や順番で 病気や危険度を判定するものではありません',
+        button: '① 9つの変化チェックを開く' },
+      { portrait: true, img: 'assets/covers/ep5-b.jpg', name: 'しんどい日に、頼れる一言',
+        desc: '助けを求める言葉と一手9選\n仕事の確認範囲を相談する・今の変化を伝える・付き添いを頼む\n必要な助けを言葉にする例文と 一歩をまとめました',
+        button: '② 助けを頼む一言9選を開く' },
     ],
-    peek: { title: '9つの危険サインの見分け方', hidden: '出たときの手当て',
-      rows: [['1つ目', '休んでも疲れが取れない'], ['2つ目', '仕事がどうでもよくなってくる'], ['3つ目', '集中できない 忘れっぽくなる'], ['4つ目', '夜眠れない'], ['5つ目', 'イライラする 涙もろくなる'], ['6つ目', '好きなことが楽しめない'], ['7つ目', '人を避けるようになる'], ['8つ目', '異常なしなのに 体が痛い'], ['9つ目', '先が見えない']],
-      warn: 'いくつも当てはまるときや 9つ目に当てはまるときは\nひとりで抱えずに' },
+    peek: { pages: [
+      { name: ['「まだ大丈夫」を見直すノート', 'いつもと違う9つの変化チェック'], total: 12,
+        shows: [['assets/pages/ep5-a-03.jpg', '休んでも疲れが取れない'], ['assets/pages/ep5-a-04.jpg', '仕事がどうでもよくなる']], blur: 'assets/pages/ep5-a-05-blur.jpg' },
+      { name: ['しんどい日に、頼れる一言', '助けを求める言葉と一手9選'], total: 12,
+        shows: [['assets/pages/ep5-b-03.jpg', '確認する範囲を相手と決める'], ['assets/pages/ep5-b-04.jpg', '今の変化を一人に伝える']], blur: 'assets/pages/ep5-b-05-blur.jpg' },
+    ], warn: 'つらさが強いときは 特典を受け取る前に\n相談先へつながってください\n' },
+  },
+  // 第6話（2026-11-07）。特典名・説明は台本のCTA（句読点はLPの決まりで外す）。LINEは「特典６／特典6」で2冊が届く
+  6: {
+    question: '「いないと困る」で\n全部\n抱えていませんか',
+    lead: '自分がいなくても回る引き継ぎの一枚と\n抱えずに頼られる一言をまとめました',
+    keyword: '特典６',
+    before: '戻ってきた仕事を\n全部抱え直す前に\n渡せる形で一枚に',
+    giftIntro: '仕事を渡せる形にする一枚と 抱えずに頼られる一言\nSDキャラの場面・記入例・書き込みメモを2冊にまとめました',
+    gifts: [
+      { portrait: true, img: 'assets/covers/ep6-a.jpg', name: '休んでも仕事が回る・1枚引き継ぎシート',
+        desc: '7つの欄を埋めるだけで 10分で\n自分がいなくても回る引き継ぎの一枚ができる中身です\n記入例と 書き込み用のシートつき',
+        button: '① 引き継ぎシートを開く' },
+      { portrait: true, img: 'assets/covers/ep6-b.jpg', name: '抱えずに頼られる一言7選',
+        desc: '動画の7つの特徴ごとに\nそのまま使える一言をまとめました\n引き受ける前・渡すとき・聞くときに',
+        button: '② 頼られる一言7選を開く' },
+    ],
+    peek: { pages: [
+      { name: ['休んでも仕事が回る・1枚引き継ぎシート', '7つの欄を10分で埋める'], total: 8,
+        shows: [['assets/pages/ep6-a-03.jpg', '7つの欄 早見表'], ['assets/pages/ep6-a-04.jpg', '記入例 動画のC社の一枚']], blur: 'assets/pages/ep6-a-06-blur.jpg' },
+      { name: ['抱えずに頼られる一言7選', '全部を抱えずに頼られる一言'], total: 12,
+        shows: [['assets/pages/ep6-b-03.jpg', '七つの一言 早見表'], ['assets/pages/ep6-b-04.jpg', '引き受ける前に 範囲を言う']], blur: 'assets/pages/ep6-b-05-blur.jpg' },
+    ] },
   },
 };
 
 // 動画を公開した回だけをLPに表示する 公開後はこの一覧に回の番号を追加する
 // 番外編は 'sp1' のように文字で書く（第1話の番外編を公開したら 'sp1' を足す）
-const PUBLISHED_EPISODES = [1, 'sp1', 2, 3];
+const PUBLISHED_EPISODES = [1, 'sp1', 2, 3, 4, 5, 6];
 const isPublished = n => PUBLISHED_EPISODES.some(p => sameEp(p, n));
 // 手元では未公開回も確認できる。公開サイトの公開回一覧は変えない。
 const IS_LOCAL_PREVIEW = location.protocol === 'file:' || ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
 const canViewEpisode = n => isPublished(n) || (IS_LOCAL_PREVIEW && !!EPISODES[n]);
 // 並びは物語の順（番外編は、その回のすぐあと）
-const EP_ORDER = [1, 'sp1', 2, 3, 4, 5];
+const EP_ORDER = [1, 'sp1', 2, 3, 4, 5, 6];
 const publishedEpisodes = () => EP_ORDER.filter(n => EPISODES[n] && isPublished(n)).map(n => [String(n), EPISODES[n]]);
 
 // 特典1・特典2の札の色と、特典名の2行目の色（動画のCTAに合わせた）
@@ -890,6 +925,7 @@ const THEMES = {
   3: '賢い人がしないこと',
   4: '嫌な人に振り回されない',
   5: '心と体の危険サイン',
+  6: '辞められたら困る人',
 };
 
 // 登場人物。紹介は都合さんの目から。役どころ・年の差・口ぐせは キャラクター設定.md と各話の台本のとおり
@@ -1114,6 +1150,13 @@ const EP2_CHECKS = ['相談を聞くうちに 仕事まで全部引き取って�
 const SP1_CHECKS = ['食事のときも スマホで仕事の連絡を見ている', '夜中まで 起きている', 'ご飯を残す日が 増えた', '何を聞いても「まだ大丈夫」と答える', '家族や 好きだったものに 反応しなくなった'];
 // 3話は 動画の5つ（特典の5項目）に上から1つずつ対応させた。言葉は台本で都合さんが実際にしていたこと
 const EP3_CHECKS = ['「前と同じなので」で 書類を見ずに答えてしまう', '嫌味を言われると 言い返す言葉がのどまで出てくる', '夜中に急いで返したメールに 朝になって間違いを見つける', '話しかけられると 画面を見たまま答えてしまう', '指摘されると 直す場所より先に 事情の説明が出てしまう'];
+// 4〜6話（2026-11-07）。3話と同じく 動画の項目に上から1つずつ対応させ 言葉は台本で都合さんが実際にしていたこと
+// 4話＝対処①③④⑥⑦（すぐ返さない・短く線を引く・会う形を変える・頭の中の再生を止める・会社の仕組みに頼る）
+const EP4_CHECKS = ['嫌なメールに 読んですぐ長い返事を書いてしまう', '言い返すほど 話がそれて長くなってしまう', '呼ばれるたびに 一人で怒鳴られに行ってしまう', '夜中まで 言い合いを頭の中でくり返してしまう', '何か月も続いているのに 一人で戦い続けている'];
+// 5話＝サイン①④⑥⑧⑨。数で病気や危険度を判定しない（特典と同じ）
+const EP5_CHECKS = ['週末に休んでも 月曜の朝から体が重い', '布団に入っても 仕事のことで眠れない', '好きだったことが 楽しめなくなった', '検査で異常がないのに 体の不調が続く', 'この先に 楽しみが思い浮かばない'];
+// 6話＝特徴①〜④と「いないと困る」で抱え直すこと（何でも引き受ける人の側）
+const EP6_CHECKS = ['頼まれた付箋を 全部自分の机に貼ってしまう', '仕事の手順が 自分の頭の中にしかない', '同じ質問に 何度も答えを渡している', '自分がした仕事が 人からも自分からも見えない', '「いないと困る」と言われると うれしくて全部抱え直す'];
 function renderEpisodeContext(n) {
   const sp = sameEp(n, 'sp1');
   document.querySelector('[data-slot="episodeLabel"]').textContent = sp ? `${epLabel(n)}の学びを 家で使うために` : `${epLabel(n)}の学びを 職場で使うために`;
@@ -1124,8 +1167,8 @@ function renderEpisodeContext(n) {
   });
   document.title = '都合さんの逆転ノート';
   document.querySelector('[data-slot="faqKeyword"]').replaceChildren('この回は', el('span', { class: 'kw' }, EPISODES[n].keyword));
-  document.querySelector('[data-slot="checkHeading"]').textContent = n === 2 ? 'こんな場面で 言葉に迷っていませんか' : n === 3 ? 'こんなこと 心当たりはありませんか' : sp ? '家族に こんな様子はありませんか' : 'こんなこと ありませんか';
-  const checks = n === 2 ? EP2_CHECKS : n === 3 ? EP3_CHECKS : sp ? SP1_CHECKS : originalChecks;
+  document.querySelector('[data-slot="checkHeading"]').textContent = n === 2 ? 'こんな場面で 言葉に迷っていませんか' : (n === 3 || n === 4 || n === 6) ? 'こんなこと 心当たりはありませんか' : n === 5 ? 'こんな変化 続いていませんか' : sp ? '家族に こんな様子はありませんか' : 'こんなこと ありませんか';
+  const checks = n === 2 ? EP2_CHECKS : n === 3 ? EP3_CHECKS : n === 4 ? EP4_CHECKS : n === 5 ? EP5_CHECKS : n === 6 ? EP6_CHECKS : sp ? SP1_CHECKS : originalChecks;
   document.querySelectorAll('.check').forEach((b, i) => { b.setAttribute('aria-pressed', 'false'); b.lastElementChild.textContent = checks[i]; });
   updateChecks(n);
   document.querySelector('[data-slot="giftIntro"]').textContent = EPISODES[n].giftIntro || (n === 2 ? '点数をつけるためではなく 次のやりとりを考えるために\n最近の一場面を振り返るシートと 5つの場面の例文をセットにしました' : '振り返るシートと言葉の集を 2つセットでお渡しします');
@@ -1138,7 +1181,7 @@ function renderEpisodeContext(n) {
       el('li', {}, el('div', {}, el('b', {}, 'シートで振り返る'), el('p', {}, 'できたことと 次に試したいことを確かめる'))),
       el('li', {}, el('div', {}, el('b', {}, '自分の一言にする'), el('p', {}, '例文の仕事や期限を 自分の状況に置き換える')))),
     el('p', { class: 'usage__example' }, 'たとえば 追加の仕事を頼まれたら\n「今日は難しいです A社の締め切りがあるので\n明日の午前なら出せます それで間に合いますか？」'));
-  document.querySelector('[data-slot="storyHeading"]').textContent = n === 2 ? '断る言葉を覚えても まだ迷います' : n === 3 ? '頼られはじめても 落とし穴がありました' : sp ? 'いちばん近くで 見ていたのは家族でした' : '僕も ずっと断れませんでした';
+  document.querySelector('[data-slot="storyHeading"]').textContent = n === 2 ? '断る言葉を覚えても まだ迷います' : n === 3 ? '頼られはじめても 落とし穴がありました' : n === 4 ? '言い返せても 振り回されていました' : n === 5 ? '頼られるうれしさの裏で 疲れていました' : n === 6 ? '「いないと困る」がうれしくて 抱え直しました' : sp ? 'いちばん近くで 見ていたのは家族でした' : '僕も ずっと断れませんでした';
   const frames = document.querySelector('.frames');
   const frameList = n === 2 ? [
     ['assets/scenes/3-morning.jpg', '課長に状況を伝える都合さん', '前回の一歩', '自分の状況を伝える言葉を覚えました\nそれでも 相手を思うと引き受けてしまうことがあります'],
@@ -1149,6 +1192,19 @@ function renderEpisodeContext(n) {
     ['assets/scenes/ep3-answer.jpg', '早川さんの相談に笑顔で答える都合さん', '前回の一歩', '理由を添えて 自分の考えを言えるようになり\n相談に来てくれる人が 少しずつ増えました'],
     ['assets/scenes/ep3-kyutoshitsu.jpg', '給湯室の前で足を止める都合さん', '今回のつまずき', '給湯室から\n「あの人 実は頭が悪いんじゃないか」\n「前と同じなので」で済ませる早川さんのうわさでした\nその言葉 僕もさっき言ったばかりでした'],
     ['assets/scenes/ep3-cafe.jpg', '夜の喫茶店で小野寺さんの席に着く都合さん', '次に覚えること', '小野寺さんに教わった\n賢い人がしない5つのこと\n決める前に確かめて\n指摘されたら直す場所を聞く練習をします'],
+  ] : n === 4 ? [
+    // 4〜6話も導入と最初の喫茶店まで（転・底・回復は見せない）
+    ['assets/scenes/ep4-ask.jpg', '会議で片山課長に直す場所を聞く都合さん', '前回の一歩', '理由を添えて断れるようになり\n失敗したあとに 直し方を聞けるようにもなりました'],
+    ['assets/scenes/ep4-night.jpg', '夜中の二時 布団の中で目が冴えている都合さん', '今回のつまずき', '会議で課長に「言い訳するな！」と怒鳴られ\n佐伯さんの一言で その場は止まったのに\n夜中の二時まで 頭の中で課長と戦っていました'],
+    ['assets/scenes/ep4-cafe.jpg', '夜の喫茶店で小野寺さんの席へ向かう都合さん', '次に覚えること', '小野寺さんに教わった\n振り回されない人の5つの対処\n腹が立ったまま すぐに返さず\n短くはっきり 線を引く練習をします'],
+  ] : n === 5 ? [
+    ['assets/scenes/ep5-memo.jpg', '机でノートに記録をつける都合さん', '前回の一歩', '人事に相談して 課長は人前で怒鳴らなくなりました\n理由を伝えて断ることも\n困ったことを記録に残すことも 今はできます'],
+    ['assets/scenes/ep5-genkan.jpg', '朝の玄関で座ったままの都合さんと 心配する恵子さん', '今回のつまずき', '確認を頼まれる資料が増え\n同じ資料を何度も見直すうちに\n朝の玄関で 靴を履く手が止まっていました'],
+    ['assets/scenes/ep5-cafe.jpg', '夜の喫茶店で小野寺さんと話す都合さん', '次に覚えること', '小野寺さんに教わった\n限界を超えた人に出る5つのサイン\n「まだ大丈夫」と言う前に\n確認する範囲を 頼んだ人と決めます'],
+  ] : n === 6 ? [
+    ['assets/scenes/ep6-call.jpg', '自分の席で電話をかける都合さん', '前回の一歩', '理由を伝えて断ることも\nつらいときに「一緒に来てほしい」と頼むことも\n少しずつ できるようになりました'],
+    ['assets/scenes/ep6-fusen.jpg', '付箋で埋まった机で 後輩に「自分がやっておきます」と答える都合さん', '今回のつまずき', '一週間休んだあとの机は 付箋で埋まっていました\n「いないと困る」と言われたのがうれしくて\n気づけば 全部を抱え直していました'],
+    ['assets/scenes/ep6-cafe.jpg', '喫茶店で 付箋だらけのノートを見る小野寺さん', '次に覚えること', '異動まで 二週間\n小野寺さんに教わった\n辞められたら困る人の7つの特徴\n仕事を 渡せる形で残す練習をします'],
   ] : sp ? [
     ['assets/preview/sp1-2.jpg', '夜中の居間で資料を直す都合さんと 起きてきたひなたさん', '会社で壊れていくころ', '夜中まで資料を直し\n娘の「今日は私がやるよ」まで\n「自分がやっておくから」と断っていました'],
     ['assets/scenes/sp1-limit.jpg', '居間のソファで 都合さんの背中に手を当てる恵子さん', 'あの夜', '家族に「僕 もう限界です」と言えました\n恵子は「頑張れ」と言わず\n「ちゃんと食べたの？」と聞いてくれました'],
@@ -1159,7 +1215,10 @@ function renderEpisodeContext(n) {
   const close = document.querySelector('[data-slot="storyClose"]');
   if (n === 2) close.textContent = '優しさを捨てるのではなく 伝え方を少しずつ変える\nうまく言えない日があっても\n次の一言を 一緒に選んでいきませんか';
   else if (n === 3) close.textContent = '間違えない人を目指すより\n間違いに気づいてから 何をするか\n次に聞く一言を 一緒に決めていきませんか';
-  else if (sp) close.textContent = '会社では見えにくいサインも\n家では出ていました\nLINEでは 大切な人のサインに気づくチェックと\n疲れている家族に届く一言を お渡ししています';
+  else if (n === 4) close.textContent = '嫌な人を変えなくても\n振り回される時間は 減らせます\n次の一言と 一つの記録から\n一緒に始めてみませんか';
+  else if (n === 5) close.textContent = '「まだ大丈夫」と言う前に\nいつもとの違いに 気づいてください\nひとりで抱えずに 頼る言葉を\n一緒に持っておきませんか';
+  else if (n === 6) close.textContent = '何でも引き受ける人ではなく\n自分がいなくても回る形を 残せる人へ\n渡せる一枚から\n一緒に始めてみませんか';
+  else if (sp) close.textContent ='会社では見えにくいサインも\n家では出ていました\nLINEでは 大切な人のサインに気づくチェックと\n疲れている家族に届く一言を お渡ししています';
   else close.innerHTML = originalStoryClose;
 }
 function render(n) {
@@ -1250,6 +1309,14 @@ const PREVIEW = {
     ['assets/preview/05-4.jpg', '弁当を持って都合さんを心配する恵子さん'],
     ['assets/preview/05.jpg', '朝の玄関で、恵子さんから弁当を受け取る都合さん'],
   ],
+  // 6話は動画の導入の絵から（2026-11-07・960×540に縮めた）
+  6: [
+    ['assets/preview/06-1.jpg', '休み明け、付箋で埋まった机を見つめる都合さん'],
+    ['assets/preview/06-2.jpg', '「都合がいないと一覧の場所も分からん」と机を指す片山課長'],
+    ['assets/preview/06-3.jpg', '「戻ってきてくれて本当に」と頼みごとを持ってくる後輩'],
+    ['assets/preview/06-4.jpg', '机の付箋を全部はがして ノートに貼り直す都合さん'],
+    ['assets/preview/06.jpg', '人事の担当者から 来月の異動の話を聞く都合さん'],
+  ],
   // 番外編の絵は 台本\台本\【画像】LINE特典動画_第1話の裏側_家族編\ から（2026-10-14・960×540に縮めた）
   sp1: [
     ['assets/preview/sp1-1.jpg', '夕飯のあいだも、スマホで仕事のメールを見る都合さんと恵子さん'],
@@ -1259,7 +1326,7 @@ const PREVIEW = {
     ['assets/preview/sp1-5.jpg', '足元に来たたえこにも、手が伸びない都合さん'],
   ],
 };
-const sceneIndex = { sp1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+const sceneIndex = { sp1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
 let currentEp = 1;
 let scenesReady = false;
 
@@ -1381,6 +1448,11 @@ function updateChecks(epNumber = currentEp) {
     if (n === checks.length) { result.replaceChildren(el('b', {}, '5つ全部'), '\n少し前の僕と まったく同じです'); return; }
     result.replaceChildren(el('b', {}, `${n}つ`), '当てはまりました\n少し前の僕は 5つ全部でした'); return;
   }
+  // 5話は数で判定しない（特典と同じ）。相談先へも案内する
+  if (epNumber === 5) {
+    if (n === checks.length) { result.replaceChildren(el('b', {}, '5つ全部'), '\nあの頃の僕と 同じです\nひとりで抱えず 下の相談先も見てください'); return; }
+    result.replaceChildren(el('b', {}, `${n}つ`), '気になりました\n特典の9つの変化チェックで\nいつもとの違いを確かめてみましょう'); return;
+  }
   if (sameEp(epNumber, 'sp1')) {
     if (n === checks.length) { result.replaceChildren(el('b', {}, '5つ全部'), '\nあの頃の僕と 同じです\nひとりで抱えず 下の相談先も見てください'); return; }
     result.replaceChildren(el('b', {}, `${n}つ`), '当てはまりました\n特典の7つの変化チェックで\nいつもとの違いを確かめてみましょう'); return;
@@ -1431,7 +1503,7 @@ const parser = new HTMLProcessingParser(model);
 const ZWSP = /​/g;
 // BudouX が割ってしまう言葉。この中では折り返さない（足すときは、ここに書く）
 const KEEP = ['ありがとうございます', '一人暮らし', '気にかけて', '魔法のフレーズ5選', '笑み',
-  '踏みとどまる', '言い切れない', 'はまり', '当てはま', '仕事の連絡', '明るいうち', '見えにくい', '頭が悪い', '直す場所', '朝になって', '言い返す言葉', 'のどまで', '事情の説明'].map(w => new RegExp([...w].join('​?'), 'g'));
+  '踏みとどまる', '言い切れない', 'はまり', '当てはま', '仕事の連絡', '明るいうち', '見えにくい', '頭が悪い', '直す場所', '朝になって', '言い返す言葉', 'のどまで', '事情の説明', '引き受ける', '残す練習'].map(w => new RegExp([...w].join('​?'), 'g'));
 const textNodes = root => {
   const list = [], walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
   for (let t = walk.nextNode(); t; t = walk.nextNode()) list.push(t);
